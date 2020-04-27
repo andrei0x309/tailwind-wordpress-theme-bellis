@@ -4,19 +4,37 @@
  
     
     
-    <div class="content bg-white w-full sm:w-full md:w-3/5 lg:w-3/5 xl:w-3/5 p-10">
+    <div class="content bg-white w-full sm:w-full md:w-7/12 lg:w-7/12 xl:w-7/12 p-10">
      
         
          <?php 
+
  if ( have_posts() ) { 
  while ( have_posts() ) : the_post();
  ?>
- <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-     <header><h2 class="blog-post-title"><?php the_title(); ?></h2>
- <p class="blog-post-meta"><?php the_date(); ?> by <?php the_author(); ?></p></header>
+ <article id="post-<?php the_ID(); ?>" <?php post_class('post-body mb-4'); ?>>
+     <header><h2 class="blog-post-title">
+         <a href="<?php echo esc_url( get_the_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
+         <?php the_title(); ?>
+         </a>
+         </h2>
+        <div class="blog-post-meta flex flex-row">
+            <address class="author px-2 pt-3 pb-6"><a rel="author" href="/author/john-doe"><i class="icon-twitter"></i> <?php the_author(); ?></a></address> 
+            <time class="px-2 pt-3 pb-6 " pubdate datetime="<?php echo get_the_date('Y-m-d'); ?>" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>
+            <span class="px-2 pt-3 pb-6 " ><i class="icon-tags"></i> <?php the_category( ', ' ); ?></span> 
+        </div>     
+     </header><!--  !-->
+ 
+ <?php if(has_post_thumbnail()) { ?>
+            <a href="<?php echo esc_url( get_the_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" id="featured-thumbnail" class="post-image post-image-left">
+                <?php echo '<div class="pr-6 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left">'; the_post_thumbnail('',array('title' => '', 'class' => 'm-auto')); echo '</div>'; ?>
+            </a>
+<?php } ?>         
+         
+  
  
      
- <?php the_content(); ?>
+ <?php the_excerpt(); ?>
  </article><!-- /.blog-post -->
  <?php
  endwhile;
@@ -24,13 +42,8 @@
  ?>
 
     </div>
-    <aside class="sidebar w-1/4 ml-8 bg-gray-100 hidden sm:hidden md:flex lg:flex xl:flex text-4xl content-center items-center justify-center" >
-      aside content here
-    </aside>
+<?php get_sidebar(); ?>
   </main>
-  <footer class="footer flex w-full items-center text-center text-4xl content-center justify-center">
-    footer content here
-  </footer>
-       <?php wp_footer(); ?>
+<?php get_footer() ?>    
     </body>
 </html>

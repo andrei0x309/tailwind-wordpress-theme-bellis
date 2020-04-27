@@ -1,8 +1,5 @@
-<?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ <footer class="footer flex w-full items-center text-center text-4xl content-center justify-center">
+    footer content here
+    <?php wp_footer(); ?>
+ </footer>
 

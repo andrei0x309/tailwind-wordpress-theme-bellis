@@ -1,8 +1,12 @@
-<?php
+<?php if ( is_active_sidebar( 'main-sidebar' ) ) : ?>
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+<aside class="sidebar w-2/5 ml-6 hidden sm:hidden md:block lg:block xl:block content-center" >
+      
+    <?php dynamic_sidebar( 'main-sidebar' ); ?>
+    
+</aside>
+
+<?php endif; ?>    
+
 

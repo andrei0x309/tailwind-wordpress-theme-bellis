@@ -7,7 +7,8 @@ Description: A theme specificaly made from my blog it uses laravel-mix with tail
 Version: 0.1 dev
 Text Domain: a309
 License: CC BY-NC
-License URI: -
+License URI: https://gitlab.flashsoft.ro/andrei0x309/tailwindcss-wordpress-theme
+Tags: lightweight, tailwindcss, laravel-mix
 */
 /*
     Created on : Jun 8, 2019, 1:02:07 PM
@@ -7544,11 +7545,11 @@ video {
 }
 
 .w-1\/3 {
-  width: 33.33333% !important;
+  width: 33.333333% !important;
 }
 
 .w-2\/3 {
-  width: 66.66667% !important;
+  width: 66.666667% !important;
 }
 
 .w-1\/4 {
@@ -7580,11 +7581,11 @@ video {
 }
 
 .w-1\/6 {
-  width: 16.66667% !important;
+  width: 16.666667% !important;
 }
 
 .w-2\/6 {
-  width: 33.33333% !important;
+  width: 33.333333% !important;
 }
 
 .w-3\/6 {
@@ -7592,19 +7593,19 @@ video {
 }
 
 .w-4\/6 {
-  width: 66.66667% !important;
+  width: 66.666667% !important;
 }
 
 .w-5\/6 {
-  width: 83.33333% !important;
+  width: 83.333333% !important;
 }
 
 .w-1\/12 {
-  width: 8.33333% !important;
+  width: 8.333333% !important;
 }
 
 .w-2\/12 {
-  width: 16.66667% !important;
+  width: 16.666667% !important;
 }
 
 .w-3\/12 {
@@ -7612,11 +7613,11 @@ video {
 }
 
 .w-4\/12 {
-  width: 33.33333% !important;
+  width: 33.333333% !important;
 }
 
 .w-5\/12 {
-  width: 41.66667% !important;
+  width: 41.666667% !important;
 }
 
 .w-6\/12 {
@@ -7624,11 +7625,11 @@ video {
 }
 
 .w-7\/12 {
-  width: 58.33333% !important;
+  width: 58.333333% !important;
 }
 
 .w-8\/12 {
-  width: 66.66667% !important;
+  width: 66.666667% !important;
 }
 
 .w-9\/12 {
@@ -7636,11 +7637,11 @@ video {
 }
 
 .w-10\/12 {
-  width: 83.33333% !important;
+  width: 83.333333% !important;
 }
 
 .w-11\/12 {
-  width: 91.66667% !important;
+  width: 91.666667% !important;
 }
 
 .w-full {
@@ -7680,7 +7681,8 @@ video {
 }
 
 body {
-  background-color: #005196;
+  /* background-color: #005196;*/
+  background-color: #1c3a80;
   background-image: url(images/black-linen.png);
   height: 100%;
   width: 100%;
@@ -7692,6 +7694,57 @@ body {
 
 .header .logo {
   border-width: 4px;
+  border-color: rgba(0, 0, 0, 0);
+}
+
+.header nav.header-nav ul {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* .header nav.header-nav div {
+  
+    
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+        
+    }   */
+
+.header nav.header-nav ul li {
+  margin-right: 0.5rem;
+  min-height: 4rem;
+  line-height: 3.8em;
+}
+
+.header-nav ul img, .header-nav ul svg {
+  display: inline;
+}
+
+.header-nav ul li:hover {
+  background: linear-gradient(to bottom, #995c00 0%, #ffa10a 3%, rgba(253, 135, 33, 0.91) 87%, rgba(222, 105, 2, 0.9) 100%);
+}
+
+.header-nav ul li:hover ul.sub-menu {
+  padding: 1.2rem;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  background: #fff;
+  color: #f6ad55;
+  box-shadow: 0.1rem 0.1rem #555;
+}
+
+.header-nav ul ul.sub-menu {
+  display: none;
+}
+
+.header-nav ul ul.sub-menu ul.sub-menu {
+  display: none;
 }
 
 .main {
@@ -7703,11 +7756,39 @@ body {
   max-width: 1200px;
 }
 
-.main .sidebar {
+.content article .blog-post-title {
+  font-size: 2.3rem;
+  color: #0274be;
+  text-shadow: 0.05em 0.03em 0.06em #cbd5e0;
+}
+
+.blog-post-meta {
+  color: #606b7b;
+}
+
+.sidebar {
   max-width: 300px;
 }
 
-.main .content, .main .siebar {
+/* purgecss ignore */
+
+.widget {
+  background-color: #fff;
+  box-shadow: 0.2em 0.2em 0.2em #222;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.widget h2 {
+  font-size: 1.3rem;
+}
+
+.widget img {
+  display: inline;
+}
+
+.content, .siebar {
   min-height: 50.8rem;
 }
 
@@ -7719,7 +7800,71 @@ body {
   min-height: 4rem;
 }
 
+/* classes needed by wordpress */
+
+/*theme Icons */
+
+@font-face {
+  font-family: 'icomoon';
+
+  src: url("fonts/icomoon.eot?a76a2s");
+
+  src: url("fonts/icomoon.eot?a76a2s#iefix") format("embedded-opentype"), url("fonts/icomoon.ttf?a76a2s") format("truetype"), url("fonts/icomoon.woff?a76a2s") format("woff"), url("fonts/icomoon.svg?a76a2s#icomoon") format("svg");
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-search:before {
+  content: "\e900";
+}
+
+.icon-triangle-down:before {
+  content: "\e901";
+}
+
+.icon-user-solid-square:before {
+  content: "\e902";
+}
+
+.icon-cheveron-down:before {
+  content: "\e903";
+}
+
+.icon-tags:before {
+  content: "\e904";
+}
+
+.icon-twitter:before {
+  content: "\e905";
+}
+
+.icon-book-open:before {
+  content: "\e906";
+}
+
+.icon-calendar:before {
+  content: "\e907";
+}
+
 /* Plugins */
+
+/* purgecss ignore */
 
 .syntaxhighlighter {
   word-break: break-all;
@@ -14627,11 +14772,11 @@ body {
   }
 
   .sm\:w-1\/3 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .sm\:w-2\/3 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .sm\:w-1\/4 {
@@ -14663,11 +14808,11 @@ body {
   }
 
   .sm\:w-1\/6 {
-    width: 16.66667% !important;
+    width: 16.666667% !important;
   }
 
   .sm\:w-2\/6 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .sm\:w-3\/6 {
@@ -14675,19 +14820,19 @@ body {
   }
 
   .sm\:w-4\/6 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .sm\:w-5\/6 {
-    width: 83.33333% !important;
+    width: 83.333333% !important;
   }
 
   .sm\:w-1\/12 {
-    width: 8.33333% !important;
+    width: 8.333333% !important;
   }
 
   .sm\:w-2\/12 {
-    width: 16.66667% !important;
+    width: 16.666667% !important;
   }
 
   .sm\:w-3\/12 {
@@ -14695,11 +14840,11 @@ body {
   }
 
   .sm\:w-4\/12 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .sm\:w-5\/12 {
-    width: 41.66667% !important;
+    width: 41.666667% !important;
   }
 
   .sm\:w-6\/12 {
@@ -14707,11 +14852,11 @@ body {
   }
 
   .sm\:w-7\/12 {
-    width: 58.33333% !important;
+    width: 58.333333% !important;
   }
 
   .sm\:w-8\/12 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .sm\:w-9\/12 {
@@ -14719,11 +14864,11 @@ body {
   }
 
   .sm\:w-10\/12 {
-    width: 83.33333% !important;
+    width: 83.333333% !important;
   }
 
   .sm\:w-11\/12 {
-    width: 91.66667% !important;
+    width: 91.666667% !important;
   }
 
   .sm\:w-full {
@@ -21665,11 +21810,11 @@ body {
   }
 
   .md\:w-1\/3 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .md\:w-2\/3 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .md\:w-1\/4 {
@@ -21701,11 +21846,11 @@ body {
   }
 
   .md\:w-1\/6 {
-    width: 16.66667% !important;
+    width: 16.666667% !important;
   }
 
   .md\:w-2\/6 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .md\:w-3\/6 {
@@ -21713,19 +21858,19 @@ body {
   }
 
   .md\:w-4\/6 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .md\:w-5\/6 {
-    width: 83.33333% !important;
+    width: 83.333333% !important;
   }
 
   .md\:w-1\/12 {
-    width: 8.33333% !important;
+    width: 8.333333% !important;
   }
 
   .md\:w-2\/12 {
-    width: 16.66667% !important;
+    width: 16.666667% !important;
   }
 
   .md\:w-3\/12 {
@@ -21733,11 +21878,11 @@ body {
   }
 
   .md\:w-4\/12 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .md\:w-5\/12 {
-    width: 41.66667% !important;
+    width: 41.666667% !important;
   }
 
   .md\:w-6\/12 {
@@ -21745,11 +21890,11 @@ body {
   }
 
   .md\:w-7\/12 {
-    width: 58.33333% !important;
+    width: 58.333333% !important;
   }
 
   .md\:w-8\/12 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .md\:w-9\/12 {
@@ -21757,11 +21902,11 @@ body {
   }
 
   .md\:w-10\/12 {
-    width: 83.33333% !important;
+    width: 83.333333% !important;
   }
 
   .md\:w-11\/12 {
-    width: 91.66667% !important;
+    width: 91.666667% !important;
   }
 
   .md\:w-full {
@@ -28703,11 +28848,11 @@ body {
   }
 
   .lg\:w-1\/3 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .lg\:w-2\/3 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .lg\:w-1\/4 {
@@ -28739,11 +28884,11 @@ body {
   }
 
   .lg\:w-1\/6 {
-    width: 16.66667% !important;
+    width: 16.666667% !important;
   }
 
   .lg\:w-2\/6 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .lg\:w-3\/6 {
@@ -28751,19 +28896,19 @@ body {
   }
 
   .lg\:w-4\/6 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .lg\:w-5\/6 {
-    width: 83.33333% !important;
+    width: 83.333333% !important;
   }
 
   .lg\:w-1\/12 {
-    width: 8.33333% !important;
+    width: 8.333333% !important;
   }
 
   .lg\:w-2\/12 {
-    width: 16.66667% !important;
+    width: 16.666667% !important;
   }
 
   .lg\:w-3\/12 {
@@ -28771,11 +28916,11 @@ body {
   }
 
   .lg\:w-4\/12 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .lg\:w-5\/12 {
-    width: 41.66667% !important;
+    width: 41.666667% !important;
   }
 
   .lg\:w-6\/12 {
@@ -28783,11 +28928,11 @@ body {
   }
 
   .lg\:w-7\/12 {
-    width: 58.33333% !important;
+    width: 58.333333% !important;
   }
 
   .lg\:w-8\/12 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .lg\:w-9\/12 {
@@ -28795,11 +28940,11 @@ body {
   }
 
   .lg\:w-10\/12 {
-    width: 83.33333% !important;
+    width: 83.333333% !important;
   }
 
   .lg\:w-11\/12 {
-    width: 91.66667% !important;
+    width: 91.666667% !important;
   }
 
   .lg\:w-full {
@@ -35741,11 +35886,11 @@ body {
   }
 
   .xl\:w-1\/3 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .xl\:w-2\/3 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .xl\:w-1\/4 {
@@ -35777,11 +35922,11 @@ body {
   }
 
   .xl\:w-1\/6 {
-    width: 16.66667% !important;
+    width: 16.666667% !important;
   }
 
   .xl\:w-2\/6 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .xl\:w-3\/6 {
@@ -35789,19 +35934,19 @@ body {
   }
 
   .xl\:w-4\/6 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .xl\:w-5\/6 {
-    width: 83.33333% !important;
+    width: 83.333333% !important;
   }
 
   .xl\:w-1\/12 {
-    width: 8.33333% !important;
+    width: 8.333333% !important;
   }
 
   .xl\:w-2\/12 {
-    width: 16.66667% !important;
+    width: 16.666667% !important;
   }
 
   .xl\:w-3\/12 {
@@ -35809,11 +35954,11 @@ body {
   }
 
   .xl\:w-4\/12 {
-    width: 33.33333% !important;
+    width: 33.333333% !important;
   }
 
   .xl\:w-5\/12 {
-    width: 41.66667% !important;
+    width: 41.666667% !important;
   }
 
   .xl\:w-6\/12 {
@@ -35821,11 +35966,11 @@ body {
   }
 
   .xl\:w-7\/12 {
-    width: 58.33333% !important;
+    width: 58.333333% !important;
   }
 
   .xl\:w-8\/12 {
-    width: 66.66667% !important;
+    width: 66.666667% !important;
   }
 
   .xl\:w-9\/12 {
@@ -35833,11 +35978,11 @@ body {
   }
 
   .xl\:w-10\/12 {
-    width: 83.33333% !important;
+    width: 83.333333% !important;
   }
 
   .xl\:w-11\/12 {
-    width: 91.66667% !important;
+    width: 91.666667% !important;
   }
 
   .xl\:w-full {
