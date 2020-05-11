@@ -1,10 +1,10 @@
 <?php get_header(); ?>
 
-<main class="main flex w-full mt-6 mb-6 justify-center">
+<div class="main flex w-full mt-6 mb-6 justify-center">
  
     
     
-    <div class="content bg-white w-full sm:w-full md:w-7/12 lg:w-7/12 xl:w-7/12 p-10">
+    <main class="flex flex-col content bg-white w-full sm:w-full md:w-7/12 lg:w-7/12 xl:w-7/12 p-8">
      
         
          <?php 
@@ -27,7 +27,7 @@
  
  <?php if(has_post_thumbnail()) { ?>
             <a href="<?php echo esc_url( get_the_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" id="featured-thumbnail" class="post-image post-image-left">
-                <?php echo '<div class="pr-6 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left">'; the_post_thumbnail('',array('title' => '', 'class' => 'm-auto')); echo '</div>'; ?>
+                <?php echo '<div class="pr-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left">'; the_post_thumbnail('',array('title' => '', 'class' => 'm-auto')); echo '</div>'; ?>
             </a>
 <?php } ?>         
          
@@ -38,12 +38,15 @@
  </article><!-- /.blog-post -->
  <?php
  endwhile;
- } 
+ }
+ 
+  echo the_posts_pagination();
+ 
  ?>
 
-    </div>
+    </main>
 <?php get_sidebar(); ?>
-  </main>
+  </div>
 <?php get_footer() ?>    
     </body>
 </html>

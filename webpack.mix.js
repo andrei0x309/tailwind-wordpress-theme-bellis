@@ -25,7 +25,8 @@ require('laravel-mix-purgecss');
         //whitelistPatterns: [/language/, /hljs/],
        
         //whitelistPatternsChildren: [/^markdown$/],
-    })*/
+    }) 
+*/
    .then(function () {
     concat([
         'dev-assets/css/template-header.css',
