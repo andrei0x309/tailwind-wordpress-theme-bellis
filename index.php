@@ -12,7 +12,7 @@
  if ( have_posts() ) { 
  while ( have_posts() ) : the_post();
  ?>
- <article id="post-<?php the_ID(); ?>" <?php post_class('post-body mb-4'); ?>>
+ <article id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>""  <?php post_class('post-body mb-4'); ?>>
      <header><h2 class="blog-post-title">
          <a href="<?php echo esc_url( get_the_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
          <?php the_title(); ?>
@@ -22,7 +22,8 @@
             <address class="author px-2 pt-3 pb-6"><a rel="author" href="/author/john-doe"><i class="icon-twitter"></i> <?php the_author(); ?></a></address> 
             <time class="px-2 pt-3 pb-6 " pubdate datetime="<?php echo get_the_date('Y-m-d'); ?>" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>
             <span class="px-2 pt-3 pb-6 " ><i class="icon-tags"></i> <?php the_category( ', ' ); ?></span> 
-        </div>     
+        </div>
+         
      </header><!--  !-->
  
  <?php if(has_post_thumbnail()) { ?>
@@ -40,7 +41,7 @@
  endwhile;
  }
  
-  echo the_posts_pagination();
+  //echo the_posts_pagination();
  
  ?>
 

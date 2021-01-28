@@ -18,6 +18,14 @@
          <?php the_title(); ?>
          </a>
          </h2>
+         
+                  <div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
+    <?php if(function_exists('bcn_display'))
+    {
+        bcn_display();
+    }?>
+</div>
+         
         <div class="blog-post-meta flex flex-row">
             <address class="author px-2 pt-3 pb-6"><a rel="author" href="/author/john-doe"><i class="icon-twitter"></i> <?php the_author(); ?></a></address> 
             <time class="px-2 pt-3 pb-6 " pubdate datetime="<?php echo get_the_date('Y-m-d'); ?>" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>

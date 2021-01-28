@@ -37,6 +37,7 @@ require('laravel-mix-purgecss');
     }); 
 }); 
 
+mix.js('dev-assets/js/app_index.js', 'js/app_index.js');
 
         
         /*    

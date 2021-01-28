@@ -14,7 +14,7 @@
    <body  <?php body_class( ); ?>>
   <header class="header flex flex-row bg-gray-200 items-center">
       <div class="logo min-h-full h-16 w-40 bg-white py-2 rounded-tr-full">
- <img class="h-full ml-4" src="<?php echo get_theme_file_uri( 'images/blogLogo.svg' ) ?>"  alt="Blog Svg Logo" >
+ <img height="48" width="96" class="h-full ml-4" src="<?php echo get_theme_file_uri( 'images/blogLogo.svg' ) ?>"  alt="flashsoft.eu Blog Logo" >
       </div>
    
       <nav class="header-nav  min-h-full md:flex flex-row text-gray-100 text-center px-4">
