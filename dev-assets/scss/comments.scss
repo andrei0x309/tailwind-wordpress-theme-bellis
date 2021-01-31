@@ -1,22 +1,15 @@
-@mixin blueBtn {
-            padding:0.5em;
-            background: #3f4c6b; /* Old browsers */
-            background: -moz-linear-gradient(top, #3f4c6b 0%, #2a3d66 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(top, #3f4c6b 0%,#2a3d66 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(to bottom, #3f4c6b 0%,#2a3d66 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            color: #ffffff;
-            padding-left: 1em;
-            padding-right: 1em;
-            text-transform:uppercase;
-}
-
-
+@import "minxin/blue_btn.scss"; 
 
 #comments {
 
     border: 1px solid #4b5c678f;
     border-radius: 0.5em;
-    padding: 1em;
+    padding: 0.8em;
+    
+    .comment {
+    margin: 0.5em 0 0.5em 0;
+    box-shadow: 0 0 1px #4b5c678f;
+    }
     
     h2 {
     font-size: 1.8em;
@@ -71,6 +64,9 @@
         }
 
     }
+    #comments-show-more-btn {
+         @include blueBtn;
+    }
     
     #comments-show-btn {
         @include blueBtn;
@@ -93,6 +89,13 @@
     padding: 1em;
     }
     
+    .comment-author {
+        span {
+            display: block-inline;
+            width:20%;
+        }
+    }
+    
     .avatar {
           width: 60px;
             height: 60px;
@@ -103,6 +106,27 @@
             display: inline;
     }
 
+    .loadingspinner {
+	pointer-events: none;
+	width: 2.5em;
+	height: 2.5em;
+	border: 0.4em solid transparent;
+        border-color:  #ffcc00;
+	border-top-color: #3E67EC;
+	border-bottom-color: #3E67EC;
+	border-radius: 50%;
+	animation: loadingspin 1s linear infinite;
+        margin: auto;
+}
+
+@keyframes loadingspin {
+	100% {
+			transform: rotate(360deg)
+	}
+}
+
+    
+    
 }
 
 

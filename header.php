@@ -11,7 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
     <script>
-     var A309JSPHP = {}; window.A309JSPHP.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>';
+     var A309TH = {}; window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>'
+     window.A309TH.current_user_id = '<?php echo wp_get_current_user()->ID ?>';
     </script>
   </head>
    <body  <?php body_class( ); ?>>

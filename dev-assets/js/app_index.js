@@ -1,16 +1,21 @@
  
  // Document Ready
  document.addEventListener("DOMContentLoaded", function() {
+
+// Get Some Elements we need
+window.articleNodes = null;
+window.mainTagEL = document.querySelector('main');
+window.A309TH.postsRemoveShowMoreBtn = document.getElementById('show-more-posts');
+
+ // Add Load More Events
+window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
+
  // Add Open Post Event
  document.querySelectorAll('.read-more').forEach(
          (node) => {
              node.addEventListener('click', openPost);
          });
- 
- // Add Load More Events
- 
-window.articleNodes = null;
-window.mainTagEL = document.querySelector('main'); 
+
  });
  
 
@@ -69,7 +74,7 @@ window.mainTagEL = document.querySelector('main');
      const spinnerTag = addSpinner(articleTopOffset);
      
      // fetch post 
-     const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-post/${postId}`;
+    const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-post/${postId}/user/${window.A309TH.current_user_id}`;
      
     const response = await fetch(fetchUrl, {
     headers: {
@@ -85,9 +90,7 @@ window.mainTagEL = document.querySelector('main');
              window.mainTagEL.removeChild(articleNode);
         }
 
-
-     console.log(data);
-     
+ 
      // change URL
      
       const state = { 'post_id': postId, 'post_slug': postSlug, 'post_title': postTitle  };
@@ -140,14 +143,31 @@ window.mainTagEL = document.querySelector('main');
  };
  
  
- const loadMorePosts = () =>{
+ const loadMorePosts =  async () =>{
        // Var needed  
        const numberOfPosts = 'x';  
-     
+      
        // show Load Spinner
        
        // fetch post 
      return false;
+     
+     
+  window.A309TH.postsRemoveShowMoreBtn();
+  const spinner = document.createElement('div');
+  spinner.class = 'loadingspinner';
+  window.A309TH.commentsEl.appendChild(spinner);
+ 
+  const data = await window.A309TH.fetchComments();      
+  window.A309TH.commentsList.insertAdjacentHTML('beforeend', data.comments); 
+  
+      if(window.A309TH.commentsEl.dataset.noComments - (5 * (window.A309TH.page) ) > 0){
+        window.A309TH.commentsShowMoreBtn = window.A309TH.commentsAddShowMoreBtn();
+     }
+     
+  window.A309TH.commentsEl.removeChild(spinner);
+     
+     
  };
  
  

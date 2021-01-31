@@ -12,6 +12,7 @@
 @import "../../node_modules/tailwindcss/utilities";
 //@import "./custom-utilities.css;
 
+@import "minxin/blue_btn.scss";
 
 
 body{
@@ -373,6 +374,11 @@ body{
 .blog-post-meta{
     color:#606b7b;
     font-size:0.9em;
+}
+
+#show-more-post-btn{
+     @include blueBtn;
+    
 }
 
 .sidebar{

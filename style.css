@@ -24493,6 +24493,20 @@ body {
   font-size: 0.9em;
 }
 
+#show-more-post-btn {
+  padding: 0.5em;
+  background: #3f4c6b;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #3f4c6b 0%, #2a3d66 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: #ffffff;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-transform: uppercase;
+}
+
 .sidebar {
   max-width: 19rem;
   display: flex;

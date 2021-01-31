@@ -4,11 +4,9 @@ if ( post_password_required() ) {
 	return;
 }
 
-$twenty_twenty_one_comment_count = get_comments_number();
+$a309_no_comments = get_comments_number();
 
-global $current_user;
- 
- 
+//global $current_user; 
 //if($current_user) echo $current_user->user_login;
  
 
@@ -17,7 +15,7 @@ global $current_user;
  
 
 
-<div id="comments" class="comments-area default-max-width <?php echo get_option( 'show_avatars' ) ? 'show-avatars' : ''; ?>">
+<div id="comments" data-no-comments="<?php echo $a309_no_comments; ?>" class="comments-area default-max-width <?php echo get_option( 'show_avatars' ) ? 'show-avatars' : ''; ?>">
 
     	<?php
         $aria_req = ($req) ? " aria-required='true'" : '' ;
@@ -52,14 +50,14 @@ global $current_user;
 	if ( have_comments() ) :
 		?>
 		<h2 class="comments-title">
-			<?php if ( '1' === $twenty_twenty_one_comment_count ) : ?>
+			<?php if ( '1' === $a309_no_comments ) : ?>
 				<?php esc_html_e( '1 comment', 'twentytwentyone' ); ?>
 			<?php else : ?>
 				<?php
 				printf(
 					/* translators: %s: comment count number. */
-					esc_html( _nx( '%s comment', '%s comments', $twenty_twenty_one_comment_count, 'Comments title', 'twentytwentyone' ) ),
-					esc_html( number_format_i18n( $twenty_twenty_one_comment_count ) )
+					esc_html( _nx( '%s comment', '%s comments', $a309_no_comments, 'Comments title', 'twentytwentyone' ) ),
+					esc_html( number_format_i18n( $a309_no_comments ) )
 				);
 				?>
 			<?php endif; ?>

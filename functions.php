@@ -13,6 +13,34 @@ function change_default_jquery( ){
 }
 */
 
+/**
+ * Disable the emoji's
+ */
+function disable_emojis() {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );	
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );	
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+	
+	// Remove from TinyMCE
+	add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+}
+add_action( 'init', 'disable_emojis' );
+
+/**
+ * Filter out the tinymce emoji plugin.
+ */
+function disable_emojis_tinymce( $plugins ) {
+	if ( is_array( $plugins ) ) {
+		return array_diff( $plugins, array( 'wpemoji' ) );
+	} else {
+		return array();
+	}
+}
+
 
  
 if (! function_exists('mix')) {
@@ -109,8 +137,9 @@ if ( ! isset( $content_width ) ){
 function wpa309_theme_setup() {
     add_theme_support( 'title-tag' );
     add_theme_support( 'automatic-feed-links' );
-    add_theme_support( "post-thumbnails" );
-    
+    add_theme_support( 'post-thumbnails' );
+    add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script' ) );
+  
 }
  
 add_action( 'after_setup_theme', 'wpa309_theme_setup' );
@@ -158,10 +187,17 @@ add_action( 'comment_form_before', 'wpse71451_enqueue_comment_reply' );
 add_action('rest_api_init', 'change_rest_post' );
 function change_rest_post(){
    
-  register_rest_route( 'a309/v1', '/get-post/(?P<id>\d+)', array(
+  register_rest_route( 'a309/v1', '/get-post/(?P<id>\d+)/user/(?P<user_id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_post_by_id',
   ) );
+  
+  register_rest_route( 'a309/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'a309_get_posts',
+  ) );
+  
+  
     
    register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
     'methods' => 'GET',
@@ -171,10 +207,36 @@ function change_rest_post(){
 }
  
 
+function a309_get_post_template($wpQueryArgs = null ,$full = true){
+    
+        $my_posts = new WP_Query($wpQueryArgs);  
+
+   if($my_posts->have_posts()) : 
+       ob_start();
+        while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
+
+          get_template_part( 'parts/article', null, [ 'full_content' => $full ]);  
+          
+        endwhile; //end the while loop
+        $template = ob_get_clean ();
+endif; // end of the loop. 
+     
+return $template;
+    
+}
+
 
 function get_post_by_id($data){
  global $withcomments;
  $withcomments = true;
+
+$data['user_id'] = intval($data['user_id']);
+$user_id = $data['user_id'] > 0 ? $data['user_id']: 0;
+ 
+global $current_user;
+$current_user = new stdClass();
+$current_user->ID =  $user_id;
+
  $template = '';
  $postId  = '';
  $args = array(
@@ -182,20 +244,37 @@ function get_post_by_id($data){
         'post_status' => 'publish',
         'p' => $data['id'],   // id of the post you want to query
     );
-    $my_posts = new WP_Query($args);  
-
-   if($my_posts->have_posts()) : 
-       $postId = $data['id'];
-       ob_start();
-        while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
-
-          get_template_part( 'parts/article', null, [ 'full_content' => true ]);  
-          
-        endwhile; //end the while loop
-        $template = ob_get_clean ();
-endif; // end of the loop. 
-        wp_send_json([ 'article' => $template, 'post_id' => $postId ]);
+    
+ $template = a309_get_post_template($args, true);
+ 
+    wp_send_json([ 'article' => $template, 'post_id' =>  $data['id'] ]);
+ 
 }
+
+
+function a309_get_posts($data){
+     $template = '';
+     $data['per_page'] = intval($data['per_page']);
+     $data['per_page'] = $data['per_page']  < 0 ? 0 : $data['per_page'];
+     $data['offset'] = intval($data['offset']);
+     $data['offset'] = $data['offset']  < 0 ? 0 : $data['offset'];
+     
+     
+     $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'posts_per_page' => $data['per_page'],   // id of the post you want to query
+        'offset' => $data['offset'],
+    );
+     
+     $my_posts = new WP_Query($args);
+     
+     $template = a309_get_post_template($args, false);
+     
+     wp_send_json([ 'article' => $template, 'offset' =>  $data['offset'], 'per_page' => $data['per_page']]);
+     
+}
+
 
 
 function get_comments_post($data){
