@@ -17,11 +17,15 @@
 body{
     /* background-color: #005196;*/
     font-size: 1.05rem;
-    background-color: #1c3a80;
+    /*background-color: #1c3a80;*/
+    
+    background: #2f3944; /* Old browsers */
     background-image: url(images/black-linen.png);
+ 
     font-family: 'Raleway', sans-serif;
     height: 100%;
     width: 100%;
+    scroll-behavior: smooth;
 }
 
 .header {

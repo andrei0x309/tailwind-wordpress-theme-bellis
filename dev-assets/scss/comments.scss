@@ -1,0 +1,108 @@
+@mixin blueBtn {
+            padding:0.5em;
+            background: #3f4c6b; /* Old browsers */
+            background: -moz-linear-gradient(top, #3f4c6b 0%, #2a3d66 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #3f4c6b 0%,#2a3d66 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #3f4c6b 0%,#2a3d66 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            color: #ffffff;
+            padding-left: 1em;
+            padding-right: 1em;
+            text-transform:uppercase;
+}
+
+
+
+#comments {
+
+    border: 1px solid #4b5c678f;
+    border-radius: 0.5em;
+    padding: 1em;
+    
+    h2 {
+    font-size: 1.8em;
+    color: #4a5568;
+    padding: 0.2em;
+    }
+
+    p{
+        margin-bottom: 0.5em;
+    }
+    
+    form input, form textarea {
+
+        border: 1px solid #2f3944;
+        padding: 0.5em;
+
+    }
+
+    .comment-name-email-block{
+        display: flex;
+        flex-wrap: wrap;
+
+        .comment-form-author, .comment-form-email{
+            flex: 1 0 40%;  /* flex-grow, flex-shrink, flex-basis */
+            background-color: lightgreen;
+        }
+        
+        .comment-form-author{
+            margin-right: 2px;
+        }
+        
+        .comment-form-email{
+            margin-left: 2px;
+        }
+        
+        input{
+            width: 100%
+        }
+
+    }
+
+    textarea {
+        width:100%;
+        height:10em;
+    }
+
+    .form-submit {
+        text-align: center;
+
+        input{
+            @include blueBtn;
+        }
+
+    }
+    
+    #comments-show-btn {
+        @include blueBtn;
+        
+        width:100%;
+        
+        img {
+            padding: 0.7em;
+            margin: auto;
+        }
+        
+    }
+    
+    
+    // Comment list
+    
+    .comment{
+    border: 1px solid #4b5c678f;
+    border-radius: 0.5em;
+    padding: 1em;
+    }
+    
+    .avatar {
+          width: 60px;
+            height: 60px;
+            border-radius: 50%;
+
+            object-fit: cover;
+            object-position: center right;
+            display: inline;
+    }
+
+}
+
+

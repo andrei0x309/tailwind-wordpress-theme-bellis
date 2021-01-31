@@ -37,44 +37,15 @@ window.mainTagEL = document.querySelector('main');
 };
  
  const addPost = (postData) => {
+     let postEl = null;
      
-     
-     const postEl = document.createElement('article');
-     postEl.id = `post-${postData.id}`;
-     postEl.dataset.id = postData.id;
-     postEl.dataset.slug = postData.slug;
-     postEl.dataset.title = postData.title.rendered;
-     postEl.classList.add(...postData.post_classes);
-     
-     postEl.innerHTML = `<header><h2 class="blog-post-title">
-         <a href=${postData.link}" title="${postData.title.rendered}">
-          ${postData.title.rendered}
-         </a>
-         </h2>
-        <div class="blog-post-meta flex flex-row">
-            <address class="author px-2 pt-3 pb-6"><a rel="author" href="/author/john-doe"><i class="icon-twitter"></i>aaa</a></address> 
-            <time class="px-2 pt-3 pb-6 " pubdate datetime="${postData.date}" title="${postData.date}"><i class="icon-calendar"></i>${new Date(postData.date).toLocaleDateString('en-US', {  year: 'numeric', month: 'long', day: 'numeric' })}</time>
-            <span class="px-2 pt-3 pb-6 " ><i class="icon-tags"></i> category, 1 2</span> 
-        </div>
+     if(postData.article){
+    window.mainTagEL.insertAdjacentHTML('beforeend', postData.article);   
+    postEl = document.getElementById(`post-${postData.post_id}`);
+     }
          
-     </header><!--  !-->
+    return postEl;
  
-    ${ postData.fimg_html ? 
-    
-    `<a href="${postData.link}; ?>" title="${postData.title.rendered}" id="featured-thumbnail" class="post-image post-image-left">
-                <div class="pr-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left">
-     ${postData.fimg_html}
-  </div>
-            </a>`
-     
-     : '' }
-            
- 
-${postData.content.rendered}
-  
-`;
-window.mainTagEL.appendChild(postEl);     
-     
  };
  
  const removeSpinner = (spinnerTag) => {
@@ -98,7 +69,7 @@ window.mainTagEL.appendChild(postEl);
      const spinnerTag = addSpinner(articleTopOffset);
      
      // fetch post 
-     const fetchUrl = `${window.location.origin}/wp-json/wp/v2/posts/${postId}`;
+     const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-post/${postId}`;
      
     const response = await fetch(fetchUrl, {
     headers: {
@@ -129,7 +100,8 @@ window.mainTagEL.appendChild(postEl);
      console.log('here');
      
      // Add Post to DOM
-      addPost(data);
+     addPost(data);
+     window.scroll(0,0);
      
      // Execute Plugin
      SyntaxHighlighter.highlight();
@@ -149,10 +121,15 @@ window.mainTagEL.appendChild(postEl);
         console.log(curArt);
         const spinnerEl = addSpinner(curArt.getBoundingClientRect().top - document.body.getBoundingClientRect().top);
          
-         window.mainTagEL.removeChild(curArt);
+        window.mainTagEL.removeChild(curArt);
+        const comments = document.getElementById('comments');
          
         for(let articleNode of window.articleNodes) {
              window.mainTagEL.appendChild(articleNode);
+        }
+        
+        if(comments){
+            window.mainTagEL.removeChild(comments);
         }
          
          window.articleNodes = null;

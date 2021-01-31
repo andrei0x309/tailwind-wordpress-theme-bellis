@@ -1,17 +1,20 @@
 <?php
+ 
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 
 // Remove Admin Bar
 add_filter('show_admin_bar', '__return_false');
 // Remove Jquery
-add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
+/*add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
 
 function change_default_jquery( ){
     wp_dequeue_script( 'jquery');
     wp_deregister_script( 'jquery');   
 }
+*/
 
 
+ 
 if (! function_exists('mix')) {
     /**
      * Get the path to a versioned Mix file.
@@ -113,98 +116,110 @@ function wpa309_theme_setup() {
 add_action( 'after_setup_theme', 'wpa309_theme_setup' );
 
 // Remove Jquery Migrate 
+/*
 add_action('wp_default_scripts', function ($scripts) {
     if (!empty($scripts->registered['jquery'])) {
         $scripts->registered['jquery']->deps = array_diff($scripts->registered['jquery']->deps, ['jquery-migrate']);
     }
 });
+*/
 
+function add_adidtional_css_js() {
+    
 
-function index_js_enqueue() {
-    if( is_front_page() )
+    
+    wp_enqueue_style( 'a309CommentsCss', get_template_directory_uri() . '/css/comments.css',false, null,'all');
+    
+    //Singular JS
+    if( is_singular() ){
+        wp_enqueue_script( 'a309CommentsJs', get_theme_file_uri('/js/app_comments.js'), [], null, true );
+    }
+    
+    //Index JS
+    if( is_home() )
     {
-        wp_enqueue_script( 'indexJs', get_theme_file_uri('/js/app_index.js'), [], null, true );
+        wp_enqueue_script( 'a309IndexJs', get_theme_file_uri('/js/app_index.js'), [], null, true );
+    }
+ 
+}
+
+add_action( 'wp_enqueue_scripts', 'add_adidtional_css_js' );
+
+
+function wpse71451_enqueue_comment_reply() {
+    if ( get_option( 'thread_comments' ) ) { 
+        wp_enqueue_script( 'comment-reply' ); 
     }
 }
-add_action( 'wp_enqueue_scripts', 'index_js_enqueue' );
-
-
-
-
-
+// Hook into comment_form_before
+add_action( 'comment_form_before', 'wpse71451_enqueue_comment_reply' );
+ 
 
 add_action('rest_api_init', 'change_rest_post' );
 function change_rest_post(){
-    /*
-    register_rest_field( array('post'),
-        'fimg_url',
-        array(
-            'get_callback'    => 'get_rest_featured_image',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
-      */
    
+  register_rest_route( 'a309/v1', '/get-post/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_post_by_id',
+  ) );
     
-   register_rest_field( array('post'),
-        'fimg_html',
-        array(
-            'get_callback'    => 'get_rest_featured_image_html',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
+   register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_comments_post',
+  ) );
    
-       register_rest_field( array('post'),
-        'post_categories',
-        array(
-            'get_callback'    => 'get_post_classes',
-            'update_callback' => null,
-            'schema'          => null,
-        )
+}
+ 
+
+
+function get_post_by_id($data){
+ global $withcomments;
+ $withcomments = true;
+ $template = '';
+ $postId  = '';
+ $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'p' => $data['id'],   // id of the post you want to query
     );
-   
-    register_rest_field( array('post'),
-        'post_categories',
-        array(
-            'get_callback'    => 'get_post_classes',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
-    
-    register_rest_field( array('post'),
-        'post_author',
-        array(
-            'get_callback'    => 'get_post_classes',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
-    
-    
-}
+    $my_posts = new WP_Query($args);  
 
-function get_rest_featured_image( $object ) {
-    if( $object['featured_media'] ){
-        return nelioefi_get_thumbnail_src( $object['id'] );
-    }
-    return false;
-}
+   if($my_posts->have_posts()) : 
+       $postId = $data['id'];
+       ob_start();
+        while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
 
-function get_rest_featured_image_html( $object ) {
-    if( $object['featured_media'] ){
-        return nelioefi_get_html_thumbnail( $object['id'], null, ['class' => 'm-auto'] );
-    }
-    return false;
+          get_template_part( 'parts/article', null, [ 'full_content' => true ]);  
+          
+        endwhile; //end the while loop
+        $template = ob_get_clean ();
+endif; // end of the loop. 
+        wp_send_json([ 'article' => $template, 'post_id' => $postId ]);
 }
 
 
-function get_post_classes($object){
-    return get_post_class('post-body mb-4', $object['id']);
-}
+function get_comments_post($data){
 
-function get_post_categories($object){
-    return get_post_class('post-body mb-4', $object['id']);
+// setup a fake POST to trick wp_list_comments
+global $post; 
+$post = new stdClass();
+$post->ID = $data['post_id'];
+setup_postdata( $post );
+
+
+    $template = wp_list_comments(
+				array(
+					'avatar_size' => 60,
+					'style'       => 'ol',
+					'short_ping'  => true,
+                                        'max_depth' => 5,
+                                        'per_page' => 5,
+                                        'page' =>    $data['page_no'],
+                                        'echo' => false,
+                                       
+				), );
+		 
+ wp_reset_postdata();
+ 
+      wp_send_json([ 'comments' => $template, 'post_id' => $data['post_id'], 'page_no' => $data['page_no'] ]);
 }

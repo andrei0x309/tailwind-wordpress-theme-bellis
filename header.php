@@ -9,7 +9,10 @@
     <link rel="profile" href="http://gmpg.org/xfn/11" />
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
-      <?php wp_head(); ?>
+    <?php wp_head(); ?>
+    <script>
+     var A309JSPHP = {}; window.A309JSPHP.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>';
+    </script>
   </head>
    <body  <?php body_class( ); ?>>
   <header class="header flex flex-row bg-gray-200 items-center">
