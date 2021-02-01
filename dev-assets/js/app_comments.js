@@ -7,6 +7,7 @@
  // Add Load More Events
 
 window.A309TH.commentsEl = document.getElementById('comments');
+window.A309TH.commentFormEl = document.getElementById('commentform');
 
 window.A309TH.commentsList = null;
 window.A309TH.commentsShowMoreBtn = null;
@@ -16,6 +17,7 @@ window.A309TH.postId = document.querySelector('article').dataset.id;
 window.A309TH.page = 1;
 // Add event on comments show
 window.A309TH.showCommentsBtn.addEventListener('click', A309TH.showCommentsFn );
+window.A309TH.commentFormEl.addEventListener('submit', sumbitComment );
  });
 
 
@@ -102,3 +104,53 @@ window.A309TH.showMoreCommentsFn = async () => {
      
   window.A309TH.commentsEl.removeChild(spinner);
 };
+
+
+const sumbitComment  =  async (e) => {
+     
+     e.preventDefault();
+     
+        //serialize and store form data in a variable
+        const commentform = window.A309TH.commentFormEl;
+ 
+        const formdata = new URLSearchParams(new FormData(commentform));
+        
+        console.log(formdata);
+        
+        //Add a status message
+        //statusdiv.html('<p>Processing...</p>');
+        //Extract action URL from commentform
+        var formurl=commentform.getAttribute('action');
+        //Post Form with data
+        
+            const response = await fetch(formurl, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: formdata // body data type must match "Content-Type" header
+  });
+     
+     console.log( await response.text());
+     
+     
+     
+        /* $.ajax({
+            type: 'post',
+            url: formurl,
+            data: formdata,
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                statusdiv.html('<p class="ajax-error" >You might have left one of the fields blank, or be posting too quickly</p>');
+                                },
+            success: function(data, textStatus){
+                if(data=="success")
+                    statusdiv.html('<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>');
+                else
+                    statusdiv.html('<p class="ajax-error" >Please wait a while before posting your next comment</p>');
+                    commentform.find('textarea[name=comment]').val('');
+                                }
+                });
+                return false;*/
+        };

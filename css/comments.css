@@ -1,3 +1,5 @@
+@use 'components/SimpleSpinner';
+
 #comments {
   border: 1px solid #4b5c678f;
   border-radius: 0.5em;
@@ -126,28 +128,31 @@
   display: inline;
 }
 
-#comments .loadingspinner {
-  pointer-events: none;
-  width: 2.5em;
-  height: 2.5em;
-  border: 0.4em solid transparent;
-  border-color: #ffcc00;
-  border-top-color: #3E67EC;
-  border-bottom-color: #3E67EC;
-  border-radius: 50%;
-  -webkit-animation: loadingspin 1s linear infinite;
-          animation: loadingspin 1s linear infinite;
-  margin: auto;
+#comments .comment-metadata {
+  font-size: 0.7em;
+  padding-bottom: 2px;
+  text-align: right;
 }
 
-@-webkit-keyframes loadingspin {
-  100% {
-    transform: rotate(360deg);
-  }
+#comments .comment-content {
+  padding: 0.7em;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
-@keyframes loadingspin {
-  100% {
-    transform: rotate(360deg);
-  }
+#comments .reply {
+  min-width: 8em;
+  width: 10%;
+  border: 1px #2f3944;
+  background: linear-gradient(to bottom, #7B8297 0%, #756F97 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: #ffffff;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#comments .reply:hover {
+  font-weight: bolder;
 }

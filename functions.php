@@ -159,15 +159,18 @@ function add_adidtional_css_js() {
     
     wp_enqueue_style( 'a309CommentsCss', get_template_directory_uri() . '/css/comments.css',false, null,'all');
     
+    
+    wp_enqueue_script( 'a309appJs', get_theme_file_uri('/js/app.js'), [], null, true );
+    
     //Singular JS
     if( is_singular() ){
-        wp_enqueue_script( 'a309CommentsJs', get_theme_file_uri('/js/app_comments.js'), [], null, true );
+        wp_enqueue_script( 'a309CommentsJs', get_theme_file_uri('/js/app_comments.js'), ['a309appJs'], null, true );
     }
     
     //Index JS
     if( is_home() )
     {
-        wp_enqueue_script( 'a309IndexJs', get_theme_file_uri('/js/app_index.js'), [], null, true );
+        wp_enqueue_script( 'a309IndexJs', get_theme_file_uri('/js/app_index.js'), ['a309appJs'], null, true );
     }
  
 }
@@ -271,7 +274,7 @@ function a309_get_posts($data){
      
      $template = a309_get_post_template($args, false);
      
-     wp_send_json([ 'article' => $template, 'offset' =>  $data['offset'], 'per_page' => $data['per_page']]);
+     wp_send_json([ 'articles' => $template, 'offset' =>  $data['offset'], 'per_page' => $data['per_page']]);
      
 }
 
@@ -302,3 +305,14 @@ setup_postdata( $post );
  
       wp_send_json([ 'comments' => $template, 'post_id' => $data['post_id'], 'page_no' => $data['page_no'] ]);
 }
+
+
+// Ajax Comment
+
+function change_comment_action_url( $defaults ) {
+	$defaults['action'] = get_template_directory_uri().'/inc/comment-post.php';
+	return $defaults;
+}
+
+add_filter( 'comment_form_defaults', 'change_comment_action_url');
+

@@ -11,14 +11,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
     <script>
-     var A309TH = {}; window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>'
+     var A309TH = {}; window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>';
      window.A309TH.current_user_id = '<?php echo wp_get_current_user()->ID ?>';
     </script>
   </head>
    <body  <?php body_class( ); ?>>
   <header class="header flex flex-row bg-gray-200 items-center">
       <div class="logo min-h-full h-16 w-40 bg-white py-2 rounded-tr-full">
+ <a href="<?php get_site_url() ?>">
  <img height="48" width="96" class="h-full ml-4" src="<?php echo get_theme_file_uri( 'images/blogLogo.svg' ) ?>"  alt="flashsoft.eu Blog Logo" >
+ </a>
       </div>
    
       <nav class="header-nav  min-h-full md:flex flex-row text-gray-100 text-center px-4">

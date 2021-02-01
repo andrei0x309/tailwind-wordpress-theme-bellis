@@ -8,7 +8,8 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
      <header>
          <?php  if($articleFull): ?>
          <h1 class="blog-post-title">
-         <?php else: ?>
+         <?php          
+         else: ?>
          <h2 class="blog-post-title">
          <?php endif; ?>
          <a href="<?php echo esc_url( get_the_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
@@ -16,18 +17,17 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
          </a>
          <?php  if($articleFull): ?>
             </h1>
-         <?php else: ?>
+         <?php
+         
+     if ( function_exists('yoast_breadcrumb') ):
+     yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+     endif;
+         
+         else: ?>
          </h2>
          <?php endif; ?>
          
-             <?php if(function_exists('bcn_display')): ?>
-                  <div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
-    
-    <?php {
-        bcn_display();
-    }?>
-</div>
-    <?php endif; ?>
+ 
          
         <div class="blog-post-meta flex flex-row">
             <address class="author px-2 pt-3 pb-6"><a rel="author" href="/author/john-doe"><i class="icon-twitter"></i> <?php the_author(); ?></a></address> 

@@ -21,7 +21,7 @@
  
  ?>
         <div class="text-center m-2"> 
-        <button id="show-more-post-btn">Load more Posts</button>
+        <button id="show-more-posts-btn">Load more Posts</button>
         </div>
     </main>
 <?php get_sidebar(); ?>

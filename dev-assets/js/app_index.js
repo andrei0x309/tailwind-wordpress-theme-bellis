@@ -1,11 +1,14 @@
  
- // Document Ready
+ /* global SyntaxHighlighter */
+
+// Document Ready
  document.addEventListener("DOMContentLoaded", function() {
 
 // Get Some Elements we need
 window.articleNodes = null;
 window.mainTagEL = document.querySelector('main');
-window.A309TH.postsRemoveShowMoreBtn = document.getElementById('show-more-posts');
+window.A309TH.postsRemoveShowMoreBtn = document.getElementById('show-more-posts-btn');
+window.A309TH.fetchPostsOffset = 4;
 
  // Add Load More Events
 window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
@@ -45,7 +48,7 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
      let postEl = null;
      
      if(postData.article){
-    window.mainTagEL.insertAdjacentHTML('beforeend', postData.article);   
+    window.mainTagEL.insertAdjacentHTML('afterbegin', postData.article);   
     postEl = document.getElementById(`post-${postData.post_id}`);
      }
          
@@ -142,31 +145,87 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
        
  };
  
+ const clearAlertBox = () => {
+   document.querySelectorAll('.alert').forEach( (el) => {
+         if(el.parentElement) el.parentElement.removeChild(el);
+   }  );
+ };
+ 
+ 
+ const alertBox = ( alertClass='error', alertMsg = '' ) => {
+     switch (alertClass) {
+        case 'error':
+            alertClass = 'alert-error';
+            break;
+        case 'info':
+           alertClass = 'alert-info';
+            break;
+        case 'success':
+            alertClass = 'alert-success';
+            break;
+        default:
+            alertClass = 'alert-error';
+            break;
+    }
+     
+     const alertBox = document.createElement('div');
+     alertBox.classList.add('alert');
+     alertBox.classList.add(alertClass);
+     alertBox.innerHTML = alertMsg;
+     return alertBox;
+ };
+ 
+ 
+ const fetchPosts = async (offset = 0, perPage = 0 ) => {
+    // fetch posts 
+    const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-posts/offset/${offset}/per-page/${perPage}`;
+     
+    const response = await fetch(fetchUrl, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+    let data;
+    if(response.ok){
+      data = await response.json();
+      data.httpError = false;
+    }else{
+      data = { httpError: true };
+    }
+    // parses JSON response into native JavaScript objects
+    return data;
+ };
+ 
+ 
  
  const loadMorePosts =  async () =>{
-       // Var needed  
-       const numberOfPosts = 'x';  
-      
-       // show Load Spinner
-       
-       // fetch post 
-     return false;
-     
-     
-  window.A309TH.postsRemoveShowMoreBtn();
-  const spinner = document.createElement('div');
-  spinner.class = 'loadingspinner';
-  window.A309TH.commentsEl.appendChild(spinner);
- 
-  const data = await window.A309TH.fetchComments();      
-  window.A309TH.commentsList.insertAdjacentHTML('beforeend', data.comments); 
+
+  const showMorePostsParent = window.A309TH.postsRemoveShowMoreBtn.parentElement;
+  window.A309TH.postsRemoveShowMoreBtn.disabled = true;
   
-      if(window.A309TH.commentsEl.dataset.noComments - (5 * (window.A309TH.page) ) > 0){
-        window.A309TH.commentsShowMoreBtn = window.A309TH.commentsAddShowMoreBtn();
-     }
-     
-  window.A309TH.commentsEl.removeChild(spinner);
-     
+  
+ const spinner = window.A309TH.addSimpleSpinner(showMorePostsParent);
+  
+  showMorePostsParent.prepend(spinner);
+ 
+  const data = await fetchPosts(window.A309TH.fetchPostsOffset,3);
+  window.A309TH.fetchPostsOffset +=3;
+  if(!data.httpError){
+  if(data.articles){
+         showMorePostsParent.insertAdjacentHTML('beforebegin', data.articles);
+         SyntaxHighlighter.highlight();
+         
+  }else{
+       showMorePostsParent.removeChild(window.A309TH.postsRemoveShowMoreBtn);
+       showMorePostsParent.prepend(alertBox('info', '&#x26A0; No more articles!'));  
+  }}else{
+    clearAlertBox();
+    showMorePostsParent.prepend(alertBox('error', '&#x26A0; Error fetching request!'));
+  }
+ window.A309TH.postsRemoveShowMoreBtn.disabled = false;
+
+window.A309TH.delSimpleSpinner(spinner);
+
      
  };
  

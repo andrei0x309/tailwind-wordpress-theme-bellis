@@ -14,6 +14,8 @@
 
 @import "minxin/blue_btn.scss";
 
+@import 'components/SimpleSpinner';
+@import 'components/alertBox';
 
 body{
     /* background-color: #005196;*/
@@ -322,6 +324,7 @@ body{
         margin-top:1rem;
         border-top: #fef 1px solid;
         transition: all 0.5s ease;
+        clear: left;
 
         &:hover{
             color:#888;
@@ -376,8 +379,9 @@ body{
     font-size:0.9em;
 }
 
-#show-more-post-btn{
+#show-more-posts-btn{
      @include blueBtn;
+     margin: 0.3em;
     
 }
 
