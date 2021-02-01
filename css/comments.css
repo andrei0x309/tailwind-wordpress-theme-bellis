@@ -112,9 +112,18 @@
   padding: 1em;
 }
 
+#comments .comment-author {
+  position: relative;
+}
+
 #comments .comment-author span {
   display: block-inline;
   width: 20%;
+  min-width: 6em;
+  font-size: 0.7em;
+  position: absolute;
+  top: 3.2em;
+  left: 6em;
 }
 
 #comments .avatar {
@@ -132,12 +141,15 @@
   font-size: 0.7em;
   padding-bottom: 2px;
   text-align: right;
+  margin-top: -1.5em;
 }
 
 #comments .comment-content {
-  padding: 0.7em;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  padding-top: 0.7em;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-top: 0.3em;
+  margin-botom: 0.5em;
 }
 
 #comments .reply {
@@ -151,6 +163,7 @@
   padding-right: 1em;
   text-transform: uppercase;
   text-align: center;
+  margin-top: 0.5em;
 }
 
 #comments .reply:hover {

@@ -108,14 +108,16 @@ window.A309TH.showMoreCommentsFn = async () => {
 
 const sumbitComment  =  async (e) => {
      
-     e.preventDefault();
-     
+        e.preventDefault();
+        window.A309TH.delAlertBox();
+        const respondEl = document.getElementById('respond');
+        const spinner = window.A309TH.addSimpleSpinner(respondEl, false);
         //serialize and store form data in a variable
         const commentform = window.A309TH.commentFormEl;
  
         const formdata = new URLSearchParams(new FormData(commentform));
         
-        console.log(formdata);
+ 
         
         //Add a status message
         //statusdiv.html('<p>Processing...</p>');
@@ -132,25 +134,22 @@ const sumbitComment  =  async (e) => {
     },
     body: formdata // body data type must match "Content-Type" header
   });
+    let alert = null;
+    if(response.ok){
+        const data = await response.json();
+        
+        if(data.error){
+             alert =  window.A309TH.alertBox('error', `&#x26A0; ${data.msg}` );
+        }else{
+           alert = window.A309TH.alertBox('success', 'Comment was posted');
+           
+        }
+       
+    }else{
+        alert =  window.A309TH.alertBox('error', '&#x26A0; HTTP fetch error, API down!');
+    }
      
-     console.log( await response.text());
-     
-     
-     
-        /* $.ajax({
-            type: 'post',
-            url: formurl,
-            data: formdata,
-            error: function(XMLHttpRequest, textStatus, errorThrown){
-                statusdiv.html('<p class="ajax-error" >You might have left one of the fields blank, or be posting too quickly</p>');
-                                },
-            success: function(data, textStatus){
-                if(data=="success")
-                    statusdiv.html('<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>');
-                else
-                    statusdiv.html('<p class="ajax-error" >Please wait a while before posting your next comment</p>');
-                    commentform.find('textarea[name=comment]').val('');
-                                }
-                });
-                return false;*/
-        };
+     respondEl.appendChild(alert);
+     window.A309TH.delSimpleSpinner(spinner);
+         
+ };

@@ -316,3 +316,16 @@ function change_comment_action_url( $defaults ) {
 
 add_filter( 'comment_form_defaults', 'change_comment_action_url');
 
+
+/**
+ * Change default gravatar.
+ */
+
+
+function new_gravatar ($avatar_defaults) {
+$myavatar = esc_url('https://lh3.googleusercontent.com/EzkHGdrERM11DUN8nQ8q5BL5Exv_sMwIXxFRJXn0w86swBLOnz3m7O30HVDKAThS4WZCSu4a7_pPARhMANMan454geUcJI9h7kTFwcxuXTQNDDzV95rq6eY63gmmBDIIu5BE6yfrnqSF7e_ku-D4UJ6qO8xoPT7FbMilUn6nz7F3iOWFbA12sOiQqaji83B_mURH8P6_ji1_DA3CkeheDaHCigqCSt2HFUnrTLvG4HKsMSKUrqyV8PotI_hmHALQPOd_KRORdf780wy5Pg6n6wk4UkJ2Ab0aNKAOoZdIFfN1iRRD2nSyj7NCrKSNqiadQbMEtvjFRic4TbeXSX3zHeokHHNAEypxgBo8Xx7lmfuXLs_uewVO0bWsVWU-x_UZNuVcR8QK0TT5fUANp-DlL0TxlhyhpMZEZuBQr1JlPwrXwf9gnT4TX_jIV_mh6l0pMJV9TVl0Fnx5c0_V5QaZF0hYgl9CM4AhGHo9BcRcRJaqb30OU9B8AYs8SCBODb6_CT8DaILT-E9WxYv5PIhk1NpNjatdkyt8yNSZ0kMVof2YxZzQ1_5bZgJoqjI7WjI3OtL2eMyLos0_mwtkLsjItQ6VWQzrvfsxBmWlpgRWRpxKdS1LYt9u04fN0hipxdz-XaA4k4VluR6gezE-NViLYYroVes14YfENjnIwDbQIY36IuCJRrPX0iVlubSg=s64-no?authuser=0');
+$avatar_defaults[$myavatar] = "Default Gravatar";
+return $avatar_defaults;
+}
+ 
+add_filter( 'avatar_defaults', 'new_gravatar' );

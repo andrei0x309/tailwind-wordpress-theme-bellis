@@ -7,7 +7,9 @@
 // Get Some Elements we need
 window.articleNodes = null;
 window.mainTagEL = document.querySelector('main');
+
 window.A309TH.postsRemoveShowMoreBtn = document.getElementById('show-more-posts-btn');
+window.A309TH.postsRemoveShowMoreBtnParent = window.A309TH.postsRemoveShowMoreBtn.parentElement;
 window.A309TH.fetchPostsOffset = 4;
 
  // Add Load More Events
@@ -93,7 +95,8 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
              window.mainTagEL.removeChild(articleNode);
         }
 
- 
+      window.A309TH.postsRemoveShowMoreBtnParent.parentElement.removeChild(window.A309TH.postsRemoveShowMoreBtnParent);
+      
      // change URL
      
       const state = { 'post_id': postId, 'post_slug': postSlug, 'post_title': postTitle  };
@@ -129,7 +132,7 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
          
         window.mainTagEL.removeChild(curArt);
         const comments = document.getElementById('comments');
-         
+ 
         for(let articleNode of window.articleNodes) {
              window.mainTagEL.appendChild(articleNode);
         }
@@ -139,40 +142,11 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
         }
          
          window.articleNodes = null;
+         window.mainTagEL.appendChild(window.A309TH.postsRemoveShowMoreBtnParent);
          
          removeSpinner(spinnerEl);
      }
        
- };
- 
- const clearAlertBox = () => {
-   document.querySelectorAll('.alert').forEach( (el) => {
-         if(el.parentElement) el.parentElement.removeChild(el);
-   }  );
- };
- 
- 
- const alertBox = ( alertClass='error', alertMsg = '' ) => {
-     switch (alertClass) {
-        case 'error':
-            alertClass = 'alert-error';
-            break;
-        case 'info':
-           alertClass = 'alert-info';
-            break;
-        case 'success':
-            alertClass = 'alert-success';
-            break;
-        default:
-            alertClass = 'alert-error';
-            break;
-    }
-     
-     const alertBox = document.createElement('div');
-     alertBox.classList.add('alert');
-     alertBox.classList.add(alertClass);
-     alertBox.innerHTML = alertMsg;
-     return alertBox;
  };
  
  
@@ -199,11 +173,11 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
  
  
  const loadMorePosts =  async () =>{
-
+  
+  window.A309TH.delAlertBox();
   const showMorePostsParent = window.A309TH.postsRemoveShowMoreBtn.parentElement;
   window.A309TH.postsRemoveShowMoreBtn.disabled = true;
-  
-  
+ 
  const spinner = window.A309TH.addSimpleSpinner(showMorePostsParent);
   
   showMorePostsParent.prepend(spinner);
@@ -217,10 +191,9 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
          
   }else{
        showMorePostsParent.removeChild(window.A309TH.postsRemoveShowMoreBtn);
-       showMorePostsParent.prepend(alertBox('info', '&#x26A0; No more articles!'));  
+       showMorePostsParent.prepend(window.A309TH.alertBox('info', '&#x26A0; No more articles!'));  
   }}else{
-    clearAlertBox();
-    showMorePostsParent.prepend(alertBox('error', '&#x26A0; Error fetching request!'));
+    showMorePostsParent.prepend(window.A309TH.alertBox('error', '&#x26A0; Error fetching request!'));
   }
  window.A309TH.postsRemoveShowMoreBtn.disabled = false;
 
