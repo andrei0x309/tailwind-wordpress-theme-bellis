@@ -73,7 +73,34 @@ const fetchCommentsNo = async () => {
      
 };
 
+const addCommentToDOM = (comment) => {
+    
+    
+      const date = new Date(comment.comment_date);
+      const options = {  year: 'numeric', month: 'long', day: 'numeric' };
+      
+     `<li id="comment-743" class="comment byuser comment-author-${comment.comment_author} even thread-even depth-1">
+			<article id="div-comment-${comment.comment_ID}" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						 ${comment.comment_avatar}
+                      <b class="fn"><a href="${comment.comment_author_url}" rel="external nofollow ugc" class="url">${comment.comment_author}</a></b> 
+                       <span class="says">says:</span>					</div><!-- .comment-author -->
 
+					<div class="comment-metadata">
+						<a href="https://blog-dev.flashsoft.eu:8443/async-task-without-queue-or-e-loop-php/#comment-743"><time datetime="${comment.comment_date}">${date.toLocaleDateString('en-US', options)} at ${date.toLocaleTimeString('en-US')}</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>${comment.comment_content}</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+                    <a rel="nofollow" class="comment-reply-link" href="#comment-${comment.comment_ID}" data-commentid="${comment.comment_ID}" data-postid="${comment.comment_post_ID}" data-belowelement="div-comment-${comment.comment_ID}" data-respondelement="respond" data-replyto="Reply to andrei0x309" aria-label="Reply to ${comment.comment_author}">Reply</a></div>			</article><!-- .comment-body -->
+		</li>`
+     
+};
 
 window.A309TH.showCommentsFn = async () => {
     window.A309TH.showCommentsBtn.innerHTML = `

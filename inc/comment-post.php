@@ -86,4 +86,6 @@ wp_safe_redirect( $location );
 exit;
 
  */
-wp_send_json([ 'error' => false ]);
+$comment->comment_avatar = get_avatar( $comment->comment_author_email, 64);
+
+wp_send_json([ 'error' => false, 'comment' => $comment ]);
