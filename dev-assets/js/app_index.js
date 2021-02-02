@@ -62,6 +62,18 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
      window.mainTagEL.removeChild(spinnerTag);
  };
  
+ const updateHead = (yoastHeadData) =>{
+    let template = document.createElement('template');
+    template.innerHTML = yoastHeadData;
+    const allNodes = template.content.childNodes;
+    allNodes.forEach(
+            (node) => {
+                console.log(node);
+            }
+             );
+     
+ };
+ 
  
  const openPost = async (e) => {
      
@@ -105,8 +117,9 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
      
      
      // Change Title and meta
-     document.title = data.title;
-     console.log('here');
+     //document.title = data.title;
+     console.log(data.yoast_seo);
+     updateHead(data['yoast_seo']);
      
      // Add Post to DOM
      addPost(data);

@@ -194,13 +194,22 @@ function change_rest_post(){
     'methods' => 'GET',
     'callback' => 'get_post_by_id',
   ) );
+    
+    
+  register_rest_route( 'a309/v1', '/get-y-morph/plugin/(?P<plugin>.*)', array(
+    'methods' => 'GET',
+    'callback' => 'a309_get_y_morf',
+  ) );
   
   register_rest_route( 'a309/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
     'methods' => 'GET',
     'callback' => 'a309_get_posts',
   ) );
   
-  
+  register_rest_route( 'a309/v1', '/get-comments-no/post/(?P<post_id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_top_level_comments_number',
+  ) );
     
    register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
     'methods' => 'GET',
@@ -209,30 +218,58 @@ function change_rest_post(){
    
 }
  
+//https://my.yoast.com/api/downloads/file/morphology-en-v4?plugin_version=15.7&site=https%3A%2F%2Fblackellis.eu
+function a309_get_y_morf(){
+    
+     global $wp_filesystem;
+            WP_Filesystem();
+     
+            $jsonPath = (get_template_directory() .'/res/y-morf.json');
+            if (! file_exists( $jsonPath )) {
+               wp_send_json([ 'error' => true]);
+            }
+            $json = json_decode($wp_filesystem->get_contents( $jsonPath ), true);
+             wp_send_json($json);
+ 
+}
 
-function a309_get_post_template($wpQueryArgs = null ,$full = true){
+
+function a309_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = false){
     
         $my_posts = new WP_Query($wpQueryArgs);  
-
+   global $post;
+   $yoast_head = null;
    if($my_posts->have_posts()) : 
-       ob_start();
+         ob_start();
         while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
 
           get_template_part( 'parts/article', null, [ 'full_content' => $full ]);  
+          $template = ob_get_clean ();
           
-        endwhile; //end the while loop
-        $template = ob_get_clean ();
+          if($yoastSeo){
+          ob_start();
+          do_action("wpseo_head");
+          $yoast_head = ob_get_clean();
+          }
+          endwhile; //end the while loop
+        
 endif; // end of the loop. 
-     
-return $template;
+if($yoastSeo){
+    return ['template' => $template, 'yoast_head' => $yoast_head ];
+}else{
+    return $template;
+}  
+
     
 }
 
 
 function get_post_by_id($data){
  global $withcomments;
+ global $wp_query;
+ $wp_query->is_singular = true;
  $withcomments = true;
-
+ 
 $data['user_id'] = intval($data['user_id']);
 $user_id = $data['user_id'] > 0 ? $data['user_id']: 0;
  
@@ -240,17 +277,15 @@ global $current_user;
 $current_user = new stdClass();
 $current_user->ID =  $user_id;
 
- $template = '';
- $postId  = '';
  $args = array(
         'post_type' => 'post',
         'post_status' => 'publish',
         'p' => $data['id'],   // id of the post you want to query
     );
     
- $template = a309_get_post_template($args, true);
+  $post_html = a309_get_post_template($args, true, true);
  
-    wp_send_json([ 'article' => $template, 'post_id' =>  $data['id'] ]);
+    wp_send_json([ 'article' => $post_html['template'], 'post_id' =>  $data['id'], 'yoast_seo' => $post_html['yoast_head']  ]);
  
 }
 
@@ -278,7 +313,13 @@ function a309_get_posts($data){
      
 }
 
+function get_top_level_comments_number( $data ) {
 
+    global $wpdb;
+    $data['post_id'] = esc_sql($data['post_id']);
+    $noComments = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->comments WHERE comment_parent = 0 AND comment_post_ID = '".$data['post_id']."'" );
+    wp_send_json([ 'commentNumber' => $noComments ]);
+}
 
 function get_comments_post($data){
 
@@ -292,6 +333,7 @@ setup_postdata( $post );
     $template = wp_list_comments(
 				array(
 					'avatar_size' => 60,
+                                        'reverse_top_level' => false,
 					'style'       => 'ol',
 					'short_ping'  => true,
                                         'max_depth' => 5,
@@ -323,7 +365,7 @@ add_filter( 'comment_form_defaults', 'change_comment_action_url');
 
 
 function new_gravatar ($avatar_defaults) {
-$myavatar = esc_url('https://lh3.googleusercontent.com/EzkHGdrERM11DUN8nQ8q5BL5Exv_sMwIXxFRJXn0w86swBLOnz3m7O30HVDKAThS4WZCSu4a7_pPARhMANMan454geUcJI9h7kTFwcxuXTQNDDzV95rq6eY63gmmBDIIu5BE6yfrnqSF7e_ku-D4UJ6qO8xoPT7FbMilUn6nz7F3iOWFbA12sOiQqaji83B_mURH8P6_ji1_DA3CkeheDaHCigqCSt2HFUnrTLvG4HKsMSKUrqyV8PotI_hmHALQPOd_KRORdf780wy5Pg6n6wk4UkJ2Ab0aNKAOoZdIFfN1iRRD2nSyj7NCrKSNqiadQbMEtvjFRic4TbeXSX3zHeokHHNAEypxgBo8Xx7lmfuXLs_uewVO0bWsVWU-x_UZNuVcR8QK0TT5fUANp-DlL0TxlhyhpMZEZuBQr1JlPwrXwf9gnT4TX_jIV_mh6l0pMJV9TVl0Fnx5c0_V5QaZF0hYgl9CM4AhGHo9BcRcRJaqb30OU9B8AYs8SCBODb6_CT8DaILT-E9WxYv5PIhk1NpNjatdkyt8yNSZ0kMVof2YxZzQ1_5bZgJoqjI7WjI3OtL2eMyLos0_mwtkLsjItQ6VWQzrvfsxBmWlpgRWRpxKdS1LYt9u04fN0hipxdz-XaA4k4VluR6gezE-NViLYYroVes14YfENjnIwDbQIY36IuCJRrPX0iVlubSg=s64-no?authuser=0');
+$myavatar = esc_url('https://lh3.googleusercontent.com/pw/ACtC-3d8pfcW8gcTgxsfmxSBIGYMxOmXqRibk3yZfHjq9QYTxOI-Bv8mFiq6mj0qCA6LLRJLuugMZTO216ZcGp5bsC5HA_FT3o6k-aCJTwc5l8eun0TVBVw6H1TAH4ZmIvnQl3WK3XGcvDRMW_wgvwMElkQd=s64-no');
 $avatar_defaults[$myavatar] = "Default Gravatar";
 return $avatar_defaults;
 }

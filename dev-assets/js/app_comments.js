@@ -14,7 +14,7 @@ window.A309TH.commentsShowMoreBtn = null;
 
 window.A309TH.showCommentsBtn =  document.getElementById('comments-show-btn');
 window.A309TH.postId = document.querySelector('article').dataset.id;
-window.A309TH.page = 1;
+window.A309TH.page = null;
 // Add event on comments show
 window.A309TH.showCommentsBtn.addEventListener('click', A309TH.showCommentsFn );
 window.A309TH.commentFormEl.addEventListener('submit', sumbitComment );
@@ -43,7 +43,7 @@ window.A309TH.commentsAddShowMoreBtn = () => {
 
 window.A309TH.fetchComments = async () => {
     
-    console.log(`page ${window.A309TH.page }`);
+    console.log(`page ${window.A309TH.page}`);
     // fetch Comments 
      const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments/post/${window.A309TH.postId}/page/${window.A309TH.page}`;
      
@@ -54,9 +54,25 @@ window.A309TH.fetchComments = async () => {
   });
     const data = await response.json(); // parses JSON response into native JavaScript objects
     
-    window.A309TH.page += 1;
+    window.A309TH.page -= 1;
     return data;
 };
+
+
+const fetchCommentsNo = async () => {
+    
+     const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments-no/post/${window.A309TH.postId}`;
+     
+         const response = await fetch(fetchUrl, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+     const data = await response.json();
+     window.A309TH.page = Math.ceil(data.commentNumber / 5);
+     
+};
+
 
 
 window.A309TH.showCommentsFn = async () => {
@@ -64,7 +80,10 @@ window.A309TH.showCommentsFn = async () => {
      Loading
      <div class="loadingspinner"></div>
    `;
-     window.A309TH.showCommentsBtn.disabled = true;
+    window.A309TH.showCommentsBtn.disabled = true;
+    
+    await fetchCommentsNo();
+    
      
     const data = await window.A309TH.fetchComments();      
     
@@ -77,6 +96,7 @@ window.A309TH.showCommentsFn = async () => {
     
     console.log(window.A309TH.commentsEl.dataset);
     console.log(window.A309TH.commentsEl.dataset.noComments - 5);
+    
     
     if(window.A309TH.commentsEl.dataset.noComments - 5 > 0){
         window.A309TH.commentsShowMoreBtn = window.A309TH.commentsAddShowMoreBtn();
@@ -97,8 +117,11 @@ window.A309TH.showMoreCommentsFn = async () => {
  
   const data = await window.A309TH.fetchComments();      
   window.A309TH.commentsList.insertAdjacentHTML('beforeend', data.comments); 
-  
-      if(window.A309TH.commentsEl.dataset.noComments - (5 * (window.A309TH.page) ) > 0){
+    
+    //console.log(window.A309TH.page);
+    //console.log(window.A309TH.commentsEl.dataset.noComments - (5 * (window.A309TH.page)));
+    
+      if(window.A309TH.page){
         window.A309TH.commentsShowMoreBtn = window.A309TH.commentsAddShowMoreBtn();
      }
      
