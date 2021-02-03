@@ -296,7 +296,13 @@ body{
 
     p{
         padding:0.2em 0 0.8em 0;
-
+        
+     hyphens: auto;
+     hyphenate-limit-chars: 6 3 3;
+     hyphenate-limit-lines: 2;
+     hyphenate-limit-last: always;
+     hyphenate-limit-zone: 8%;
+        
         &::first-letter {
 
             border-bottom:1px solid rgba( 33, 66, 96, 0.3) ;
@@ -565,4 +571,14 @@ $spinkit-spinner-color: #337ab7 !default;
     transform: perspective(140px) rotateY(180deg);
     opacity: 0;
   }
+}
+
+.fade-in{
+    animation: fadeinanim 0.6s linear forwards;
+}
+
+// Fade in
+@keyframes fadeinanim {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

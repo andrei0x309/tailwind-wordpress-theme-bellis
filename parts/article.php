@@ -43,15 +43,22 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
 <?php } ?>         
          
   
- <?php 
- 
- if($articleFull){
-       the_content(); 
+ <?php  if($articleFull){ 
+      the_content(); 
+       
+       /*
+       $tags = get_the_tags();
+       if($tags){ ?>
+     <div class="blog-post-meta flex flex-row">
+         <span class="px-2 pt-3 pb-6 " ><i class="icon-tags"></i> <?php echo implode(', ', array_map(function($term) {
+    return $term->name;
+}, $tags))  ; ?></span> 
+     </div>      
+       <?php
+      }    */
  }else{
    the_excerpt();  
  }
- 
- 
  ?>
  </article><!-- /.blog-post -->
  <?php  

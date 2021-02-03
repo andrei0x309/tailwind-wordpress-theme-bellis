@@ -24486,6 +24486,13 @@ body {
 
 .post-body p {
   padding: 0.2em 0 0.8em 0;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
 }
 
 .post-body p::first-letter {
@@ -24778,6 +24785,31 @@ body {
   90%, 100% {
     transform: perspective(140px) rotateY(180deg);
     opacity: 0;
+  }
+}
+
+.fade-in {
+  -webkit-animation: fadeinanim 0.6s linear forwards;
+          animation: fadeinanim 0.6s linear forwards;
+}
+
+@-webkit-keyframes fadeinanim {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeinanim {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 

@@ -16,7 +16,7 @@ window.A309TH.showCommentsBtn =  document.getElementById('comments-show-btn');
 window.A309TH.postId = document.querySelector('article').dataset.id;
 window.A309TH.page = null;
 // Add event on comments show
-window.A309TH.showCommentsBtn.addEventListener('click', A309TH.showCommentsFn );
+if(window.A309TH.showCommentsBtn) window.A309TH.showCommentsBtn.addEventListener('click', A309TH.showCommentsFn );
 window.A309TH.commentFormEl.addEventListener('submit', sumbitComment );
  });
 
@@ -75,11 +75,11 @@ const fetchCommentsNo = async () => {
 
 const addCommentToDOM = (comment) => {
     
-    
+ 
       const date = new Date(comment.comment_date);
       const options = {  year: 'numeric', month: 'long', day: 'numeric' };
       
-     `<li id="comment-743" class="comment byuser comment-author-${comment.comment_author} even thread-even depth-1">
+     const newCom = `<li id="comment-${comment.comment_ID}" class="comment byuser comment-author-${comment.comment_author} even thread-even comment-added fade-in">
 			<article id="div-comment-${comment.comment_ID}" class="comment-body">
 				<footer class="comment-meta">
 					<div class="comment-author vcard">
@@ -98,7 +98,24 @@ const addCommentToDOM = (comment) => {
 
 				<div class="reply">
                     <a rel="nofollow" class="comment-reply-link" href="#comment-${comment.comment_ID}" data-commentid="${comment.comment_ID}" data-postid="${comment.comment_post_ID}" data-belowelement="div-comment-${comment.comment_ID}" data-respondelement="respond" data-replyto="Reply to andrei0x309" aria-label="Reply to ${comment.comment_author}">Reply</a></div>			</article><!-- .comment-body -->
-		</li>`
+		</li>`;
+     
+     if (Number(comment.comment_parent) === 0){
+         const commentList = document.getElementById('comment-list');
+         commentList.insertAdjacentHTML('afterbegin', newCom);
+     }else{
+         const cancelLink = document.getElementById('cancel-comment-reply-link');
+         cancelLink.click();
+         let commentParent = document.getElementById(`comment-${comment.comment_parent}`);
+         let children = commentParent.querySelector('ol.children');
+         if(!children) {
+             children = document.createElement('ol');
+             children.classList.add('children');
+             commentParent.appendChild(children);
+         }
+         children.insertAdjacentHTML('afterbegin', newCom);
+         children.scrollIntoView();
+     }
      
 };
 
@@ -116,17 +133,15 @@ window.A309TH.showCommentsFn = async () => {
     
      
     window.A309TH.commentsList = document.createElement('ol');
+    window.A309TH.commentsList.id = 'comment-list';
     window.A309TH.commentsList.classList.add('comment-list');
     window.A309TH.commentsList.insertAdjacentHTML('beforeend', data.comments);
     
     window.A309TH.commentsEl.appendChild(window.A309TH.commentsList);
     
-    console.log(window.A309TH.commentsEl.dataset);
-    console.log(window.A309TH.commentsEl.dataset.noComments - 5);
-    
-    
-    if(window.A309TH.commentsEl.dataset.noComments - 5 > 0){
-        window.A309TH.commentsShowMoreBtn = window.A309TH.commentsAddShowMoreBtn();
+ 
+    if(window.A309TH.page){
+       await window.A309TH.showMoreCommentsFn();
     }
     
     
@@ -190,16 +205,26 @@ const sumbitComment  =  async (e) => {
         
         if(data.error){
              alert =  window.A309TH.alertBox('error', `&#x26A0; ${data.msg}` );
-        }else{
+              respondEl.appendChild(alert);
+         }else{
+             const commentList = document.getElementById('comment-list');
+      if(commentList){
+          addCommentToDOM(data.comment);
+      }else{
            alert = window.A309TH.alertBox('success', 'Comment was posted');
-           
-        }
-       
+          respondEl.appendChild(alert);
+      }
+         }
+ 
     }else{
         alert =  window.A309TH.alertBox('error', '&#x26A0; HTTP fetch error, API down!');
+         respondEl.appendChild(alert);
     }
+       
+      
+      
      
-     respondEl.appendChild(alert);
+    
      window.A309TH.delSimpleSpinner(spinner);
          
  };

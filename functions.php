@@ -193,27 +193,32 @@ function change_rest_post(){
   register_rest_route( 'a309/v1', '/get-post/(?P<id>\d+)/user/(?P<user_id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_post_by_id',
+    'permission_callback' => '__return_true',
   ) );
     
     
   register_rest_route( 'a309/v1', '/get-y-morph/plugin/(?P<plugin>.*)', array(
     'methods' => 'GET',
     'callback' => 'a309_get_y_morf',
+    'permission_callback' => '__return_true',
   ) );
   
   register_rest_route( 'a309/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
     'methods' => 'GET',
     'callback' => 'a309_get_posts',
+    'permission_callback' => '__return_true',
   ) );
   
   register_rest_route( 'a309/v1', '/get-comments-no/post/(?P<post_id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_top_level_comments_number',
+    'permission_callback' => '__return_true',
   ) );
     
    register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_comments_post',
+    'permission_callback' => '__return_true',
   ) );
    
 }
@@ -371,3 +376,23 @@ return $avatar_defaults;
 }
  
 add_filter( 'avatar_defaults', 'new_gravatar' );
+
+
+/**
+ * SMTP email.
+ */
+
+    // SMTP Authentication
+    function send_smtp_email( $phpmailer ) {
+    	$phpmailer->isSMTP();
+    	$phpmailer->Host       = SMTP_HOST;
+    	$phpmailer->SMTPAuth   = SMTP_AUTH;
+    	$phpmailer->Port       = SMTP_PORT;
+    	$phpmailer->Username   = SMTP_USER;
+    	$phpmailer->Password   = SMTP_PASS;
+    	$phpmailer->SMTPSecure = SMTP_SECURE;
+    	$phpmailer->From       = SMTP_FROM;
+    	$phpmailer->FromName   = SMTP_NAME;
+    }
+    
+add_action( 'phpmailer_init', 'send_smtp_email' );

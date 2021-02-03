@@ -132,7 +132,7 @@
     margin-botom:0.5em;
     }
     
-    .reply {
+    .reply, #reply-title a {
         min-width:8em;
         width:10%;
         border: 1px #2f3944;
@@ -150,7 +150,17 @@
             }
         
     }
-  
+   
+    #reply-title a {
+        width:100%;
+        display: block;
+    }
+    
+    h2#reply-title {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-top: 1.2em;
+    }
     
 }
 
