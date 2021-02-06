@@ -63,12 +63,63 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
  };
  
  const updateHead = (yoastHeadData) =>{
+    //const og = document.head.querySelectorAll(`meta[src*="og"]`);
+    //const article  = document.head.querySelectorAll(`meta[src*="article"]`);
+    //const twitter  = document.head.querySelectorAll(`meta[src*="article"]`);
+    //const schGraph = document.head.querySelector('.yoast-schema-graph');
+    const head = document.getElementsByTagName('head')[0];
+    const next = head.querySelector(`link[rel="next"]`);
+    if(next) next.parentElement.removeChild(next);
     let template = document.createElement('template');
     template.innerHTML = yoastHeadData;
-    const allNodes = template.content.childNodes;
+    let allNodes = [...template.content.childNodes];
+     if(allNodes){
+        allNodes = allNodes.filter( el => el instanceof HTMLElement );
+    }
+        //console.log(allNodes);
+    const replaceContentOrAddMetaEl = (attribute, node) => {
+        
+             const existingElement = head.querySelector(`meta[${attribute}="${node.getAttribute(`${attribute}`)}"]`);
+             console.log(`meta[${attribute}="${node.getAttribute('name')}"]`);
+                    if(existingElement){
+                        existingElement.content = node.content;
+                    }else{
+                        head.appendChild(node); 
+                    }
+  };
+    
     allNodes.forEach(
             (node) => {
-                console.log(node);
+                //console.log(node);
+                 
+        switch (node.nodeName.toLowerCase()) {
+            case 'meta':
+                if (node.hasAttribute('name')) {
+                    replaceContentOrAddMetaEl('name', node)
+                } else if (node.hasAttribute('property')) {
+                    replaceContentOrAddMetaEl('property', node)
+                }
+                break;
+            case 'title':
+                document.title = node.textContent;
+                break;
+            case 'script':
+                const existingElement = head.querySelector('script[type="application/ld+json"]');
+                if (existingElement)  existingElement.parentElement.removeChild(existingElement);
+                head.appendChild(node);
+                break;
+            case 'link':
+                const existingElement = head.querySelector('link[rel="canonical"]');
+                if (existingElement) {
+                    existingElement.href = node.href;
+                } else head.appendChild(node);
+                break;
+        }
+
+         
+
+                 
+                //console.log(node);
             }
              );
      
@@ -118,7 +169,7 @@ window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
      
      // Change Title and meta
      //document.title = data.title;
-     console.log(data.yoast_seo);
+     //console.log(data.yoast_seo);
      updateHead(data['yoast_seo']);
      
      // Add Post to DOM

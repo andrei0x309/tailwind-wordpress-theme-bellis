@@ -14,6 +14,8 @@
      var A309TH = {}; window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>';
      window.A309TH.current_user_id = '<?php echo wp_get_current_user()->ID ?>';
     </script>
+    <link rel="preload" href="<?php echo get_stylesheet_directory_uri() ?>/fonts/icomoon.woff" as="font" type="font/woff" crossorigin>
+    
   </head>
    <body  <?php body_class( ); ?>>
   <header class="header flex flex-row bg-gray-200 items-center">

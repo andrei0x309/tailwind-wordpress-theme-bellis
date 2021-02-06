@@ -22,17 +22,18 @@ $a309_no_comments = get_comments_number();
         $comments_args = array(  
             
             'comment_field' => '<p class="comment-form-comment"><textarea id="comment" name="comment" placeholder="Your Comment* " aria-required="true"></textarea></p>',
-            
+            'comment_notes_before' => '',
             'fields' => 
                     [   
                             'author' =>
       '<div class="comment-name-email-block"><p class="comment-form-author">'  .
-      '<input id="author" class="blog-form-input" placeholder="Your Name* " name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) .
+      '<i class="icon-user-solid-square"></i><input id="author" class="blog-form-input" placeholder="Name* " name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) .
       '" size="30"' . $aria_req . ' /></p>',
 
     'email' =>
       '<p class="comment-form-email">'.
-      '<input id="email" class="blog-form-input" placeholder="Your Email Address* " name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) .
+      '<i class="icon-alternate_email"></i><input
+   id="email" class="blog-form-input" placeholder="Email Address* " name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) .
       '" size="30"' . $aria_req . ' /></p></div>',
                         'url' => '',
                     ],

@@ -4,7 +4,7 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
         
 ?>
 
-<article id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>""  <?php post_class('post-body mb-4'); ?>>
+<article id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>""  <?php post_class('post-body mb-2'); ?>>
      <header>
          <?php  if($articleFull): ?>
          <h1 class="blog-post-title">
@@ -18,11 +18,7 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
          <?php  if($articleFull): ?>
             </h1>
          <?php
-         
-     if ( function_exists('yoast_breadcrumb') ):
-     yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
-     endif;
-         
+ 
          else: ?>
          </h2>
          <?php endif; ?>
@@ -30,14 +26,21 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
  
          
         <div class="blog-post-meta flex flex-row">
-            <address class="author px-2 pt-3 pb-6"><a rel="author" href="/author/john-doe"><i class="icon-twitter"></i> <?php the_author(); ?></a></address> 
+            <address class="author px-2 pt-3 pb-6"><a rel="author" href="/author/john-doe"><i class="icon-user-solid-square"></i> <?php the_author(); ?></a></address> 
             <time class="px-2 pt-3 pb-6 " pubdate datetime="<?php echo get_the_date('Y-m-d'); ?>" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>
-            <span class="px-2 pt-3 pb-6 " ><i class="icon-tags"></i> <?php the_category( ', ' ); ?></span> 
+            <span class="px-2 pt-3 pb-6 " ><i class="icon-folder"></i> <?php the_category( ', ' ); ?></span> 
         </div>     
      </header><!--  !-->
  
+     <?php
+          if ( function_exists('yoast_breadcrumb') && $articleFull ):
+     yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+     endif;
+ 
+     ?>
+     
  <?php if(has_post_thumbnail()) { ?>
-            <a href="<?php echo esc_url( get_the_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" id="featured-thumbnail" class="post-image post-image-left">
+            <a href="<?php echo esc_url( get_the_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" id="featured-thumbnail-<?php the_ID(); ?>" class="post-image post-image-left">
                 <?php echo '<div class="pr-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left">'; the_post_thumbnail('',array('title' => '', 'class' => 'm-auto')); echo '</div>'; ?>
             </a>
 <?php } ?>         
