@@ -1,3 +1,16 @@
+import { listen as quicklinkListen } from "quicklink"
+import { Luminous } from 'luminous-lightbox';
+
+window.addEventListener('load', () =>{
+  
+    
+    
+    quicklinkListen();
+    
+    new Luminous(document.querySelector("a"));
+ 
+});
+
 const addSimpleSpinner = (element, prepend = true) => {
     const spinner = document.createElement('div');
     spinner.classList.add('loadingspinner');

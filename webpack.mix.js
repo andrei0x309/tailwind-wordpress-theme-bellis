@@ -1,19 +1,25 @@
 const mix = require('laravel-mix');
 const concat = require('concat-files');
+//const glob = require("glob");
 require('laravel-mix-tailwind');
 mix.setPublicPath('../a309');
 require('laravel-mix-purgecss');
 
-
+ 
+ 
 //mix.js('css', 'public/js');
    mix.sass('dev-assets/scss/app.scss', 'style.css').tailwind().version()
-  /* .purgeCss({
+   .purgeCss({
         enabled: true,
 
         // Your custom globs are merged with the default globs. If you need to
         // fully replace the globs, use the underlying `paths` option instead.
-        globs: [
+        
+        
+        
+    globs: [
             path.join(__dirname, "*.php"),
+            path.join(__dirname, "parts/*.php"),
         ],
 
         extensions: ['php', 'scss'],
@@ -26,15 +32,15 @@ require('laravel-mix-purgecss');
        
         //whitelistPatternsChildren: [/^markdown$/],
     }) 
-*/
+ 
    .then(function () {
-    concat([
+    /* concat([
         'dev-assets/css/template-header.css',
         'style.css'
     ], 'style.css', function (err) {
         if (err) { throw err; }
         console.log('done');
-    }); 
+    }); */
 }); 
 
 mix.js('dev-assets/js/app.js', 'js/app.js');

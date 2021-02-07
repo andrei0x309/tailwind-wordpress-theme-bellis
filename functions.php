@@ -249,7 +249,7 @@ function a309_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = f
         while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
 
           get_template_part( 'parts/article', null, [ 'full_content' => $full ]);  
-          $template = ob_get_clean ();
+         
           
           if($yoastSeo){
           ob_start();
@@ -257,7 +257,7 @@ function a309_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = f
           $yoast_head = ob_get_clean();
           }
           endwhile; //end the while loop
-        
+    $template = ob_get_clean();
 endif; // end of the loop. 
 if($yoastSeo){
     return ['template' => $template, 'yoast_head' => $yoast_head ];
@@ -312,7 +312,7 @@ function a309_get_posts($data){
      
      $my_posts = new WP_Query($args);
      
-     $template = a309_get_post_template($args, false);
+     $template = a309_get_post_template($args, false , false);
      
      wp_send_json([ 'articles' => $template, 'offset' =>  $data['offset'], 'per_page' => $data['per_page']]);
      

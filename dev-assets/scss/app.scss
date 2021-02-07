@@ -3,8 +3,10 @@
     Author     : andrei0x309
 */
 
+/* purgecss start ignore */
 @import "../../node_modules/tailwindcss/base";
 //@import "./custom-base-styles.css";
+/* purgecss end ignore */
 
 @import "../../node_modules/tailwindcss/components";
 //@import "./custom-components";
@@ -12,24 +14,89 @@
 @import "../../node_modules/tailwindcss/utilities";
 //@import "./custom-utilities.css;
 
-@import "minxin/blue_btn.scss";
 
+
+
+
+/* purgecss start ignore */
+@import "minxin/blue_btn.scss";
 @import 'components/SimpleSpinner';
 @import 'components/alertBox';
 
 
+// Font 
+/* latin-ext */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/raleway/v19/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCGPrEHJA.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  ascent-override: 80%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+/* latin */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/raleway/v19/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCIPrE.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  ascent-override: 80%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+ 
+html {
+  scroll-behavior: smooth;
+}
  
 body{
-    
     font-size: 1.1rem;
     background: #2f3944; /* Old browsers */
     background-image: url(images/black-linen.png);
- 
-    font-family: 'Raleway', sans-serif;
+    font-family: sans-serif;
+    font-family: 'Raleway';
     height: 100%;
     width: 100%;
-    scroll-behavior: smooth;
 }
+
+ 
+a.classic-link{
+    
+    color: #0274be;
+    border-bottom: 1px solid #9999ff;
+    transition: all .3s ease-out; 
+    &:before{
+        content: ''!important;
+    }
+}
+
+.article-body a {
+    color: #0274be;
+    border-bottom: 1px solid #9999ff;
+    transition: all .3s ease-out; 
+    position: relative;
+    padding-left: 1.2em;
+    
+    &:before{
+        content: "\e906";
+        position: absolute;
+        top: 5%;
+        left:0;
+    }
+    
+    &:hover{
+        color: #003366;
+        border-color: #ff9933;
+    }
+    
+}
+
+
 
 .header {
     background: linear-gradient(to bottom, rgba(153,92,0,1) 0%, rgba(255,161,10,1) 3%, rgba(253,135,33,0.91) 87%, rgba(222,105,2,0.9) 100%);
@@ -42,13 +109,19 @@ body{
     border-width: 0;
     border-color: rgba(0, 0, 0, 0);
     
-    img::hover{
-       filter: contrast(1.3) brightness(1.1) hue-rotate(8deg);
+    img{
+        transition: all .5s ease-in;
+    }
+    
+    a:hover{
+        
+        img {
+        filter: contrast(1.7) brightness(0.9) hue-rotate(-25deg);
+      }
     }
     
 }
 
-/* purgecss start ignore */
 
 .header {
 
@@ -120,7 +193,7 @@ body{
         -ms-user-select: none;
         user-select: none;
         position: fixed;
-        left: 88%;
+        right: 2%;
         top: .8rem;
         z-index: 3;
         background-color: chocolate;
@@ -265,12 +338,24 @@ body{
 
 }
 
-/* purgecss end ignore */
 
+ 
 .main{
+    
+     @media (max-width:  768px) {
+        & {
+           max-width: 100%;
+        }
+     }
     max-width: 96%;
     margin:auto;
-
+    
+    article{
+        content-visibility: auto;
+        contain-intrinsic-size: 1000px;
+    }
+    
+    
     nav.pagination{
         width:100%;
         text-align: center;
@@ -312,39 +397,42 @@ body{
     }
 
     code.inline {
-        background-color: #ddd;
-        padding: 0.1em;
-        border: 1px solid #aaa;
-        font-variant: all-petite-caps;
+    background-color: #dadada;
+    padding: 0.3em;
+    border: 1px solid #7b7b7b;
+    font-family: monospace;
+    font-size: 0.8em;
+    letter-spacing: 0.12em;
     }
 
-    .read-more{
+    a.read-more{
             display: block;
-            color: #718096;
+            color: #3e5f8e;
             text-align: center;
             text-transform: uppercase;
             padding: 0.5rem 0.7em 0.5em 0.2em;
             transition: all 0.5s ease;
             width: 100%;
             margin: 1.6em auto 0.2em auto;
+            border-bottom: 0;
             border-top: 1px solid #cbd5e0;
             border-radius: 4px;
             font-weight: 600;
             clear: left;
-
+ 
         &:hover{
             color:#14386a;
+            border-color: #ff9933;
             font-weight: 900;
         }
 
         &:before{
-            background-color: #555;
-            width: 20rem;
+            content:'';
         }    
 
         i {
             position:relative;
-            color:#000;
+            color:#222;
             top: 1px;
             left: -2px;
         }
@@ -380,16 +468,24 @@ body{
 .content article .blog-post-title {
     font-size: 2.3rem;
     color: #0274be;
-    text-shadow: 0.05em 0.03em 0.06em #cbd5e0;
+    text-shadow: 0.05em 0.03em 0.06em #b8c6d5;
+    padding-left: 0.2em;
+    transition: all .4s cubic-bezier(0, 0, 0.02, 0.56);
+    
+    &:hover{
+        font-weight: 800;
+    }
+    
 }
+
 
 .blog-post-meta{
     color:#606b7b;
     font-size:0.9em;
     
-    &:i{
+    & i{
     position: relative;
-    top: 1px;
+    top: 2px;
     }
     
 }
@@ -407,7 +503,7 @@ body{
 
 }
 
-/* purgecss ignore */  
+ 
 .widget {
     background-color: #fff;
     box-shadow: 0.2em 0.2em 0.2em #222;
@@ -446,7 +542,7 @@ body{
     min-height: 4rem;
 }
 
-/* purgecss start ignore */
+ 
 /* classes needed by wordpress */
 
 .wp-caption { }
@@ -457,8 +553,7 @@ body{
 .alignright { }
 .alignleft { }
 .aligncenter { }
-/* purgecss end ignore */
-
+ 
 
 /*theme Icons */
  
@@ -474,7 +569,7 @@ body{
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"], [class*=" icon-"], .article-body a:before {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: never;
@@ -537,7 +632,7 @@ body{
 
 
 /* Plugins */
-/* purgecss ignore */
+
 .syntaxhighlighter {
     word-break: break-all;
 }
@@ -575,6 +670,21 @@ $spinkit-spinner-color: #337ab7 !default;
     animation: sk-folding-cube-angle $animationDuration infinite linear both;
     transform-origin: 100% 100%;
   }
+  
+  .sk-cube-txt{
+    font-size: 2rem;
+    transform: rotate(315deg);
+    margin: 2em 0em 0em 0.3em;
+    text-shadow: -3px 2px 6px #eee;
+    background-color: #0274be;
+    color: #f0f0f0;
+    padding-left: 0.6em;
+    padding-bottom: 0.1em;
+    width: 225%;
+    clip-path: ellipse( 90% 30%);
+    animation: sk-folding-cube-txt 2s infinite;
+    animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
 
   // Rotation / angle
   @for $i from 2 through $cubeCount {
@@ -588,6 +698,11 @@ $spinkit-spinner-color: #337ab7 !default;
       animation-delay: ($delayRange / $cubeCount * ($i - 1));
     }
   }
+}
+
+@keyframes sk-folding-cube-txt {
+    0%   { text-shadow: -3px 2px 6px #eee; }
+    100% { text-shadow: 0 0 0 #eee; }
 }
 
 @keyframes sk-folding-cube-angle {
@@ -625,7 +740,17 @@ $spinkit-spinner-color: #337ab7 !default;
     height:75px;
     
 }
-#gr_custom_widget_1471853922 img.staticStars{
+#gr_custom_widget_1471853922 .staticStars img{
     width:15px;
     height:15px;
 }
+
+/* breadcrumbs */
+div#breadcrumbs{
+    font-size: 0.8em;
+    
+    .breadcrumb_last{
+        font-weight: 700;
+    }
+}
+/* purgecss end ignore */

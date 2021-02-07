@@ -4,20 +4,9 @@
 // Document Ready
  document.addEventListener("DOMContentLoaded", function() {
  
- // Add Load More Events
+ 
+window.A309TH.eventsOnComments();
 
-window.A309TH.commentsEl = document.getElementById('comments');
-window.A309TH.commentFormEl = document.getElementById('commentform');
-
-window.A309TH.commentsList = null;
-window.A309TH.commentsShowMoreBtn = null;
-
-window.A309TH.showCommentsBtn =  document.getElementById('comments-show-btn');
-window.A309TH.postId = document.querySelector('article').dataset.id;
-window.A309TH.page = null;
-// Add event on comments show
-if(window.A309TH.showCommentsBtn) window.A309TH.showCommentsBtn.addEventListener('click', A309TH.showCommentsFn );
-window.A309TH.commentFormEl.addEventListener('submit', sumbitComment );
  });
 
 
