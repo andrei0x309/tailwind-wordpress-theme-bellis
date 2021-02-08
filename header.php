@@ -14,7 +14,7 @@
      window.A309TH.current_user_id = '<?php echo wp_get_current_user()->ID ?>';
     </script>
     <link rel="prefetch" href="<?php echo get_stylesheet_directory_uri() ?>/fonts/icomoon.woff" as="font" type="font/woff" crossorigin="">
-    
+    <?php if(isset($args['head_aditional_code']))echo $args['head_aditional_code'];?>
   </head>
    <body  <?php body_class( ); ?>>
   <header class="header flex flex-row bg-gray-200 items-center">

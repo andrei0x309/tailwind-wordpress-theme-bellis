@@ -16,16 +16,24 @@ document.addEventListener("DOMContentLoaded", function () {
     window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
 
     // Add Open Post Event
-    document.querySelectorAll('.read-more').forEach(
-            (node) => {
-        node.addEventListener('click', openPost);
-    });
+    modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ]);
 
 });
 
 
 window.onpopstate = () => {
     backToPosts();
+};
+
+
+const modifyEventForOpenPost = ( selectors = [], remove=false) => {
+    for(const selector of selectors){
+    document.querySelectorAll(selector).forEach(
+            (node) => {
+        if(!remove) node.addEventListener('click', openPost);
+        else node.removeEventListener('click', openPost);
+    });
+    }
 };
 
 const addSpinner = (articleStart) => {
@@ -108,14 +116,12 @@ const updateHead = (yoastHeadData) => {
                 head.appendChild(node);
                 break;
             case 'link':
-            {
                 const existingLink = head.querySelector('link[rel="canonical"]');
                 if (existingLink) {
                     existingLink.href = node.href;
                 } else
                     head.appendChild(node);
                 break;
-            }
         }
 
     }
@@ -194,7 +200,7 @@ const openPost = async (e) => {
     updateHead(data['yoast_seo']);
     
     // Add Stylsheet and comment js
-    addStyleScriptts([ {type:'script', id:'a309CommentsJs-js', path:`${window.A309TH.theme_URI}/js/app_comments.js`,  onLoadCallback: () => { console.log('test'); window.A309TH.eventsOnComments();  }    },
+    addStyleScriptts([ {type:'script', id:'a309CommentsJs-js', path:`${window.A309TH.theme_URI}/js/app_comments.js`,  onLoadCallback: () => {  window.A309TH.eventsOnComments();  }    },
                        {type:'script', id:'comment-reply-js', path:`${window.location.origin}/wp-includes/js/comment-reply.min.js`,  onLoadCallback: () => { window.addComment.init();  } },
                        {type:'script', id:'akismet-form-js', path:`${window.location.origin}/wp-content/plugins/akismet/_inc/form.js` },
                        {type:'style',  id:'a309CommentsCss-css', path:`${window.A309TH.theme_URI}/css/comments.css` },
@@ -209,7 +215,10 @@ const openPost = async (e) => {
 
     // Execute Plugin
     SyntaxHighlighter.highlight();
-
+    window.A309TH.quicklinkListen();
+    window.A309TH.initLightbox();
+  
+  
     //Remove Spinner
 
     removeSpinner(spinnerTag);
@@ -291,6 +300,10 @@ const loadMorePosts = async () => {
     } else {
         showMorePostsParent.prepend(window.A309TH.alertBox('error', '&#x26A0; Error fetching request!'));
     }
+    
+    modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ] , true);
+    modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ]);
+      
     window.A309TH.postsRemoveShowMoreBtn.disabled = false;
 
     window.A309TH.delSimpleSpinner(spinner);

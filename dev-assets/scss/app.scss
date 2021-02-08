@@ -23,6 +23,11 @@
 @import 'components/SimpleSpinner';
 @import 'components/alertBox';
 
+@import 'node_modules/luminous-lightbox/dist/luminous-basic.min';
+
+.lum-lightbox-inner img {
+    margin: auto;
+}
 
 // Font 
 /* latin-ext */
@@ -65,7 +70,7 @@ body{
 }
 
  
-a.classic-link{
+/*a.classic-link{
     
     color: #0274be;
     border-bottom: 1px solid #9999ff;
@@ -74,20 +79,21 @@ a.classic-link{
         content: ''!important;
     }
 }
+*/
 
-.article-body a {
+.article-body a  {
     color: #0274be;
     border-bottom: 1px solid #9999ff;
     transition: all .3s ease-out; 
     position: relative;
-    padding-left: 1.2em;
+
     
-    &:before{
+    /*:not(img):before  {
         content: "\e906";
         position: absolute;
         top: 5%;
         left:0;
-    }
+    }*/
     
     &:hover{
         color: #003366;
@@ -552,7 +558,7 @@ a.classic-link{
 .bypostauthor { }
 .alignright { }
 .alignleft { }
-.aligncenter { }
+.aligncenter { margin: auto; }
  
 
 /*theme Icons */

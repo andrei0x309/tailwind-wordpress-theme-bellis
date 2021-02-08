@@ -1,15 +1,19 @@
 import { listen as quicklinkListen } from "quicklink"
-import { Luminous } from 'luminous-lightbox';
+import { LuminousGallery } from 'luminous-lightbox';
 
 window.addEventListener('load', () =>{
-  
-    
-    
+   
     quicklinkListen();
-    
-    new Luminous(document.querySelector("a"));
+    initLightbox();
  
 });
+
+const initLightbox = () => {
+    new LuminousGallery(document.querySelectorAll("a.lightbox"), 
+    {arrowNavigation: true },
+    {injectBaseStyles: false },
+    );
+};
 
 const addSimpleSpinner = (element, prepend = true) => {
     const spinner = document.createElement('div');
@@ -63,6 +67,8 @@ window.A309TH.delAlertBox = delAlertBox;
 window.A309TH.alertBox = alertBox;
 window.A309TH.addSimpleSpinner = addSimpleSpinner;
 window.A309TH.delSimpleSpinner = delSimpleSpinner;
+window.A309TH.quicklinkListen = quicklinkListen;
+window.A309TH.initLightbox = initLightbox;
  });
 
 
