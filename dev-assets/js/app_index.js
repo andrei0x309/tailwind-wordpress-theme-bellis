@@ -195,15 +195,13 @@ const openPost = async (e) => {
 
 
     // Change Title and meta
-    //document.title = data.title;
-    //console.log(data.yoast_seo);
     updateHead(data['yoast_seo']);
     
     // Add Stylsheet and comment js
-    addStyleScriptts([ {type:'script', id:'a309CommentsJs-js', path:`${window.A309TH.theme_URI}/js/app_comments.js`,  onLoadCallback: () => {  window.A309TH.eventsOnComments();  }    },
+    addStyleScriptts([ {type:'script', id:'a309-comments-js', path:`${window.A309TH.theme_URI}/js/app_comments.js`,  onLoadCallback: () => {  window.A309TH.eventsOnComments();  }    },
                        {type:'script', id:'comment-reply-js', path:`${window.location.origin}/wp-includes/js/comment-reply.min.js`,  onLoadCallback: () => { window.addComment.init();  } },
                        {type:'script', id:'akismet-form-js', path:`${window.location.origin}/wp-content/plugins/akismet/_inc/form.js` },
-                       {type:'style',  id:'a309CommentsCss-css', path:`${window.A309TH.theme_URI}/css/comments.css` },
+                       {type:'style',  id:'a309-single-css', path:`${window.A309TH.theme_URI}/css/single.css` },
 
 ]);
     
@@ -217,6 +215,7 @@ const openPost = async (e) => {
     SyntaxHighlighter.highlight();
     window.A309TH.quicklinkListen();
     window.A309TH.initLightbox();
+    window.a2a.init_all();
   
   
     //Remove Spinner

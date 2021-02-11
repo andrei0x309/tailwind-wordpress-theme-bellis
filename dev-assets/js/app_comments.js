@@ -5,11 +5,12 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 
-    eventsOnComments();
+    window.A309TH.eventsOnComments();
 
 });
 
-const eventsOnComments = () => {
+//Called from index
+window.A309TH.eventsOnComments = () => {
     window.A309TH.commentsEl = document.getElementById('comments');
     window.A309TH.commentFormEl = document.getElementById('commentform');
 
@@ -32,7 +33,7 @@ const commentsRemoveShowMoreBtn = () => {
         window.A309TH.commentsShowMoreBt = null;
     }
 
-}
+};
 
 const commentsAddShowMoreBtn = () => {
     const showMoreBtn = document.createElement('button');

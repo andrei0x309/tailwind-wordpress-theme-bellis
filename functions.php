@@ -5,13 +5,29 @@ require_once(ABSPATH . 'wp-admin/includes/file.php');
 // Remove Admin Bar
 add_filter('show_admin_bar', '__return_false');
 // Remove Jquery
-/*add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
+add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
 
 function change_default_jquery( ){
     wp_dequeue_script( 'jquery');
     wp_deregister_script( 'jquery');   
 }
-*/
+
+
+// yarp CSS
+add_action( 'wp_print_styles', 'deregister_yarpp_header_styles' );
+function deregister_yarpp_header_styles() {
+   wp_dequeue_style('yarppWidgetCss');
+   wp_deregister_style('yarppRelatedCss'); 
+}
+
+add_action( 'wp_footer', 'deregister_yarpp_footer_styles' );
+function deregister_yarpp_footer_styles() {
+   wp_dequeue_style('yarppRelatedCss');
+}
+
+// addtoany CSS
+remove_action( 'wp_enqueue_scripts', 'A2A_SHARE_SAVE_stylesheet');
+
 
 /**
  * Disable the emoji's
@@ -155,22 +171,25 @@ add_action('wp_default_scripts', function ($scripts) {
 
 function add_adidtional_css_js() {
     
+    
+    
 
+    if( is_singular() ){
+    wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
+    }
     
-    wp_enqueue_style( 'a309CommentsCss', get_template_directory_uri() . '/css/comments.css',false, null,'all');
-    
-    
-    wp_enqueue_script( 'a309appJs', get_theme_file_uri('/js/app.js'), [], null, true );
+    wp_enqueue_script( 'a309-app', get_theme_file_uri('/js/app.js'), [], null, true );
     
     //Singular JS
     if( is_singular() ){
-        wp_enqueue_script( 'a309CommentsJs', get_theme_file_uri('/js/app_comments.js'), ['a309appJs'], null, true );
+        wp_enqueue_script( 'a309-comments', get_theme_file_uri('/js/app_comments.js'), ['a309-app'], null, true );
+ 
     }
     
     //Index JS
     if( is_home() )
     {
-        wp_enqueue_script( 'a309IndexJs', get_theme_file_uri('/js/app_index.js'), ['a309appJs'], null, true );
+        wp_enqueue_script( 'a309-index', get_theme_file_uri('/js/app_index.js'), ['a309-app'], null, true );
     }
  
 }

@@ -69,19 +69,30 @@ body{
     width: 100%;
 }
 
- 
-/*a.classic-link{
+.search-form {
     
-    color: #0274be;
-    border-bottom: 1px solid #9999ff;
-    transition: all .3s ease-out; 
-    &:before{
-        content: ''!important;
+    div {
+     position: relative;
+        
+        i{
+            position: absolute;
+    top: px;
+    font-size: 1.35em;
+    color: #e0e8ff;
+    background: #055bb3;
+    padding: 0.18em;
+    border: 1px solid #0e305f;
+        }
+      
+    input[type="search"]{
+    padding: 0.2em 0 0.1em 2.3em;
+    border: 1px solid #113971;
+    }
     }
 }
-*/
+ 
 
-.article-body a  {
+.article-body a, .yarpp-related-shortcode a  {
     color: #0274be;
     border-bottom: 1px solid #9999ff;
     transition: all .3s ease-out; 
@@ -102,14 +113,11 @@ body{
     
 }
 
-
-
 .header {
     background: linear-gradient(to bottom, rgba(153,92,0,1) 0%, rgba(255,161,10,1) 3%, rgba(253,135,33,0.91) 87%, rgba(222,105,2,0.9) 100%);
 }     
 
-
-
+ 
 
 .header .logo{
     border-width: 0;
@@ -751,12 +759,4 @@ $spinkit-spinner-color: #337ab7 !default;
     height:15px;
 }
 
-/* breadcrumbs */
-div#breadcrumbs{
-    font-size: 0.8em;
-    
-    .breadcrumb_last{
-        font-weight: 700;
-    }
-}
 /* purgecss end ignore */

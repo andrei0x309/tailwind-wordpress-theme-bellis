@@ -32,6 +32,7 @@
                 <?php wp_nav_menu( [ 'theme_location' => 'secondary-menu', 'walker' => new Walker_Nav_Menu_Custom ] ); ?>
 	<?php }?>
       </nav>
+      <?php get_search_form(); ?>
 
       
   </header>

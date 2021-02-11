@@ -60,13 +60,26 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
      </div>      
        <?php
       }    */
+ 
+      
+      
+ if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' ) ) { 
+    ADDTOANY_SHARE_SAVE_KIT( array( 
+        'buttons' => array( 'twitter', 'reddit', 'pinterest', 'whatsapp', 'facebook', 'email', 'print' ),
+    ) );
+}    
+      
  }else{
    the_excerpt();  
  }
  ?>
  </div>
  </article><!-- /.blog-post -->
- <?php  
+ <?php
+ 
  if($articleFull){
+ echo do_shortcode('[yarpp]');
+ 
+ 
  comments_template();
   }
