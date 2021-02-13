@@ -3,7 +3,6 @@
   <head>
     <link rel="stylesheet" href="<?php echo mix('style.css'); ?>" />
     <meta charset="<?php bloginfo( 'charset' ); ?>">
-    <title><?php wp_title(); ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -32,7 +31,7 @@
                 <?php wp_nav_menu( [ 'theme_location' => 'secondary-menu', 'walker' => new Walker_Nav_Menu_Custom ] ); ?>
 	<?php }?>
       </nav>
-      <?php get_search_form(); ?>
+      <?php get_search_form(['a309_menu' => true]); ?>
 
       
   </header>

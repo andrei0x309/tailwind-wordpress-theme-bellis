@@ -105,8 +105,6 @@ const updateHead = (yoastHeadData) => {
                 }
                 break;
             case 'title':
-                const existingTitle = head.querySelector('title');
-                head.removeChild(existingTitle);
                 document.title = node.textContent;
                 break;
             case 'script':

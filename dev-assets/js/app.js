@@ -5,8 +5,11 @@ window.addEventListener('load', () =>{
    
     quicklinkListen();
     initLightbox();
- 
+    document.getElementById('menu-search-btn').addEventListener('click', showSearchModal);
 });
+
+let searchModalOpen = false;
+
 
 const initLightbox = () => {
     new LuminousGallery(document.querySelectorAll("a.lightbox"), 
@@ -14,6 +17,44 @@ const initLightbox = () => {
     {injectBaseStyles: false },
     );
 };
+
+const showSearchModal = () => {
+  if(!searchModalOpen) {
+  searchModalOpen = true;
+  const searchModal=document.createElement('div');
+  searchModal.id="full-search-modal";
+  searchModal.innerHTML =  `
+<button id="search-close-btn">X</button> 
+<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+	<label style="display:none;" for="menu-search-input">Search</label>
+        <input placeholder="Search" type="search" id="menu-search-input" class="search-field" name="s" autocomplete="off" />
+        <input style="display:none;" type="submit" class="search-submit" value="search" />
+</form>
+  </div>`;
+  document.getElementsByTagName("BODY")[0].append(searchModal);
+  //searchModal.classList.add('search-modal-open');
+    
+requestAnimationFrame(() => {
+  searchModal.classList.add("search-modal-open")
+});
+  
+  document.getElementById('search-close-btn').addEventListener('click', closeSearchModal);
+  }
+};
+
+const closeSearchModal = () => {
+    if(searchModalOpen) {
+    const searchModal = document.getElementById('full-search-modal');
+    searchModal.removeEventListener('click', closeSearchModal);
+    searchModalOpen = false;
+    searchModal.style.animation = 'search-modal-close 0.4s linear forwards';
+    searchModal.addEventListener('animationend', () => {
+  searchModal.parentElement.removeChild(searchModal);
+});
+    }
+};
+
+
 
 const addSimpleSpinner = (element, prepend = true) => {
     const spinner = document.createElement('div');
