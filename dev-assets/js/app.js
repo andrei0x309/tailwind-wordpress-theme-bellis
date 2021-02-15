@@ -25,7 +25,7 @@ const showSearchModal = () => {
   searchModal.id="full-search-modal";
   searchModal.innerHTML =  `
 <button id="search-close-btn">X</button> 
-<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+<form role="search" method="get" class="search-form" action="${window.location.origin}">
 	<label style="display:none;" for="menu-search-input">Search</label>
         <input placeholder="Search" type="search" id="menu-search-input" class="search-field" name="s" autocomplete="off" />
         <input style="display:none;" type="submit" class="search-submit" value="search" />

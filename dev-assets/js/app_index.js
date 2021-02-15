@@ -227,25 +227,25 @@ const backToPosts = () => {
 
     if (window.articleNodes) {
 
-        const curArt = window.mainTagEL.querySelector('article');
-        console.log(curArt);
-        const spinnerEl = addSpinner(curArt.getBoundingClientRect().top - document.body.getBoundingClientRect().top);
-
-        window.mainTagEL.removeChild(curArt);
-        const comments = document.getElementById('comments');
-
-        for (let articleNode of window.articleNodes) {
+       
+        const spinnerEl = addSpinner(100);
+        const mainNodes = [...window.mainTagEL.childNodes].filter(el => el instanceof HTMLElement && el.id !== 'loadingSpinner');
+        
+        
+        for(const node of mainNodes){
+            node.parentElement.removeChild(node);
+        }
+        
+         for (const articleNode of window.articleNodes) {
             window.mainTagEL.appendChild(articleNode);
         }
-
-        if (comments) {
-            window.mainTagEL.removeChild(comments);
-        }
-
+ 
         window.articleNodes = null;
         window.mainTagEL.appendChild(window.A309TH.postsRemoveShowMoreBtnParent);
 
         removeSpinner(spinnerEl);
+   
+         
     }
 
 };
