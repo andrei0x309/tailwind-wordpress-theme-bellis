@@ -26,8 +26,12 @@ function deregister_yarpp_footer_styles() {
 }
 
 // addtoany CSS
-remove_action( 'wp_enqueue_scripts', 'A2A_SHARE_SAVE_stylesheet');
+add_action( 'init', 'disable_css_add_to_any');
+function disable_css_add_to_any() {
+    remove_action( 'wp_enqueue_scripts', 'A2A_SHARE_SAVE_stylesheet', 20);
+}
 
+ 
 
 /**
  * Disable the emoji's
@@ -240,8 +244,19 @@ function change_rest_post(){
     'permission_callback' => '__return_true',
   ) );
    
+      register_rest_route( 'a309/v1', '/gr-widget', array(
+    'methods' => 'GET',
+    'callback' => 'a309_get_gr_widget',
+    'permission_callback' => '__return_true',
+  ) );
+   
 }
  
+function a309_get_gr_widget(){
+    echo file_get_contents("https://www.goodreads.com/review/custom_widget/52338687.Andrei's%20bookshelf:%20read?cover_position=left&cover_size=small&num_books=5&order=d&shelf=read&show_author=1&show_cover=1&show_rating=1&show_review=1&show_tags=1&show_title=1&sort=date_added&widget_bg_color=FFFFFF&widget_bg_transparent=true&widget_border_width=none&widget_id=1613506906&widget_text_color=000000&widget_title_size=medium&widget_width=medium");
+}
+
+
 //https://my.yoast.com/api/downloads/file/morphology-en-v4?plugin_version=15.7&site=https%3A%2F%2Fblackellis.eu
 function a309_get_y_morf(){
     

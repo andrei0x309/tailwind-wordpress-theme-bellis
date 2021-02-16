@@ -6,5 +6,6 @@ dynamic_sidebar('footer-sidebar');
 }
 
 wp_footer(); ?>
+
  </footer>
 

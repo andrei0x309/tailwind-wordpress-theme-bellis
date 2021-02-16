@@ -1,20 +1,20 @@
 import { listen as quicklinkListen } from "quicklink"
 import { LuminousGallery } from 'luminous-lightbox';
 
-window.addEventListener('load', () =>{
+/*window.addEventListener('load', () =>{
    
     quicklinkListen();
     initLightbox();
     document.getElementById('menu-search-btn').addEventListener('click', showSearchModal);
 });
-
+*/
 let searchModalOpen = false;
 
 
 const initLightbox = () => {
     new LuminousGallery(document.querySelectorAll("a.lightbox"), 
     {arrowNavigation: true },
-    {injectBaseStyles: false },
+    {injectBaseStyles: true },
     );
 };
 
@@ -101,15 +101,43 @@ const alertBox = ( alertClass='error', alertMsg = '' ) => {
      alertBox.innerHTML = alertMsg;
      return alertBox;
  };
+ 
+const goodReadsUpdate = async () => {
+   const grFurl = `${window.location.origin}/wp-json/a309/v1/gr-widget`;
+   const response = await fetch(grFurl,{ mode: 'cors',  headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    } });
+   if(response.ok){
+       const widgetId = 'gr_custom_widget_1613506906';
+       const respTxt = await response.text();
+       //console.log(respTxt);
+        
+       let widgetHTML = respTxt.match(/=([^]+)widget_div =/gm)[0].replace('  var widget_div =','');
+       widgetHTML = widgetHTML.substring(3).slice(0, -2).trim();
+       widgetHTML = widgetHTML.replace(/border=\\"0\\"/gm, '').replace(/\\\//gm, '/');
+       widgetHTML = widgetHTML.replace(/\\n/gm, '').replace(/\\"/gm, '"').replace(/<center>.*?<\/center>/gm, '');
+       
+       console.log(widgetHTML);
+        
+       document.getElementById(widgetId).innerHTML = widgetHTML;
+   } 
+};
 
 
 document.addEventListener("DOMContentLoaded", function() {
+quicklinkListen();
+
 window.A309TH.delAlertBox = delAlertBox;
 window.A309TH.alertBox = alertBox;
 window.A309TH.addSimpleSpinner = addSimpleSpinner;
 window.A309TH.delSimpleSpinner = delSimpleSpinner;
 window.A309TH.quicklinkListen = quicklinkListen;
 window.A309TH.initLightbox = initLightbox;
+
+    window.A309TH.initLightbox();
+    goodReadsUpdate();
+    document.getElementById('menu-search-btn').addEventListener('click', showSearchModal);
+
  });
 
 

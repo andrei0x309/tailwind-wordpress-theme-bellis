@@ -26,7 +26,7 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
          
         <div class="blog-post-meta flex flex-row">
             <address class="author px-2 pt-3 pb-6"><a rel="author" title="Author's page" href="<?php echo site_url(); ?>/author/andrei0x309/"><i class="icon-user-solid-square"></i> <?php the_author(); ?></a></address> 
-            <time class="px-2 pt-3 pb-6 "datetime="<?php echo get_the_date('Y-m-d'); ?>"  pubdate="pubdate" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>
+            <time class="px-2 pt-3 pb-6 "datetime="<?php echo get_the_date('Y-m-d'); ?>" itemprop="datePublished" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>
             <span class="px-2 pt-3 pb-6 " ><i class="icon-folder"></i> <?php the_category( ', ' ); ?></span> 
         </div>     
      </header><!--  !-->

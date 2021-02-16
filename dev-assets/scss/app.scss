@@ -23,7 +23,8 @@
 @import 'components/SimpleSpinner';
 @import 'components/alertBox';
 
-@import 'node_modules/luminous-lightbox/dist/luminous-basic.min';
+
+@import "node_modules/luminous-lightbox/dist/luminous-basic";
 
 .lum-lightbox-inner img {
     margin: auto;
@@ -69,7 +70,7 @@ body{
     width: 100%;
 }
 
-.search-form {
+/*.search-form {
     
     div {
      position: relative;
@@ -90,7 +91,7 @@ body{
     }
     }
 }
- 
+ */
 
 .article-body a, .yarpp-related-shortcode a  {
     color: #0274be;
@@ -451,6 +452,7 @@ button.link-search-icon{
     max-width:100rem;
     border-radius: 0.3rem;
     position:relative;
+    height: 0%;
 }
 
 /* Post */
@@ -829,15 +831,71 @@ $spinkit-spinner-color: #337ab7 !default;
 
 /* plugins */
 
-#gr_custom_widget_1471853922 div a img
+#gr_custom_container_1613506906 div a img
  {
     width:50px;
     height:75px;
     
 }
-#gr_custom_widget_1471853922 .staticStars img{
+#gr_custom_container_1613506906 .staticStars img{
     width:15px;
     height:15px;
 }
+
+.gr_custom_container_1613506906 {
+    padding: 0px 15px 10px 5px;
+    background-color: transparent;
+    color: #1b2426;
+    width: 300px;
+    margin-top: -7px;
+  }
+  
+  .gr_custom_container_1613506906 a{
+      color: #003333;
+     &:hover{
+        color: #003366;
+        border-color: #ff9933;
+    }
+  }
+  
+  .gr_custom_header_1613506906 {
+    /* customize your Goodreads header here*/
+    border-bottom: 1px solid gray;
+    width: 100%;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 120%
+  }
+  .gr_custom_each_container_1613506906 {
+    /* customize each individual book container here */
+    width: 100%;
+    clear: both;
+    margin-bottom: 10px;
+    overflow: auto;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #aaa;
+  }
+  .gr_custom_book_container_1613506906 {
+    /* customize your book covers here */
+    overflow: hidden;
+    height: 60px;
+      float: left;
+      margin-right: 4px;
+      width: 39px;
+  }
+  .gr_custom_author_1613506906 {
+    /* customize your author names here */
+    font-size: 10px;
+  }
+  .gr_custom_tags_1613506906 {
+    /* customize your tags here */
+    font-size: 10px;
+    color: gray;
+  }
+  .gr_custom_rating_1613506906 {
+    /* customize your rating stars here */
+    float: right;
+  }
+
 
 /* purgecss end ignore */
