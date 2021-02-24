@@ -2,6 +2,9 @@
  
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 
+// Remove Generator
+remove_action('wp_head', 'wp_generator');
+
 // Remove Admin Bar
 add_filter('show_admin_bar', '__return_false');
 // Remove Jquery

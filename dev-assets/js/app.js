@@ -25,7 +25,7 @@ const showSearchModal = () => {
   searchModal.id="full-search-modal";
   searchModal.innerHTML =  `
 <button id="search-close-btn">X</button> 
-<form role="search" method="get" class="search-form" action="${window.location.origin}">
+<form id="menu-search-from" role="search" method="get" class="search-form" action="${window.location.origin}">
 	<label style="display:none;" for="menu-search-input">Search</label>
         <input placeholder="Search" type="search" id="menu-search-input" class="search-field" name="s" autocomplete="off" />
         <input style="display:none;" type="submit" class="search-submit" value="search" />
@@ -33,19 +33,21 @@ const showSearchModal = () => {
   </div>`;
   document.getElementsByTagName("BODY")[0].append(searchModal);
   //searchModal.classList.add('search-modal-open');
-    
-requestAnimationFrame(() => {
-  searchModal.classList.add("search-modal-open")
-});
-  
+ 
   document.getElementById('search-close-btn').addEventListener('click', closeSearchModal);
+  document.getElementById('menu-search-from').addEventListener('submit', searchAddSpinner);
   }
+};
+
+const searchAddSpinner = (e) => {
+    addSimpleSpinner(e.target, false);
 };
 
 const closeSearchModal = () => {
     if(searchModalOpen) {
     const searchModal = document.getElementById('full-search-modal');
-    searchModal.removeEventListener('click', closeSearchModal);
+    document.getElementById('search-close-btn').removeEventListener('click', closeSearchModal);
+    document.getElementById('menu-search-from').removeEventListener('menu-search-from').addEventListener('submit', searchAddSpinner);
     searchModalOpen = false;
     searchModal.style.animation = 'search-modal-close 0.4s linear forwards';
     searchModal.addEventListener('animationend', () => {
@@ -110,14 +112,11 @@ const goodReadsUpdate = async () => {
    if(response.ok){
        const widgetId = 'gr_custom_widget_1613506906';
        const respTxt = await response.text();
-       //console.log(respTxt);
         
        let widgetHTML = respTxt.match(/=([^]+)widget_div =/gm)[0].replace('  var widget_div =','');
        widgetHTML = widgetHTML.substring(3).slice(0, -2).trim();
-       widgetHTML = widgetHTML.replace(/border=\\"0\\"/gm, '').replace(/\\\//gm, '/');
-       widgetHTML = widgetHTML.replace(/\\n/gm, '').replace(/\\"/gm, '"').replace(/<center>.*?<\/center>/gm, '');
-       
-       console.log(widgetHTML);
+       widgetHTML = widgetHTML.replace(/\\\//gm, '/').replace(/\\n/gm, '');
+       widgetHTML = widgetHTML.replace(/\\"/gm, '"').replace(/<center>.*?<\/center>/gm, '').replace(/border="0"/gm, '').replace(/\\'/gm,`'`);
         
        document.getElementById(widgetId).innerHTML = widgetHTML;
    } 

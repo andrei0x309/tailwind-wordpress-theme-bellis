@@ -4,13 +4,13 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
         
 ?>
 
-<article id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>" <?php post_class('post-body mb-2'); ?>>
+<article itemscope itemtype="http://schema.org/BlogPosting" id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>" <?php post_class('post-body mb-2'); ?>>
      <header>
          <?php  if($articleFull): ?>
-         <h1 class="blog-post-title">
+         <h1 itemprop="headline" class="blog-post-title">
          <?php          
          else: ?>
-         <h2 class="blog-post-title blog-post-title-link">
+         <h2 itemprop="headline" class="blog-post-title blog-post-title-link">
          <a href="<?php echo esc_url( get_the_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
          <?php endif; ?>
         
@@ -26,11 +26,11 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
          
         <div class="blog-post-meta flex flex-row">
             <address class="author px-2 pt-3 pb-6"><a rel="author" title="Author's page" href="<?php echo site_url(); ?>/author/andrei0x309/"><i class="icon-user-solid-square"></i> <?php the_author(); ?></a></address> 
-            <time class="px-2 pt-3 pb-6 "datetime="<?php echo get_the_date('Y-m-d'); ?>" itemprop="datePublished" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>
-            <span class="px-2 pt-3 pb-6 " ><i class="icon-folder"></i> <?php the_category( ', ' ); ?></span> 
+            <time class="px-2 pt-3 pb-6" itemprop="published" datetime="<?php echo get_the_date('Y-m-d'); ?>" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>
+            <span class="px-2 pt-3 pb-6" ><i class="icon-folder"></i> <?php the_category( ', ' ); ?></span> 
         </div>     
      </header><!--  !-->
-     <div class="article-body">
+     <div itemprop="articleBody" class="article-body">
      <?php
           if ( function_exists('yoast_breadcrumb') && $articleFull ):
      yoast_breadcrumb( '<div id="breadcrumbs" class="mb-2">','</div>' );

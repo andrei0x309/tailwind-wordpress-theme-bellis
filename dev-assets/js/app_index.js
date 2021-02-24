@@ -20,9 +20,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+let isPostOpen = false;
+let lastPostOpen = null;
+let homeSeoHead = '';
 
 window.onpopstate = () => {
-    backToPosts();
+    if(isPostOpen) backToPosts();
+    else if(lastPostOpen) openPost(lastPostOpen);
 };
 
 
@@ -69,6 +73,28 @@ const addPost = (postData) => {
 
 const removeSpinner = (spinnerTag) => {
     window.mainTagEL.removeChild(spinnerTag);
+};
+
+
+const getSeoHead = () => {
+    homeSeoHead = '';
+    const head = document.getElementsByTagName('head')[0];
+    const title = head.querySelector('title');
+    let curElement = title;
+    homeSeoHead += curElement.outerHTML;
+    for(let i=0;i<100;i++){
+        console.log(curElement);
+        if(curElement.nextSibling && curElement.nextSibling instanceof HTMLElement){
+            if(curElement.nextSibling.nodeName.toLowerCase() === 'link' && curElement.nextSibling.rel === 'stylesheet') break;
+            homeSeoHead += curElement.nextSibling.outerHTML;
+            //if(curElement.nodeName.toLowerCase() === 'script' && curElement.hasAttribute('type') && curElement.getAttribute('type') === 'application/ld+json') break;
+            if(curElement.nextSibling.toLowerCase() === 'script'){
+               
+            }
+             console.log(curElement.nodeName.toLowerCase());
+        }
+    if(curElement.nextSibling) curElement =  curElement.nextSibling;
+    }
 };
 
 const updateHead = (yoastHeadData) => {
@@ -156,12 +182,15 @@ const openPost = async (e) => {
     e.preventDefault();
     // Var needed
     const article = e.target.closest('article');
-
-
+    isPostOpen = true;
+    lastPostOpen = e;
+    
     const postId = article.dataset.id;
     const postSlug = article.dataset.slug;
     const postTitle = article.dataset.title;
-
+    
+    getSeoHead();
+    
     // show Load Spinner
     const articleTopOffset = article.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
     const spinnerTag = addSpinner(articleTopOffset);
@@ -190,8 +219,7 @@ const openPost = async (e) => {
     const state = {'post_id': postId, 'post_slug': postSlug, 'post_title': postTitle};
 
     history.pushState(state, postTitle, postSlug);
-
-
+ 
     // Change Title and meta
     updateHead(data['yoast_seo']);
     
@@ -224,13 +252,13 @@ const openPost = async (e) => {
 };
 
 const backToPosts = () => {
-
+    isPostOpen = false;
     if (window.articleNodes) {
 
        
         const spinnerEl = addSpinner(100);
         const mainNodes = [...window.mainTagEL.childNodes].filter(el => el instanceof HTMLElement && el.id !== 'loadingSpinner');
-        
+        updateHead(homeSeoHead);
         
         for(const node of mainNodes){
             node.parentElement.removeChild(node);
@@ -250,6 +278,7 @@ const backToPosts = () => {
 
 };
 
+ 
 
 const fetchPosts = async (offset = 0, perPage = 0) => {
     // fetch posts 

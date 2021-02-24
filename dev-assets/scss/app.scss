@@ -141,13 +141,12 @@ body{
     color: #999;
     height: 80px;
     font-size: 60px;
-    position: absolute;
-    top: 100px;
-    left: 0;
     text-align: center;
     width: 90%;
     margin: 0 5%;
     outline: none;
+    margin-top: 100px;
+    margin-bottom: 0.5em;
    }
     #search-close-btn{
     position: fixed;
