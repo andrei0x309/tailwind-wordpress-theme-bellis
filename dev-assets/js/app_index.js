@@ -79,22 +79,17 @@ const removeSpinner = (spinnerTag) => {
 const getSeoHead = () => {
     homeSeoHead = '';
     const head = document.getElementsByTagName('head')[0];
-    const title = head.querySelector('title');
-    let curElement = title;
-    homeSeoHead += curElement.outerHTML;
-    for(let i=0;i<100;i++){
-        console.log(curElement);
-        if(curElement.nextSibling && curElement.nextSibling instanceof HTMLElement){
-            if(curElement.nextSibling.nodeName.toLowerCase() === 'link' && curElement.nextSibling.rel === 'stylesheet') break;
-            homeSeoHead += curElement.nextSibling.outerHTML;
-            //if(curElement.nodeName.toLowerCase() === 'script' && curElement.hasAttribute('type') && curElement.getAttribute('type') === 'application/ld+json') break;
-            if(curElement.nextSibling.toLowerCase() === 'script'){
-               
-            }
-             console.log(curElement.nodeName.toLowerCase());
-        }
-    if(curElement.nextSibling) curElement =  curElement.nextSibling;
+    const nodes = [...head.childNodes].filter(el => el instanceof HTMLElement);
+      console.log(nodes);
+    for(let node of nodes){
+            const nodeName = node.nodeName.toLowerCase();
+            if(nodeName === 'link' && node.rel !== 'canonical') continue;
+            if(nodeName === 'script' && node.type !== 'application/ld+json' ) continue;
+            if(nodeName === 'meta') 
+            if(node.getAttribute('charset') !== null || node.getAttribute('http-equiv') !== null)continue;    
+            homeSeoHead += node.outerHTML;
     }
+   console.log(homeSeoHead);
 };
 
 const updateHead = (yoastHeadData) => {

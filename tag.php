@@ -1,18 +1,16 @@
 <?php 
 
+
 $style = '<style>'.
-file_get_contents( __DIR__ . '/css/search-results.css')
+file_get_contents( __DIR__ . '/css/post-list.css')
 .'</style>';
 
 get_header(null,['head_aditional_code' => $style]);  ?>
 
 <div class="main flex w-full mt-6 mb-6 justify-center">
- 
-    
 <main class="flex flex-col content bg-white w-full sm:w-full md:w-7/12 lg:w-7/12 xl:w-7/12 p-8">
         
-<?php get_search_form(['a309_search_btn' => true]); ?>
-    <h1 class="list-posts-title"> Search Results for:  <span><?php echo get_search_query(); ?></span></h1>
+    <h1 class="list-posts-title"> Tag:  <span><?php single_term_title(); ?></span></h1>
  <?php 
  if ( have_posts() ) { 
  while ( have_posts() ) : the_post();
