@@ -25,8 +25,9 @@ Notes:
 */
 ?>
 
-<h3>Related Posts</h3>
+
 <?php if ( have_posts() ) : ?>
+<h3>Related Posts</h3>
 <ul>
 	<?php 
 	while ( have_posts() ) :

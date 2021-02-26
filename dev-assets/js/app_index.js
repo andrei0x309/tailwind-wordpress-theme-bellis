@@ -89,7 +89,6 @@ const getSeoHead = () => {
             if(node.getAttribute('charset') !== null || node.getAttribute('http-equiv') !== null)continue;    
             homeSeoHead += node.outerHTML;
     }
-   console.log(homeSeoHead);
 };
 
 const updateHead = (yoastHeadData) => {
@@ -120,9 +119,9 @@ const updateHead = (yoastHeadData) => {
         switch (node.nodeName.toLowerCase()) {
             case 'meta':
                 if (node.hasAttribute('name')) {
-                    replaceContentOrAddMetaEl('name', node)
+                    replaceContentOrAddMetaEl('name', node);
                 } else if (node.hasAttribute('property')) {
-                    replaceContentOrAddMetaEl('property', node)
+                    replaceContentOrAddMetaEl('property', node);
                 }
                 break;
             case 'title':
@@ -198,6 +197,7 @@ const openPost = async (e) => {
             'Content-Type': 'application/json'
         }
     });
+    if(response.ok){
     const data = await response.json(); // parses JSON response into native JavaScript objects
 
     // Remove posts
@@ -237,7 +237,12 @@ const openPost = async (e) => {
     window.A309TH.quicklinkListen();
     window.A309TH.initLightbox();
     window.a2a.init_all();
-  
+    }else{
+    window.mainTagEL.prepend(window.A309TH.alertBox('error', `&#x26A0; error fetching post!`));
+    isPostOpen = false;
+    lastPostOpen = null;
+    window.scroll(0, 0);
+    }
   
     //Remove Spinner
 
@@ -267,8 +272,6 @@ const backToPosts = () => {
         window.mainTagEL.appendChild(window.A309TH.postsRemoveShowMoreBtnParent);
 
         removeSpinner(spinnerEl);
-   
-         
     }
 
 };

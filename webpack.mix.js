@@ -47,9 +47,11 @@ mix.js('dev-assets/js/app.js', 'js/app.js');
 mix.js('dev-assets/js/app_index.js', 'js/app_index.js');
 mix.js('dev-assets/js/app_comments.js', 'js/app_comments.js');
 
+
+mix.sass('dev-assets/scss/base/post-list.scss', 'css/post-list.css');
+mix.sass('dev-assets/scss/search-results.scss', 'css/search-results.css');
 mix.sass('dev-assets/scss/single.scss', 'css/single.css').version();
-mix.sass('dev-assets/scss/base/post-list.scss', 'css/post-list.css').version();
-mix.sass('dev-assets/scss/search-results.scss', 'css/search-results.css').version();
+
         
         /*    
         

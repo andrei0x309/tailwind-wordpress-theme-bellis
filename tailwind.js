@@ -5,8 +5,6 @@ module.exports = {
   purge: false,
   theme: {
     fontFamily: {
-      display: ['Gilroy', 'sans-serif'],
-      body: ['Graphik', 'sans-serif'],
     },
     extend: {
       colors: {

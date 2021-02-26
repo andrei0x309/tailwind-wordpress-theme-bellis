@@ -47,7 +47,7 @@ const closeSearchModal = () => {
     if(searchModalOpen) {
     const searchModal = document.getElementById('full-search-modal');
     document.getElementById('search-close-btn').removeEventListener('click', closeSearchModal);
-    document.getElementById('menu-search-from').removeEventListener('menu-search-from').addEventListener('submit', searchAddSpinner);
+    document.getElementById('menu-search-from').removeEventListener('menu-search-from', searchAddSpinner);
     searchModalOpen = false;
     searchModal.style.animation = 'search-modal-close 0.4s linear forwards';
     searchModal.addEventListener('animationend', () => {
@@ -112,13 +112,15 @@ const goodReadsUpdate = async () => {
    if(response.ok){
        const widgetId = 'gr_custom_widget_1613506906';
        const respTxt = await response.text();
-        
-       let widgetHTML = respTxt.match(/=([^]+)widget_div =/gm)[0].replace('  var widget_div =','');
+       let widgetHTML = respTxt.match(/=([^]+)widget_div =/gm)[0];
+       if(widgetHTML){        
+       widgetHTML = widgetHTML.replace('  var widget_div =','');
        widgetHTML = widgetHTML.substring(3).slice(0, -2).trim();
        widgetHTML = widgetHTML.replace(/\\\//gm, '/').replace(/\\n/gm, '');
        widgetHTML = widgetHTML.replace(/\\"/gm, '"').replace(/<center>.*?<\/center>/gm, '').replace(/border="0"/gm, '').replace(/\\'/gm,`'`);
         
        document.getElementById(widgetId).innerHTML = widgetHTML;
+   }
    } 
 };
 
