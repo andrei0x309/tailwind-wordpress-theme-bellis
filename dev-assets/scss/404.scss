@@ -1,0 +1,56 @@
+@tailwind utilities;
+
+.not-found-subtitle {
+    text-align: center;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-top: -0.6em;
+    margin-bottom: 0.6em;
+    text-shadow: 1px 1px 2px #3f5a94;
+    color: #2b4b92;
+    }
+   
+.not-found-404 {
+            font-size: 3.7em;
+            text-align: center;
+            padding: 0.2em;
+            transform: skewX(357deg);
+            font-weight: 700;
+            text-shadow: 1px 1px 2px #2a3d66;
+            color: #3d598c;
+            }
+            
+.not-found-back-button {
+
+display: block;
+    margin: 0.5em auto 1em auto;
+    width: 13em;
+    padding: .5em 0 .5em 0.8em;
+    background-color: #2a3d66;
+    border-radius: 0.6em;
+    color: darkorange;
+    border: 1px solid #2a3d66;
+    font-weight: 600;
+    background: linear-gradient(
+180deg
+, rgba(42,61,102,1) 23%, rgba(33,46,75,1) 88%, rgba(35,36,40,1) 100%);
+
+}
+
+.not-found-back-button:hover {
+color: white;
+}
+
+.not-found-back-button:hover .not-found-back-icon {
+ color: darkorange;
+}
+
+
+.not-found-back-icon {
+    color: white;
+    display: inline-block;
+    transform: translateX(-2px) translateY(2px) rotate(
+90deg
+);
+
+}

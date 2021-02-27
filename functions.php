@@ -347,8 +347,6 @@ function a309_get_posts($data){
         'offset' => $data['offset'],
     );
      
-     $my_posts = new WP_Query($args);
-     
      $template = a309_get_post_template($args, false , false);
      
      wp_send_json([ 'articles' => $template, 'offset' =>  $data['offset'], 'per_page' => $data['per_page']]);

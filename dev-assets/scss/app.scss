@@ -3,10 +3,10 @@
     Author     : andrei0x309
 */
 
-/* purgecss start ignore */
+/*! purgecss start ignore */
 @import "../../node_modules/tailwindcss/base";
 //@import "./custom-base-styles.css";
-/* purgecss end ignore */
+/*! purgecss end ignore */
 
 @import "../../node_modules/tailwindcss/components";
 //@import "./custom-components";
@@ -16,7 +16,7 @@
 
 
 
-/* purgecss start ignore */
+/*! purgecss start ignore */
 @import "minxin/blue_btn.scss";
 @import 'components/SimpleSpinner';
 @import 'components/alertBox';
@@ -575,7 +575,7 @@ li li::marker { color: #a2a; }
 
 .content article .blog-post-title {
     font-size: 2rem;
-    color: #0274be;
+    color: #1d7aaf;
     text-shadow: 0.05em 0.03em 0.06em #b8c6d5;
     padding-left: 0.2em;
     transition: all .4s cubic-bezier(0, 0, 0.02, 0.56);
@@ -928,4 +928,4 @@ $spinkit-spinner-color: #337ab7 !default;
   }
 
 
-/* purgecss end ignore */
+/*! purgecss end ignore */
