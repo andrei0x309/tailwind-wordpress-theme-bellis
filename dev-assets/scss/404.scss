@@ -22,19 +22,13 @@
             
 .not-found-back-button {
 
-display: block;
-    margin: 0.5em auto 1em auto;
-    width: 13em;
-    padding: .5em 0 .5em 0.8em;
+    display: block;
+    padding: 0.5em 0 0.5em 0.8em;
     background-color: #2a3d66;
-    border-radius: 0.6em;
+    border-radius: 0.2em;
     color: darkorange;
-    border: 1px solid #2a3d66;
     font-weight: 600;
-    background: linear-gradient(
-180deg
-, rgba(42,61,102,1) 23%, rgba(33,46,75,1) 88%, rgba(35,36,40,1) 100%);
-
+    text-align: center;
 }
 
 .not-found-back-button:hover {

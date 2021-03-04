@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11" />
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <?php wp_head(); ?>
     <script>
      var A309TH = {}; window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>';
@@ -32,7 +33,5 @@
 	<?php }?>
       </nav>
       <?php get_search_form(['a309_menu' => true]); ?>
-
-      
   </header>
 

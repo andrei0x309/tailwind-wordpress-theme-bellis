@@ -8,7 +8,7 @@ $a309wp_search_formen_menu = isset($args['a309_menu']) && $args['a309_menu'] == 
  
 ?>
 <?php if($a309wp_search_formen_menu): ?>
-<button id="menu-search-btn" class="icon-search link-search-icon"></button>  
+<button id="menu-search-btn" class="icon-search link-search-icon" aria-label="search button to open search modal"></button>  
 <?php else: ?>
 <form role="search" <?php echo $a309wp_aria_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above. ?> method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 	<!-- <label for="<?php echo esc_attr( $a309wp_unique_id ); ?>"><?php _e( 'Search&hellip;', 'twentytwentyone' ); // phpcs:ignore: WordPress.Security.EscapeOutput.UnsafePrintingFunction -- core trusts translations ?></label> -->

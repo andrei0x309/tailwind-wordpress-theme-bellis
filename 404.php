@@ -18,8 +18,11 @@ get_header(null,['head_aditional_code' => $style]); ?>
             
                     <div class="page-wrapper">
                 <div class="page-content">
-                    <a class="not-found-back-button" href="<?php echo site_url(); ?>" title="back to home button"><i class="icon-triangle-down not-found-back-icon"></i><?php _e( 'back to the front page', 'a309wp' ); ?></a>
- <?php
+                 <a class="not-found-back-button" href="<?php echo site_url(); ?>" title="back to home button"><i class="icon-triangle-down not-found-back-icon"></i><?php _e( 'back to the front page', 'a309wp' ); ?></a>
+ 
+                  <h3 class="mt-6 page-title not-found-subtitle"><?php _e( 'Check the latest articles:', 'a309wp' ); ?></h3>
+                     
+                     <?php
  
       $args = array(
         'post_type' => 'post',
@@ -33,22 +36,38 @@ get_header(null,['head_aditional_code' => $style]); ?>
    global $post;
    $yoast_head = null;
    if($my_posts->have_posts()) : ?>
-       <div class="lg:flex items-center container mx-auto my-auto">
+        <div class="block lg:flex justify-between md:-mx-2">
       <?php  while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
  ?>
    <!-- Card -->
-      <div class="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8">
+        <div class="break-all lg:w-full xl:w-1/3 md:mx-2 mb-4 md:mb-0">
+        <div class="bg-gray-50 rounded-lg overflow-hidden shadow-lg relative">
         <!-- Card Image -->
-        <img src="https://picsum.photos/id/29/2106/1404" alt=""class="overflow-hidden">
+        <?php 
+        $alt = get_post_meta( $id, '_nelioefi_alt', true );
+	if ( isset( $attr['alt'] ) )
+		$alt = $attr['alt'];
+	if ( !$alt )
+		$alt = '';
+        ?>
+        <div style="padding-top: 56.25%;" class="w-full relative">
+            <img style="top:0" class="w-full object-cover object-center absolute" width="200" height="200" loading="lazy" src="<?php echo nelioefi_get_thumbnail_src($post->ID) ?>" alt="<?php echo $alt;?>">
+        </div>
         <!-- Card Content -->
-        <div class="p-4">
-          <h3 class="font-medium text-gray-600 text-lg my-2 uppercase"><?php the_title(); ?></h3>
-          <div class="text-justify"><?php the_excerpt();  ?></div>
-          <div class="mt-5">
-            <a href="" class="hover:bg-gray-700 rounded-full py-2 px-3 font-semibold hover:text-white bg-gray-400 text-gray-100">Read More</a>
+        <div class="p-4 h-auto">
+        <a href="<?php echo get_the_permalink(); ?>" class="block text-blue-500 hover:text-blue-600 font-semibold mb-2 text-lg lg:text-base xl:text-lg uppercase">
+              <h2><?php the_title(); ?></h2>
+        </a>
+ 
+          <div class="text-gray-600 text-sm leading-relaxed block lg:text-xs xl:text-sm"><?php
+          the_advanced_excerpt('length=276&length_type=charcaters&no_custom=1&ellipsis=%26hellip;&exclude_tags=img,p,strong&add_link=0&finish=exact');
+          ?></div>
+          <div class="mt-5 text-center">
+            <a href="<?php echo get_the_permalink(); ?>" class="text-sm hover:bg-gray-800 rounded-full py-2 px-3 font-semibold hover:text-white bg-gray-600 text-gray-100">View Full Article</a>
           </div>
         </div>
-      </div>
+        </div>
+        </div>
  <?php        
           
  
@@ -58,9 +77,7 @@ endif; // end of the loop.
      
  
  ?>
-                    
  
-                
                 </div><!-- .page-content -->
             </div><!-- .page-wrapper -->
  
