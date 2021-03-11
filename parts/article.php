@@ -3,7 +3,6 @@
 $articleFull = (isset($args['full_content']) && $args['full_content']);
         
 ?>
-
 <article itemscope itemtype="http://schema.org/BlogPosting" id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>" <?php post_class('post-body mb-2'); ?>>
      <header>
          <?php  if($articleFull): ?>

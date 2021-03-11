@@ -2,6 +2,19 @@
  
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 
+/**
+ * Determine whether this is an AMP response.
+ *
+ * Note that this must only be called after the parse_query action.
+ *
+ * @return bool Is AMP endpoint (and AMP plugin is active).
+ */
+function a309_is_amp() {
+    return function_exists( 'is_amp_endpoint' ) && is_amp_endpoint();
+}
+
+
+
 // Remove Generator
 remove_action('wp_head', 'wp_generator');
 
@@ -177,20 +190,18 @@ add_action('wp_default_scripts', function ($scripts) {
 */
 
 function add_adidtional_css_js() {
-    
-    
-    
-
+ if(!a309_is_amp()) {
+    // APP CSS
     if( is_singular() ){
     wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
     }
     
+    // App JS
     wp_enqueue_script( 'a309-app', get_theme_file_uri('/js/app.js'), [], null, true );
     
     //Singular JS
     if( is_singular() ){
         wp_enqueue_script( 'a309-comments', get_theme_file_uri('/js/app_comments.js'), ['a309-app'], null, true );
- 
     }
     
     //Index JS
@@ -198,7 +209,12 @@ function add_adidtional_css_js() {
     {
         wp_enqueue_script( 'a309-index', get_theme_file_uri('/js/app_index.js'), ['a309-app'], null, true );
     }
- 
+ }else{
+    // APP CSS
+    if( is_singular() ){
+    wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
+    }
+ }
 }
 
 add_action( 'wp_enqueue_scripts', 'add_adidtional_css_js' );
@@ -281,21 +297,21 @@ function a309_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = f
         $my_posts = new WP_Query($wpQueryArgs);  
    global $post;
    $yoast_head = null;
-   if($my_posts->have_posts()) : 
-         ob_start();
-        while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
+   $template = '';
 
-          get_template_part( 'parts/article', null, [ 'full_content' => $full ]);  
-         
-          
+   if($my_posts->have_posts()) : 
+       while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
           if($yoastSeo){
           ob_start();
           do_action("wpseo_head");
           $yoast_head = ob_get_clean();
           }
+          ob_start();
+          get_template_part( 'parts/article', null, [ 'full_content' => $full ]);
+          $template .= ob_get_clean();
           endwhile; //end the while loop
-    $template = ob_get_clean();
-endif; // end of the loop. 
+endif; // end of the loop.
+ 
 if($yoastSeo){
     return ['template' => $template, 'yoast_head' => $yoast_head ];
 }else{
@@ -326,8 +342,8 @@ $current_user->ID =  $user_id;
     );
     
   $post_html = a309_get_post_template($args, true, true);
- 
-    wp_send_json([ 'article' => $post_html['template'], 'post_id' =>  $data['id'], 'yoast_seo' => $post_html['yoast_head']  ]);
+
+  wp_send_json([ 'article' => $post_html['template'], 'post_id' =>  $data['id'], 'yoast_seo' => $post_html['yoast_head']  ]);
  
 }
 
