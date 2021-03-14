@@ -18,6 +18,7 @@
 
 /*! purgecss start ignore */
 @import "minxin/blue_btn.scss";
+@import "minxin/search_modal.scss";
 @import 'components/SimpleSpinner';
 @import 'components/alertBox';
 
@@ -117,51 +118,12 @@ body{
     background: linear-gradient(to bottom, #995c00 0%, #ffa10a 3%, rgb(234 118 18 / 91%) 87%, rgba(222, 105, 2, 0.9) 100%);
 }
 
+s{
+    align-content:center;
+}
 
-#full-search-modal{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    z-index: 100!important;
-    -webkit-transition: all .5s ease-in-out;
-    -moz-transition: all .5s ease-in-out;
-    -o-transition: all .5s ease-in-out;
-    -ms-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out;
-    animation: search-modal-open 0.4s linear forwards;
-    
-   #menu-search-input{
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: #999;
-    min-height: 3em;
-    font-size: 4rem;
-    text-align: center;
-    width: 90%;
-    margin: 0 5%;
-    outline: none;
-    margin-top: 100px;
-    margin-bottom: 0.5em;
-   }
-    #search-close-btn{
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    color: #999!important;
-    border: 1px solid #dfdfdf;
-    opacity: 1;
-    padding: 15px 15px 12px;
-    font-size: 27px;
-    }
-    #search-close-btn:hover{
-        background-color: #ff9933;
-        color:#fff;
-    }
-    
+.full-search-modal{
+  @include searchModal;
 }
  
 
@@ -635,8 +597,8 @@ li li::marker { color: #a2a; }
     text-align: center;
 }
 
-.widget img{
-    display: inline;
+.widget .staticStars img{
+    display: inline-block;
 }
 
 .content, .siebar{
@@ -663,8 +625,36 @@ li li::marker { color: #a2a; }
 .bypostauthor { }
 .alignright { }
 .alignleft { }
-.aligncenter { margin: auto; }
+.aligncenter { margin: auto; display: block; }
  
+
+/* Pagination */
+
+nav.pagination {
+font-size: 1.2em;
+
+h2{
+padding: 0.6em;
+margin-top: -1.2em;
+}
+
+a.page-numbers, span.page-numbers{
+padding: 0.2em;
+    border: 1px solid #b9bdb6;
+    color: #0274be;
+    box-shadow: 1px 1px 1px #a0aec0;
+    transition: all 0.3s ease-in;
+    }
+
+ span.current, a.page-numbers:hover {
+    border: 1px solid #1b2426;
+    box-shadow: 1px 1px 2px 1px #a0aec0;
+    background-color: #1b2426;
+    color: #ffaa3e;
+}    
+}
+
+
 
 /*theme Icons */
  
@@ -682,7 +672,7 @@ li li::marker { color: #a2a; }
 
 [class^="icon-"], [class*=" icon-"], .article-body a:before {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: 'icomoon';
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -860,6 +850,13 @@ $spinkit-spinner-color: #337ab7 !default;
     opacity: 0; }
 }
  
+// Spinner Anim
+
+@keyframes loadingspin {
+	100% {
+			transform: rotate(360deg)
+	}
+}
 
 /* plugins */
 

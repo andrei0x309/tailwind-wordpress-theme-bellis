@@ -1,6 +1,8 @@
 <?php
- 
+
 require_once(ABSPATH . 'wp-admin/includes/file.php');
+
+$A309_IS_AMP = false;
 
 /**
  * Determine whether this is an AMP response.
@@ -10,8 +12,66 @@ require_once(ABSPATH . 'wp-admin/includes/file.php');
  * @return bool Is AMP endpoint (and AMP plugin is active).
  */
 function a309_is_amp() {
-    return function_exists( 'is_amp_endpoint' ) && is_amp_endpoint();
+    global $A309_IS_AMP;
+    return $A309_IS_AMP ;
 }
+
+
+// Exclude having CSS selectors being tree-shaken.
+ add_filter( 'amp_content_sanitizers',
+	function ( $sanitizers ) {
+		$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] = array_merge(
+			! empty( $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] ) ? $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] : [],
+			[
+				// Modified from from protected AMP_Style_Sanitizer::$DEFAULT_ARGS.
+				'amp-list',
+				'amp-live-list',
+				'[submit-error]',
+				'[submit-success]',
+				'amp-script',
+
+				// New.
+				'.full-search-modal',
+			]
+		);
+		return $sanitizers;
+	}
+);
+ 
+
+function a309_setup_amp(){
+    if(function_exists( 'is_amp_endpoint' ) && is_amp_endpoint()){
+        global $A309_IS_AMP;
+        $A309_IS_AMP = true;
+        add_filter('addtoany_script_disabled', '__return_true');
+    }
+}
+
+add_action( 'wp', 'a309_setup_amp' );
+
+
+/* Exclude Pages from search */
+function remove_pages_from_search($query) {
+if ($query->is_search) {
+$query->set('post_type', 'post');
+}
+return $query;
+}
+add_filter('pre_get_posts','remove_pages_from_search');
+
+
+
+/**
+ * Exclude wp-json from SuperPWA cache
+ * 
+ * @link https://superpwa.com/codex/superpwa_sw_never_cache_urls/
+ */
+/*function superpwa_exclude_from_cache( $superpwa_sw_never_cache_urls ) {
+	return $superpwa_sw_never_cache_urls . ',/\/wp-json/';
+}
+add_filter( 'superpwa_sw_never_cache_urls', 'superpwa_exclude_from_cache' );
+*/
+
 
 
 
@@ -20,6 +80,10 @@ remove_action('wp_head', 'wp_generator');
 
 // Remove Admin Bar
 add_filter('show_admin_bar', '__return_false');
+
+// Dev AMP
+add_filter( 'amp_dev_tools_user_default_enabled', '__return_true' );
+
 // Remove Jquery
 add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
 

@@ -13,8 +13,6 @@ $a309_no_comments = get_comments_number();
 ?>
 
  
-
-
 <div id="comments" data-no-comments="<?php echo $a309_no_comments; ?>" class="comments-area default-max-width <?php echo get_option( 'show_avatars' ) ? 'show-avatars' : ''; ?>">
 
     	<?php

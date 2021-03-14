@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
   <head>
-    <link rel="stylesheet" href="<?php echo mix('style.css'); ?>" />
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
+      
+<?php if(a309_is_amp() ): ?>
+<link rel="stylesheet" href="<?php echo mix('amp-style.css'); ?>" />
+<?php else: ?>
+<link rel="stylesheet" href="<?php echo mix('style.css'); ?>" />
+<?php endif; ?>
+   
+    
+   <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -25,14 +32,33 @@
     <meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <?php wp_head(); ?>
+    
+<?php if( ! a309_is_amp() ): ?>
     <script>
      var A309TH = {}; window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>';
      window.A309TH.current_user_id = '<?php echo wp_get_current_user()->ID ?>';
     </script>
     <link rel="prefetch" href="<?php echo get_stylesheet_directory_uri() ?>/fonts/icomoon.woff" as="font" type="font/woff" crossorigin="">
-    <?php if(isset($args['head_aditional_code']))echo $args['head_aditional_code'];?>
+    
+<?php else: ?>    
+<meta name="amp-script-src" content="sha384-hhq7xSfFaHG2is4VWR5MQSnkj7-QXdVDNNNII4iF8XKe7d7KSiUVUdNabdjsWRKQ">
+<script id="A309THHEAD" type="text/plain" target="amp-script">
+    AMP.setState( { 'A309TH':{ 'theme_URI': '<?php echo get_stylesheet_directory_uri() ?>', } } );
+</script>   
+<?php endif; ?>
+  <?php if(isset($args['head_aditional_code']))echo $args['head_aditional_code'];?>
   </head>
-   <body  <?php body_class( ); ?>>
+
+ <body  <?php body_class( ); ?>>
+<amp-state id="A309TH">
+</amp-state> 
+ <?php if(a309_is_amp() ): ?>
+  <amp-script class="hidscr" layout="fixed" height="1" width="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js" ></amp-script>
+  <amp-script class="hidscr" layout="fixed" height="1" width="1" script="A309THHEAD" ></amp-script>
+  <!-- <amp-script width="1" height="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js"></amp-script> -->
+<?php endif; ?>    
+    
+ 
   <header class="header flex flex-row bg-gray-200 items-center">
       <div class="logo min-h-full h-16 w-40 bg-white py-2 rounded-tr-full">
  <a href="<?php echo site_url(); ?>">

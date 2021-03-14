@@ -20,12 +20,14 @@
   //echo the_posts_pagination();
  
  ?>
+<?php if(a309_is_amp() ): the_posts_pagination();
+else: ?>
         <div class="text-center m-2"> 
         <button id="show-more-posts-btn">Load more Posts</button>
         </div>
+<?php endif; ?>
     </main>
 <?php get_sidebar(); ?>
   </div>
-<?php get_footer() ?>    
-    </body>
-</html>
+<?php get_footer();    
+get_template_part( 'parts/end-markup');

@@ -22,6 +22,7 @@ const showSearchModal = () => {
   if(!searchModalOpen) {
   searchModalOpen = true;
   const searchModal=document.createElement('div');
+  searchModal.classList.add('full-search-modal');
   searchModal.id="full-search-modal";
   searchModal.innerHTML =  `
 <button id="search-close-btn">X</button> 

@@ -14,6 +14,7 @@ let error404Options = [ tailwindcss('./tailwind.js'), purgecss({content: [
         ],}) ];
  
 mix.sass('dev-assets/scss/app.scss', 'style.css', {} , mainOptions).options({processCssUrls: false}).version();
+mix.sass('dev-assets/scss/app-amp.scss', 'amp-style.css', {} , mainOptions).options({processCssUrls: false}).version();
 /* 
    .then(function () {
     /* concat([
@@ -29,6 +30,10 @@ mix.sass('dev-assets/scss/app.scss', 'style.css', {} , mainOptions).options({pro
 mix.js('dev-assets/js/app.js', 'js/app.js');
 mix.js('dev-assets/js/app_index.js', 'js/app_index.js');
 mix.js('dev-assets/js/app_comments.js', 'js/app_comments.js');
+
+mix.copy('dev-assets/js/AMP/amp_base.js', 'js/AMP/amp_base.js');
+mix.copy('dev-assets/js/AMP/amp_search_modal.js', 'js/AMP/amp_search_modal.js');
+
 
 mix.sass('dev-assets/scss/base/post-list.scss', 'css/post-list.css');
 mix.sass('dev-assets/scss/search-results.scss', 'css/search-results.css');

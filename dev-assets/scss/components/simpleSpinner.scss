@@ -10,9 +10,3 @@
 	animation: loadingspin 1s linear infinite;
         margin: auto;
 }
-
-@keyframes loadingspin {
-	100% {
-			transform: rotate(360deg)
-	}
-}

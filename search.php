@@ -24,11 +24,10 @@ get_header(null,['head_aditional_code' => $style]);  ?>
  echo the_posts_pagination();
  }else {
  ?>
-    <p class="search-no-result">No result for your query <<< <?php echo get_search_query(); ?> >>></p>
+    <p class="search-no-result">No result for your query &lt;&lt;&lt; <?php echo get_search_query(); ?> &gt;&gt;&gt;</p>
  <?php } ?>
     </main>
 <?php get_sidebar(); ?>
   </div>
-<?php get_footer() ?>    
-    </body>
-</html>
+<?php get_footer();
+get_template_part( 'parts/end-markup');

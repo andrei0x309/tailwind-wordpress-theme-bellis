@@ -1,0 +1,20 @@
+@import 'app';
+
+/*! purgecss start ignore */
+
+amp-script .full-search-modal{
+  @include searchModal;
+}
+ 
+amp-script.hidscr{
+    position:absolute;
+    z-index:-3;
+}
+
+amp-script {
+    
+    @import "components/simpleSpinner";
+    
+}
+
+/*! purgecss end ignore */

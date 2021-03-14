@@ -44,6 +44,5 @@
     </main>
 <?php get_sidebar(); ?>
   </div>
-<?php get_footer() ?>    
-    </body>
-</html>
+<?php get_footer();
+get_template_part( 'parts/end-markup');
