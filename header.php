@@ -39,22 +39,19 @@
      window.A309TH.current_user_id = '<?php echo wp_get_current_user()->ID ?>';
     </script>
     <link rel="prefetch" href="<?php echo get_stylesheet_directory_uri() ?>/fonts/icomoon.woff" as="font" type="font/woff" crossorigin="">
-    
-<?php else: ?>    
-<meta name="amp-script-src" content="sha384-hhq7xSfFaHG2is4VWR5MQSnkj7-QXdVDNNNII4iF8XKe7d7KSiUVUdNabdjsWRKQ">
-<script id="A309THHEAD" type="text/plain" target="amp-script">
-    AMP.setState( { 'A309TH':{ 'theme_URI': '<?php echo get_stylesheet_directory_uri() ?>', } } );
-</script>   
 <?php endif; ?>
   <?php if(isset($args['head_aditional_code']))echo $args['head_aditional_code'];?>
   </head>
 
  <body  <?php body_class( ); ?>>
-<amp-state id="A309TH">
+<?php if(a309_is_amp() ): 
+ $stateData['theme_URI'] = get_stylesheet_directory_uri(); 
+?>        
+<amp-state id="A309TH"><script type="application/json">
+   <?php echo wp_json_encode($stateData); ?>
+</script>
 </amp-state> 
- <?php if(a309_is_amp() ): ?>
   <amp-script class="hidscr" layout="fixed" height="1" width="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js" ></amp-script>
-  <amp-script class="hidscr" layout="fixed" height="1" width="1" script="A309THHEAD" ></amp-script>
   <!-- <amp-script width="1" height="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js"></amp-script> -->
 <?php endif; ?>    
     
