@@ -16,6 +16,11 @@ let lib = {};
 lib.addSiSpinner = addSiSpinner.toString();
 lib.delSiSpiner = 'ss';
 AMP.setState( { lib } );
+//console.log(this.exportFunction('test', function () { console.log('test'); } )  );
+//console.log(this);
+//console.log(AMP.script);
+//console.log(script);
+
 /*
  AMP.setState({'A309TH':{
         addSiSpinner,

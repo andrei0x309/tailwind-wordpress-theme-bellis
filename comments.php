@@ -14,7 +14,7 @@ $a309_no_comments = get_comments_number();
 <?php if(a309_is_amp() ): ?>
 <amp-script layout="container" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_comments.js" sandbox="allow-forms">
 <?php endif; ?>
-<div id="comments" data-no-comments="<?php echo $a309_no_comments; ?>" class="comments-area default-max-width <?php echo get_option( 'show_avatars' ) ? 'show-avatars' : ''; ?>">
+<div id="comments" data-post-id="<?php echo $post->ID; ?>" data-no-comments="<?php echo $a309_no_comments; ?>" class="comments-area default-max-width <?php echo get_option( 'show_avatars' ) ? 'show-avatars' : ''; ?>">
 
     	<?php
         $aria_req = ($req) ? " aria-required='true'" : '' ;
@@ -42,9 +42,10 @@ $a309_no_comments = get_comments_number();
 			'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
 			'title_reply_after'  => '</h2>',
 		);
-        
+        if(a309_is_amp() ) { $comments_args['submit_button'] =  '<button name="%1$s" id="%2$s" class="%3$s">%4$s</button>'; }
 	comment_form( $comments_args );
-	?>
+	    
+        ?>
     
 <?php
 	if ( have_comments() ) :

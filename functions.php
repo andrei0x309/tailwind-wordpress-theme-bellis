@@ -321,7 +321,7 @@ function change_rest_post(){
     'permission_callback' => '__return_true',
   ) );
     
-   register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
+   register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)(?:/amp/(?P<amp>\d+))?', array(
     'methods' => 'GET',
     'callback' => 'get_comments_post',
     'permission_callback' => '__return_true',
@@ -446,12 +446,13 @@ function get_comments_post($data){
 // setup a fake POST to trick wp_list_comments
 global $post; 
 $post = new stdClass();
+$amp = false;
+if(isset($data['amp']) && intval($data['amp']) === 1 ) $amp = true;
+
 $post->ID = $data['post_id'];
 setup_postdata( $post );
 
-
-    $template = wp_list_comments(
-				array(
+$comment_args = array(
 					'avatar_size' => 60,
                                         'reverse_top_level' => false,
 					'style'       => 'ol',
@@ -461,7 +462,10 @@ setup_postdata( $post );
                                         'page' =>    $data['page_no'],
                                         'echo' => false,
                                        
-				), );
+				);
+if($amp) { $comment_args['format'] = 'xhtml';}
+
+$template = wp_list_comments( $comment_args );
 		 
  wp_reset_postdata();
  

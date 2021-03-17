@@ -17,6 +17,8 @@
 }
 
 let A309TH = await  waitForBase(4000);
+
+
 const addSiSpinner = new Function("return " + A309TH.addSiSpinner)();    
 
 let searchModalOpen = false;
