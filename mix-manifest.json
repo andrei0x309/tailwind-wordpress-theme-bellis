@@ -1,5 +1,5 @@
 {
-    "/js/app.js": "/js/app.js?id=e49bed3cd719a0bc0a5e",
+    "/js/app.js": "/js/app.js?id=00ae0e5c43d60249283d",
     "/js/app_index.js": "/js/app_index.js?id=5a010cd87741c1b9687a",
     "/js/app_comments.js": "/js/app_comments.js?id=80874ee8ee7218e95629",
     "/css/page-offline.css": "/css/page-offline.css?id=1656c4ef0572d23d2bca",
@@ -7,9 +7,10 @@
     "/css/post-list.css": "/css/post-list.css?id=85a5769a757a3a077418",
     "/amp-style.css": "/amp-style.css?id=04a669e4cc6bfb5455bf",
     "/style.css": "/style.css?id=e1844306c2312a23a39c",
-    "/css/single.css": "/css/single.css?id=c58f7d5476fad831ec9e",
+    "/css/single-amp.css": "/css/single-amp.css?id=0c5f78d52a9e484e2e74",
+    "/css/single.css": "/css/single.css?id=f4546187136b20264419",
     "/css/404.css": "/css/404.css?id=baed69178dac9d449fc2",
     "/js/AMP/amp_base.js": "/js/AMP/amp_base.js?id=ec0d1ccbe3d842df50ae",
     "/js/AMP/amp_search_modal.js": "/js/AMP/amp_search_modal.js?id=58842858b8d9436b1bbe",
-    "/js/AMP/amp_comments.js": "/js/AMP/amp_comments.js?id=6bc091c9bc45313f1ee7"
+    "/js/AMP/amp_comments.js": "/js/AMP/amp_comments.js?id=490be30ee84c35529fa9"
 }

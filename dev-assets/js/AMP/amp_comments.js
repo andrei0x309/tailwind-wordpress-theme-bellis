@@ -25,11 +25,11 @@
 
 
 const HTMLtoEL = (html) => {
-    const t = document.createElement('template');
-    const sanHtml = html.trim().replace(/\t/gm, '').replace(/\\"/gm, '"');
-    console.log(sanHtml);
-    t.innerHTML = sanHtml;
-    return t.firstElementChild;
+    const t = document.createElement('div');
+    //const sanHtml = html.trim().replace(/\t/gm, '').replace(/\\"/gm, '"');
+    console.log(html);
+    t.innerHTML = html;
+    return t.children;
 };
 
 const fetchCommentsNo =  async () => {
@@ -42,14 +42,14 @@ const fetchCommentsNo =  async () => {
         }
     });
     const data = await response.json();
-    page = Math.ceil(data.commentNumber / 5) - 1;
+    page = Math.ceil(data.commentNumber / 5);
 };
 
 
 const fetchComments = async () => {
 
     // fetch Comments 
-    const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments/post/${postId}/page/${page}`;
+    const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments/post/${postId}/page/${page}/amp/1`;
 
     const response = await fetch(fetchUrl, {
         headers: {
@@ -75,11 +75,38 @@ const showCommentsFn = async () => {
     const data = await fetchComments();
  
     //console.log(data);
- 
-    let comments = `<ol id="comment-list" class="comment-list">${data.comments}</ol>`;
-    console.log(HTMLtoEL(comments));
     
-    commentsList.appendChild(HTMLtoEL(comments));
+    commentsList = document.createElement('ol');
+    commentsList.id = 'comment-list';
+    commentsList.classList.add('comment-list');
+    const repFunc = (...args) =>{
+         const [classVar, src ] = [ args[2], args[1]];
+        return `<amp-img
+             class="${classVar}"
+             alt=""
+             src="${src}"
+             width="60"
+             height="60"
+             layout="fixed"
+           >
+           </amp-img>`;
+    };
+    
+    
+    let comments = HTMLtoEL(data.comments
+            .replace(/<img.*?src=['"]{1}(.*?)['"]{1}.*?class=['"]{1}(.*?)['"]{1}.*?>/gms , repFunc )
+            .trim()
+            .replace(/<!--.*?-->/gms, '')
+            .replace(/\t/gm ,'')
+            .replace(/\n/gm, ''));
+    
+    console.log(comments);
+    
+    for( const comment of comments){
+        commentsList.appendChild(comment);
+    }       
+    
+    //commentsList.appendChild(comments));
 
     commentsEl.appendChild(commentsList);
 

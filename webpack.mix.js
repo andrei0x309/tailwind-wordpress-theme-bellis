@@ -41,4 +41,4 @@ mix.sass('dev-assets/scss/search-results.scss', 'css/search-results.css');
 mix.sass('dev-assets/scss/page-offline.scss', 'css/page-offline.css');
 mix.sass('dev-assets/scss/404.scss', 'css/404.css', {} , error404Options).options({processCssUrls: false});
 mix.sass('dev-assets/scss/single.scss', 'css/single.css').version();
-
+mix.sass('dev-assets/scss/single-amp.scss', 'css/single-amp.css').version();

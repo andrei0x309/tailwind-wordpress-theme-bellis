@@ -42,12 +42,16 @@ $a309_no_comments = get_comments_number();
 			'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
 			'title_reply_after'  => '</h2>',
 		);
-        if(a309_is_amp() ) { $comments_args['submit_button'] =  '<button name="%1$s" id="%2$s" class="%3$s">%4$s</button>'; }
+        if(a309_is_amp() ) { $comments_args['submit_button'] = ''; }
 	comment_form( $comments_args );
-	    
+	if(a309_is_amp()):    
         ?>
-    
-<?php
+    <p class="form-submit">
+        <button name="submit" id="submit" class="submit">Post Comment</button>
+    </p>
+    <noscript ><div amp-boilerplate>test</div></noscript>
+<?php   
+endif;
 	if ( have_comments() ) :
 		?>
 		<h2 class="comments-title">

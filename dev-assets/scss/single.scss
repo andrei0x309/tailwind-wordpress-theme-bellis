@@ -32,11 +32,7 @@
     text-align: center;
     margin: 0 0 1.2em 0;
     }
-    
-    .comment {
-    margin: 0.5em 0 0.5em 0;
-    box-shadow: 0 0 1px #4b5c678f;
-    }
+ 
     
     h2 {
     font-size: 1.8em;
@@ -55,35 +51,7 @@
 
     }
 
-    .comment-name-email-block{
-        display: flex;
-        flex-wrap: wrap;
-
-        .comment-form-author, .comment-form-email{
-            flex: 1 0 40%;  /* flex-grow, flex-shrink, flex-basis */
-            background-color: lightgreen;
-        }
-        
-        .comment-form-author{
-            margin-right: 2px;
-        }
-        
- 
-        .comment-form-email{
-            margin-left: 2px;
-        }
-        
-        input{
-            width: 100%
-        }
-
-    }
-    
-     .comment-author-andrei0x309 .comment-meta:after{
-            content:" ✨ Site Admin";
-            font-size:0.8em;
-        }
-    
+   
     textarea {
         width:100%;
         height:10em;
@@ -92,7 +60,7 @@
     .form-submit {
         text-align: center;
 
-        input{
+        input,button{
             @include blueBtn;
         }
 
@@ -113,84 +81,16 @@
         
     }
     
-    
-    // Comment list
-    
-    .comment{
-    border: 1px solid #4b5c678f;
-    border-radius: 0.5em;
-    padding: 1em;
-    }
-    
-    .comment-author {
-        
-        position: relative;
-        
-        span {
-            display: block-inline;
-            width:20%;
-            min-width:6em;
-            font-size:0.7em;
-             position:absolute;
-             top: 3.2em;
-             left: 6em;
-        }
-    }
-    
-    .avatar {
-          width: 60px;
-            height: 60px;
-            border-radius: 50%;
-
-            object-fit: cover;
-            object-position: center right;
-            display: inline;
-    }
-
-    .comment-metadata {
+   .comment-metadata {
         font-size: 0.7em;
         padding-bottom: 2px;
         text-align: right;
         margin-top: -1.5em;
     }
     
-   .comment-content {
-    padding-top: 0.7em;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    margin-top:0.3em;
-    margin-botom:0.5em;
-    }
     
-    .reply, #reply-title a {
-        min-width:8em;
-        width:10%;
-        border: 1px #2f3944;
-         background: linear-gradient(to bottom, #7B8297 0%,#756F97 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-         color: #ffffff;
-            padding-left: 1em;
-            padding-right: 1em;
-            text-transform:uppercase;
-            text-align: center;
-            margin-top: 0.5em;
-            
-            
-            &:hover{
-                font-weight: bolder;
-            }
-        
-    }
-   
-    #reply-title a {
-        width:100%;
-        display: block;
-    }
+ @import 'components/commentList.scss';    
     
-    h2#reply-title {
-    font-size: 1.4rem;
-    text-align: center;
-    margin-top: .6em;
-    }
     
 }
 

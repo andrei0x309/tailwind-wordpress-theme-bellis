@@ -276,7 +276,8 @@ function add_adidtional_css_js() {
  }else{
     // APP CSS
     if( is_singular() ){
-    wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
+    if(!a309_is_amp()) wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
+    else wp_enqueue_style( 'a309-single-amp', get_template_directory_uri() . '/css/single-amp.css',false, null,'all');
     }
  }
 }
@@ -454,7 +455,7 @@ setup_postdata( $post );
 
 $comment_args = array(
 					'avatar_size' => 60,
-                                        'reverse_top_level' => false,
+                                        'reverse_top_level' => true,
 					'style'       => 'ol',
 					'short_ping'  => true,
                                         'max_depth' => 5,
