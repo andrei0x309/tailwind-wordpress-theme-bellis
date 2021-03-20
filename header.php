@@ -51,7 +51,7 @@
    <?php echo wp_json_encode($stateData); ?>
 </script>
 </amp-state> 
-  <amp-script class="hidscr" layout="nodisplay" height="1" width="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js" ></amp-script>
+  <amp-script style="position: absolute;" class="hidscr" layout="fixed" height="1" width="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js"></amp-script>
   <!-- <amp-script width="1" height="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js"></amp-script> -->
 <?php endif; ?>    
     

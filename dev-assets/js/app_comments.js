@@ -74,7 +74,7 @@ const fetchCommentsNo = async () => {
         }
     });
     const data = await response.json();
-    window.A309TH.page = Math.ceil(data.commentNumber / 5);
+    window.A309TH.page = Math.floor(data.commentNumber / 5);
 
 };
 

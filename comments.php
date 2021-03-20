@@ -15,8 +15,9 @@ $a309_no_comments = get_comments_number();
 <amp-script layout="container" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_comments.js" sandbox="allow-forms">
 <?php endif; ?>
 <div id="comments" data-post-id="<?php echo $post->ID; ?>" data-no-comments="<?php echo $a309_no_comments; ?>" class="comments-area default-max-width <?php echo get_option( 'show_avatars' ) ? 'show-avatars' : ''; ?>">
+<?php
+if(a309_is_amp()): echo '<div id="amp-respond">'; endif;
 
-    	<?php
         $aria_req = ($req) ? " aria-required='true'" : '' ;
         $comments_args = array(  
             
@@ -42,13 +43,17 @@ $a309_no_comments = get_comments_number();
 			'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
 			'title_reply_after'  => '</h2>',
 		);
-        if(a309_is_amp() ) { $comments_args['submit_button'] = ''; }
+        if(a309_is_amp() ) { 
+            $comments_args['cancel_reply_before'] = '';
+            $comments_args['cancel_reply_after'] = '';
+            $comments_args['cancel_reply_link'] = '';
+            $comments_args['submit_button'] = ''; }
 	comment_form( $comments_args );
 	if(a309_is_amp()):    
         ?>
     <p class="form-submit">
-        <button name="submit" id="submit" class="submit">Post Comment</button>
-    </p>
+        <button id="submit-amp" class="submit">Post Comment</button>
+    </p></div>
     <noscript ><div amp-boilerplate>test</div></noscript>
 <?php   
 endif;

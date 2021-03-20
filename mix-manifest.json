@@ -1,16 +1,16 @@
 {
     "/js/app.js": "/js/app.js?id=00ae0e5c43d60249283d",
     "/js/app_index.js": "/js/app_index.js?id=5a010cd87741c1b9687a",
-    "/js/app_comments.js": "/js/app_comments.js?id=80874ee8ee7218e95629",
+    "/js/app_comments.js": "/js/app_comments.js?id=95c69b174edccf409db7",
     "/css/page-offline.css": "/css/page-offline.css?id=1656c4ef0572d23d2bca",
     "/css/search-results.css": "/css/search-results.css?id=8920a2f41d4db327209c",
     "/css/post-list.css": "/css/post-list.css?id=85a5769a757a3a077418",
-    "/amp-style.css": "/amp-style.css?id=04a669e4cc6bfb5455bf",
-    "/style.css": "/style.css?id=e1844306c2312a23a39c",
-    "/css/single-amp.css": "/css/single-amp.css?id=0c5f78d52a9e484e2e74",
-    "/css/single.css": "/css/single.css?id=f4546187136b20264419",
+    "/amp-style.css": "/amp-style.css?id=129ab9c8f8531ec441fa",
+    "/style.css": "/style.css?id=a06c5f741382341330b1",
+    "/css/single-amp.css": "/css/single-amp.css?id=3ca8e17cee163c9a91b7",
+    "/css/single.css": "/css/single.css?id=ddc4861a803824174498",
     "/css/404.css": "/css/404.css?id=baed69178dac9d449fc2",
-    "/js/AMP/amp_base.js": "/js/AMP/amp_base.js?id=ec0d1ccbe3d842df50ae",
-    "/js/AMP/amp_search_modal.js": "/js/AMP/amp_search_modal.js?id=58842858b8d9436b1bbe",
-    "/js/AMP/amp_comments.js": "/js/AMP/amp_comments.js?id=490be30ee84c35529fa9"
+    "/js/AMP/amp_base.js": "/js/AMP/amp_base.js?id=4ce2010b2fadf8ebd426",
+    "/js/AMP/amp_search_modal.js": "/js/AMP/amp_search_modal.js?id=ade2f6c410543b6c481e",
+    "/js/AMP/amp_comments.js": "/js/AMP/amp_comments.js?id=9eb39bfcbba45290a210"
 }

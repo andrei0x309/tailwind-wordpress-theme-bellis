@@ -1,5 +1,5 @@
 
-(async function myFunction() {
+(async function ampSearch() {
     function waitForBase(timeout) {
     let start = Date.now();
     return new Promise(wait); // set the promise object within the ensureFooIsSet object
@@ -12,11 +12,11 @@
         else if (timeout && (Date.now() - start) >= timeout)
             reject(new Error("timeout"));
         else
-            setTimeout(wait.bind(this, resolve, reject), 40);
+            setTimeout(wait.bind(this, resolve, reject), 70);
     }
 }
 
-let A309TH = await  waitForBase(4000);
+let A309TH = await  waitForBase(5000);
 
 
 const addSiSpinner = new Function("return " + A309TH.addSiSpinner)();    
@@ -64,12 +64,5 @@ const closeSearchModal = () => {
  document.getElementById('menu-search-btn').addEventListener('click', showSearchModal);
 
 })();
-
-
-
-
-
- 
-
 
  

@@ -490,7 +490,7 @@ add_filter( 'comment_form_defaults', 'change_comment_action_url');
 
 
 function new_gravatar ($avatar_defaults) {
-$myavatar = esc_url('https://lh3.googleusercontent.com/zVmuU47BjXOpiSkXfXwtwKkpvm6mODPiBN8RCVM_XopigmSarZHQKVSznkCBdbRHmL0g8K5rAeYU0FB0ZJuhiXFVxOmoTIDUujpNHapPrNV5l6RauqTkcTCA6D37ZLgJR6mgDQvNkA=s64-no');
+$myavatar = esc_url('https://lh3.googleusercontent.com/8RPVeZF7KLO5QAz6ZkjLso6tHnL9sicQBvophgg05ibqxBtA-Pf2Ki_jqi0BEMliTjBaabzKX_gnFdhbDT66SX4lqCMRk0onJtKajK2QemX8cixY_OINWhKzPWc74FB09SGHJjr3SQ=s64-no');
 $avatar_defaults[$myavatar] = "Default Gravatar";
 return $avatar_defaults;
 }

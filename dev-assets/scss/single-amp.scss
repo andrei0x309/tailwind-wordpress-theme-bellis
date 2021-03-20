@@ -17,14 +17,28 @@ amp-script {
         padding-bottom: 2px;
         text-align: right;
         margin-top: -1.5em;
+        display: contents;
         }
-        
+    
+   #cancel-comment-reply-link {
+        border: 1px solid #2f3944;
+        border-bottom: 0;
+    }     
+       
+ 
     @import 'components/commentList.scss';
-  
-    
-     amp-img { display:inline-block;}   
-    
+
     }
+    
+    .comment-author{
+            amp-img {
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center right;
+            display: inline-block;
+            margin-right: 0.3em;
+            }
+        }
     
 }
 

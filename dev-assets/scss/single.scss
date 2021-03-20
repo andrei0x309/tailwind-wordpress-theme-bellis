@@ -59,6 +59,7 @@
 
     .form-submit {
         text-align: center;
+        margin-top: 0.5em;
 
         input,button{
             @include blueBtn;
