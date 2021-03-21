@@ -464,7 +464,7 @@ $comment_args = array(
                                         'echo' => false,
                                        
 				);
-if($amp) { $comment_args['format'] = 'xhtml';}
+//if($amp) { $comment_args['format'] = 'xhtml';}
 
 $template = wp_list_comments( $comment_args );
 		 
@@ -490,7 +490,7 @@ add_filter( 'comment_form_defaults', 'change_comment_action_url');
 
 
 function new_gravatar ($avatar_defaults) {
-$myavatar = esc_url('https://lh3.googleusercontent.com/8RPVeZF7KLO5QAz6ZkjLso6tHnL9sicQBvophgg05ibqxBtA-Pf2Ki_jqi0BEMliTjBaabzKX_gnFdhbDT66SX4lqCMRk0onJtKajK2QemX8cixY_OINWhKzPWc74FB09SGHJjr3SQ=s64-no');
+$myavatar = esc_url('https://lh3.googleusercontent.com/pw/ACtC-3fPRRszLuGmIgM3DK1IUTQxyEChtxk6_NuMMD5vj68hV9WEPKnzXpnwXHSv2MLoEhVHeUYhLIh5aC0MqBk8rsF11BSqNA9LRJKzrhjuPp6KnEZs47i4LXcERl35m2m34B5kHvf68yYSSrtqdK0zMKN_=s64-no');
 $avatar_defaults[$myavatar] = "Default Gravatar";
 return $avatar_defaults;
 }

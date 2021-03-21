@@ -1,14 +1,13 @@
 
 (async function ampComments() {
-    function waitForBase(timeout) {
+    function waitForLib(timeout) {
     let start = Date.now();
     return new Promise(wait); // set the promise object within the ensureFooIsSet object
     
     async function wait(resolve, reject) {
-        const obj1 = await AMP.getState('A309TH');
         const obj2 = await AMP.getState('lib');
-        if (obj1 && obj2)
-            resolve(Object.assign({}, JSON.parse(obj1), JSON.parse(obj2)));
+        if (obj2)
+            resolve(Object.assign({}, JSON.parse(obj2)));
         else if (timeout && (Date.now() - start) >= timeout)
             reject(new Error("timeout"));
         else
@@ -16,7 +15,7 @@
     }
 }
 
-let A309TH = await waitForBase(5000);
+let A309TH = await waitForLib(8000);
 
 
 const addSiSpinner = new Function("return " + A309TH.addSiSpinner)();    
@@ -31,11 +30,14 @@ const alertBox = new Function("return " + A309TH.alertBox)();
     const postId = document.getElementById('comments').getAttribute('data-post-id');
     
     const commentsEl = document.getElementById('comments');
+    let storeRespEl = null;
+    let replyEl = null;
+    let hiddenRepLink = null;
     const commentFromEl = document.getElementById('commentform');
 
     let commentsList = null;
     let commentsShowMoreBtn = null;
-    let storeRespEl = null;
+     
 
     const showCommentsBtn = document.getElementById('comments-show-btn');
     const postCommentBtn = document.getElementById('submit-amp');
@@ -45,11 +47,26 @@ const alertBox = new Function("return " + A309TH.alertBox)();
 
 const HTMLtoEL = (html) => {
     const t = document.createElement('div');
-    //const sanHtml = html.trim().replace(/\t/gm, '').replace(/\\"/gm, '"');
-    console.log(html);
     t.innerHTML = html;
     return t.children;
 };
+
+const DelShowMoreCBtn = () => {
+        if (commentsShowMoreBtn) {
+        commentsShowMoreBtn.parentNode.removeChild(commentsShowMoreBtn);
+        commentsShowMoreBtn = null;
+    }
+};
+
+const AddShowMoreCBtn = () => {
+    const showMoreBtn = document.createElement('button');
+    showMoreBtn.id = 'comments-show-more-btn';
+    showMoreBtn.innerHTML = 'Show More Comments';
+    showMoreBtn.addEventListener('click', showMoreCommentsFn);
+    commentsEl.appendChild(showMoreBtn);
+    return showMoreBtn;
+};
+
 
 const fetchCommentsNo =  async () => {
     
@@ -81,24 +98,7 @@ const fetchComments = async () => {
     return data;
 };
 
-
-const showCommentsFn = async () => {
-    showCommentsBtn.innerHTML = `
-     Loading
-     <div class="loadingspinner"></div>
-   `;
-    showCommentsBtn.disabled = true;
-
-    await fetchCommentsNo();
- 
-    const data = await fetchComments();
- 
-    //console.log(data);
-    
-    commentsList = document.createElement('ol');
-    commentsList.id = 'comment-list';
-    commentsList.classList.add('comment-list');
-    const repFunc = (...args) =>{
+const repImgAMP = (...args) =>{
         return `<amp-img
              alt
              src="${args[1]}"
@@ -108,32 +108,70 @@ const showCommentsFn = async () => {
            >
            </amp-img>`;
     };
-    
-    
-    let comments = HTMLtoEL(data.comments
-            .replace(/<img.*?src=['"]{1}(.*?)['"]{1}.*?>/gms , repFunc )
+
+const AMPifyComments = (comments) => {
+       return HTMLtoEL(comments
+            .replace(/<img.*?src=['"]{1}(.*?)['"]{1}.*?>/gms , repImgAMP )
             .trim()
             .replace(/<!--.*?-->/gms, '')
             .replace(/\t/gm ,'')
             .replace(/\n/gm, ''));
-    
-    console.log(comments);
-    
+};
+
+const AddCommentsToList = (ListEl, comments) =>{
     for( const comment of comments){
-        commentsList.appendChild(comment);
-    }       
+        ListEl.appendChild(comment);
+    }  
+};
+
+const showCommentsFn = async () => {
+     showCommentsBtn.innerHTML = `
+     Loading
+     <div class="loadingspinner"></div>
+   `;
+    showCommentsBtn.disabled = true;
+
+    await fetchCommentsNo();
+ 
+    const data = await fetchComments();
+ 
     
-    //commentsList.appendChild(comments));
-    
-    addReplyEvent(commentsList);
+    commentsList = document.createElement('ol');
+    commentsList.id = 'comment-list';
+    commentsList.classList.add('comment-list');
+    const comments = AMPifyComments(data.comments);
+    addReplyEvent(comments);
+    AddCommentsToList(commentsList, comments);
+
     commentsEl.appendChild(commentsList);
 
     commentsEl.removeChild(showCommentsBtn);
     
     if (page) {
-        //await showMoreCommentsFn();
+        await showMoreCommentsFn();
     }
  
+};
+
+const showMoreCommentsFn = async () => {
+
+    DelShowMoreCBtn();
+    const spinner = addSiSpinner(commentsEl);
+ 
+    const data = await fetchComments();
+    const commentsList = document.getElementById('comment-list');
+    const comments = AMPifyComments(data.comments);
+    
+    
+    addReplyEvent(comments);
+    AddCommentsToList(commentsList, comments);
+    
+
+    if (page) {
+        commentsShowMoreBtn = AddShowMoreCBtn();
+    }
+
+    delSiSpinner(spinner);
 };
 
 
@@ -142,12 +180,13 @@ const sumbitComment = async (e) => {
     delAlertBox();
     const respondEl = document.getElementById('amp-respond');
     const spinner =   addSiSpinner(respondEl);
+    const submitBtn = document.getElementById('submit-amp');
+    submitBtn.disabled = true;
     //serialize and store form data in a variable
  
    console.log(actionUrl);
    
-
-   
+ 
    const bodyData = { comment:document.getElementById('comment')? document.getElementById('comment').value: '',
                       author:document.getElementById('author')? document.getElementById('author').value: '',
                       email:document.getElementById('email')? document.getElementById('email').value: '',
@@ -161,7 +200,7 @@ const sumbitComment = async (e) => {
     };
    
    const searchParams = Object.keys(bodyData).map((key) => {
-  return encodeURIComponent(key) + '=' + encodeURIComponent(bodyData[key]);
+  return `${encodeURIComponent(key)}${ bodyData[key]?'='+encodeURIComponent(bodyData[key]):''}`;
            }).join('&');
    
     const response = await fetch(actionUrl, {
@@ -196,111 +235,81 @@ const sumbitComment = async (e) => {
         alert = alertBox('error', '&#x26A0; HTTP fetch error, API down!', delAlertBox);
         respondEl.appendChild(alert);
     }
- 
+    
+    submitBtn.disabled = false;
     delSiSpinner(spinner);
 
 };
 
 const replyMoveForm = (e) => {
-    const respondEl = document.getElementById('amp-respond');
-    storeRespEl = respondEl;
-    const replyEl = document.getElementById('amp-respond').cloneNode(true);
-    /*respondEl.parentNode.removeChild(respondEl);
+    e.preventDefault();
+    if(hiddenRepLink) hiddenRepLink.removeAttribute('hidden');
     const commentId = e.target.getAttribute('data-commentid');
-    const replyName = e.target.querySelector('.fn')?e.target.querySelector('.fn').textContent:'';
-    const form = replyEl.querySelector('form');
-    form.removeAttribute('amp-novalidate');
-    form.removeAttribute('amp-novalidate');
-    form.classList.remove('comment-form i-amphtml-form');
-    const replyTitle = replyEl.querySelector('#reply-title');
-    replyTitle.removeAttribute('on');
-    replyTitle.removeAttribute('data-amp-bind-hidden');
-    replyTitle.removeAttribute('hidden');
-    replyTitle.textContent = `Reply to ${replyName}`;
-    const cancelLink = document.createElement('a');
-    cancelLink.id = 'cancel-comment-reply-link';
-    cancelLink.setAttribute('rel', 'nofollow');
-    cancelLink.setAttribute('href', '#respond ');
-    replyEl.insertBefore(cancelLink, form);
-    console.log(replyName);
-    console.log(replyName);
+    const divComment = document.getElementById(`div-comment-${commentId}`);
+    hiddenRepLink = divComment.querySelector('.comment-reply-link');
+    hiddenRepLink.setAttribute('hidden');
+    if(storeRespEl === null){    
+    const oldCancelLink = document.getElementById('cancel-comment-reply-link');
+    if(oldCancelLink) oldCancelLink.parentNode.removeChild(oldCancelLink);
+    const respondEl = document.getElementById('amp-respond');
+    const form = respondEl.querySelector('form');
+    if(form){
+        form.removeAttribute('amp-novalidate');
+        form.removeAttribute('class');
+    }
+     replyEl = respondEl.cloneNode(true);
+     storeRespEl = respondEl;
+     const resp = replyEl.querySelector('#respond');
+     const fSubmit = resp.querySelector('#form-submit');
+     const cancelLink = document.createElement('a');
+        cancelLink.id = 'cancel-comment-reply-link';
+        cancelLink.setAttribute('rel', 'nofollow');
+        cancelLink.setAttribute('href', '#comments');
+        cancelLink.textContent = `Cancel Reply`;
+        resp.insertBefore(cancelLink, fSubmit);
+     cancelLink.addEventListener('click', replyFormCancel);
+     replyEl.querySelector('#submit-amp').addEventListener('click', sumbitComment);
+    }
+    document.getElementById('amp-respond').parentNode.removeChild(storeRespEl);
     
-    cancelLink.addEventListener('click', replyFormCancel);
-    document.getElementById(`comment-${commentId}`).appendChild(replyEl); */
+    let replyName = divComment.querySelector('.fn');
+    replyName = replyName? replyName.textContent: '';
+    const replyTitle = replyEl.querySelector('#reply-title');
+    replyTitle.textContent = `Reply to ${replyName}`;
+    const resp = replyEl.querySelector('#respond');
+    const inParent = resp.querySelector('#comment_parent');
+    inParent.setAttribute('value', commentId);
+    console.log(`div-comment-${commentId}`);
+    document.getElementById(`comment-${commentId}`).insertBefore(replyEl, divComment.nextSibling);
 
 };
 
 const replyFormCancel = () => {
       const respondEl = document.getElementById('amp-respond');
-      const cancelLink = document.getElementById('cancel-comment-reply-link');
-      cancelLink.removeEventListener('click', replyFormCancel);
       respondEl.parentNode.removeChild(respondEl);
+      if(hiddenRepLink) {
+        hiddenRepLink.removeAttribute('hidden');  
+        hiddenRepLink = null;
+      }
+      storeRespEl.querySelector('#submit-amp').addEventListener('click', sumbitComment);
       commentsEl.insertBefore(storeRespEl, commentsEl.firstChild);
 };
 
-const addReplyEvent = (element) => {
-    const rLinks = element.querySelectorAll('.comment-reply-link');
-    for (const link of rLinks) {
-        link.addEventListener('click', replyMoveForm);
-    }  
+const addReplyEvent = (comments) => {
+    for(const comment of comments){
+       const links = comment.querySelectorAll('.comment-reply-link');
+       for(const link of links){
+            //link.removeAttribute('href');
+            link.addEventListener('click', replyMoveForm);
+        }
+    }
 };
 
 
 postCommentBtn.addEventListener('click', sumbitComment);
 showCommentsBtn.addEventListener('click', showCommentsFn);
 
-
-//document.getElementById('commentform').setAttribute('action-xhr', '');
-
-/*
-
-
-
-
-
-
-const eventsOnComments = () => {
-
-// Add event on comments show
-    if (showCommentsBtn) showCommentsBtn.addEventListener('click', showCommentsFn);
-    commentFromEl.addEventListener('submit', sumbitComment);
-};
-
-
-
-//Called from index
-window.A309TH.eventsOnComments = () => {
-    window.A309TH.commentsEl = document.getElementById('comments');
-    window.A309TH.commentFormEl = document.getElementById('commentform');
-
-    window.A309TH.commentsList = null;
-    window.A309TH.commentsShowMoreBtn = null;
-
-    window.A309TH.showCommentsBtn = document.getElementById('comments-show-btn');
-    window.A309TH.postId = document.querySelector('article').dataset.id;
-    window.A309TH.page = null;
-// Add event on comments show
-    if (window.A309TH.showCommentsBtn)
-        window.A309TH.showCommentsBtn.addEventListener('click', A309TH.showCommentsFn);
-    window.A309TH.commentFormEl.addEventListener('submit', sumbitComment);
-};
-
-
-
-const commentsAddShowMoreBtn = () => {
-    const showMoreBtn = document.createElement('button');
-    showMoreBtn.id = 'comments-show-more-btn';
-    showMoreBtn.innerHTML = 'Show More Comments';
-    window.A309TH.commentsEl.appendChild(showMoreBtn);
-    showMoreBtn.addEventListener('click', showMoreCommentsFn)
-
-    return showMoreBtn;
-};
-*/
-
-
-
-
+ 
 })();
 
  

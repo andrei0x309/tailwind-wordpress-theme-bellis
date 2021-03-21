@@ -58,7 +58,11 @@
 html {
   scroll-behavior: smooth;
 }
- 
+
+a {
+    cursor: pointer
+}
+
 body{
     font-size: 1.05rem;
     background: #2f3944; /* Old browsers */
@@ -377,6 +381,15 @@ button.link-search-icon{
 }
 
 
+.content-va-on {
+        content-visibility: auto;
+        contain-intrinsic-size: 700px;
+    }
+    
+.content-va-off {
+        content-visibility: si;
+    }
+
  
 .main{
     
@@ -387,12 +400,7 @@ button.link-search-icon{
      }
     max-width: 96%;
     margin:auto;
-    
-    article{
-        content-visibility: auto;
-        contain-intrinsic-size: 1000px;
-    }
-    
+ 
     
     nav.pagination{
         width:100%;

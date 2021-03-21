@@ -27,7 +27,12 @@ amp-script {
        
  
     @import 'components/commentList.scss';
-
+    
+    
+    #comments-show-more-btn {
+         @include blueBtn;
+    }
+    
     }
     
     .comment-author{

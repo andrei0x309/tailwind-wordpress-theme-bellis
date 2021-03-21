@@ -56,6 +56,7 @@ lib.delAlertBox = delAlertBox.toString();
 lib.alertBox = alertBox.toString();
 
 await AMP.setState( { lib } );
+console.log('base');
 //console.log(this.exportFunction('test', function () { console.log('test'); } )  );
 //console.log(this);
 //console.log(AMP.script);

@@ -3,7 +3,7 @@
 $articleFull = (isset($args['full_content']) && $args['full_content']);
         
 ?>
-<article itemscope itemtype="http://schema.org/BlogPosting" id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>" <?php post_class('post-body mb-2'); ?>>
+<article itemscope itemtype="http://schema.org/BlogPosting" class="<?php echo $articleFull? '':'content-va-on ' ?>post-body mb-2 <?php echo implode(' ',get_post_class()) ?>" id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>" <?php post_class(''); ?>>
      <header>
          <?php  if($articleFull): ?>
          <h1 itemprop="headline" class="blog-post-title">

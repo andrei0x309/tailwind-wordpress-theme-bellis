@@ -56,7 +56,7 @@
 <?php endif; ?>    
     
  
-  <header class="header flex flex-row bg-gray-200 items-center">
+ <header class="header flex flex-row bg-gray-200 items-center content-va-off">
       <div class="logo min-h-full h-16 w-40 bg-white py-2 rounded-tr-full">
  <a href="<?php echo site_url(); ?>">
  <img height="48" width="96" class="h-full ml-4" src="<?php echo get_theme_file_uri( 'images/blogLogo.svg' ) ?>"  alt="flashsoft.eu Blog Logo" >
