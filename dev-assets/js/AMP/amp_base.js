@@ -45,6 +45,7 @@ const alertBox = ( alertClass='error', alertMsg = '', delAlertBox = '') => {
      alertBox.id = 'a309-alert-box';
      alertBox.classList.add('alert');
      alertBox.classList.add(alertClass);
+     alertBox.classList.add('fade-in');
      alertBox.innerHTML = alertMsg;
      return alertBox;
  };

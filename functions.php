@@ -322,7 +322,7 @@ function change_rest_post(){
     'permission_callback' => '__return_true',
   ) );
     
-   register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)(?:/amp/(?P<amp>\d+))?', array(
+   register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_comments_post',
     'permission_callback' => '__return_true',
@@ -359,7 +359,7 @@ function a309_get_y_morf(){
 
 function a309_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = false){
     
-        $my_posts = new WP_Query($wpQueryArgs);  
+   $my_posts = new WP_Query($wpQueryArgs);  
    global $post;
    $yoast_head = null;
    $template = '';
@@ -447,8 +447,6 @@ function get_comments_post($data){
 // setup a fake POST to trick wp_list_comments
 global $post; 
 $post = new stdClass();
-$amp = false;
-if(isset($data['amp']) && intval($data['amp']) === 1 ) $amp = true;
 
 $post->ID = $data['post_id'];
 setup_postdata( $post );
@@ -456,6 +454,7 @@ setup_postdata( $post );
 $comment_args = array(
 					'avatar_size' => 60,
                                         'reverse_top_level' => true,
+                                        'reverse_children' => true,
 					'style'       => 'ol',
 					'short_ping'  => true,
                                         'max_depth' => 5,
@@ -464,7 +463,6 @@ $comment_args = array(
                                         'echo' => false,
                                        
 				);
-//if($amp) { $comment_args['format'] = 'xhtml';}
 
 $template = wp_list_comments( $comment_args );
 		 
@@ -490,7 +488,9 @@ add_filter( 'comment_form_defaults', 'change_comment_action_url');
 
 
 function new_gravatar ($avatar_defaults) {
-$myavatar = esc_url('https://lh3.googleusercontent.com/pw/ACtC-3fPRRszLuGmIgM3DK1IUTQxyEChtxk6_NuMMD5vj68hV9WEPKnzXpnwXHSv2MLoEhVHeUYhLIh5aC0MqBk8rsF11BSqNA9LRJKzrhjuPp6KnEZs47i4LXcERl35m2m34B5kHvf68yYSSrtqdK0zMKN_=s64-no');
+    
+//lh3.googleusercontent.com/pw/ACtC-3fPRRszLuGmIgM3DK1IUTQxyEChtxk6_NuMMD5vj68hV9WEPKnzXpnwXHSv2MLoEhVHeUYhLIh5aC0MqBk8rsF11BSqNA9LRJKzrhjuPp6KnEZs47i4LXcERl35m2m34B5kHvf68yYSSrtqdK0zMKN_=s64-no
+$myavatar = esc_url('https://i1.wp.com/lh3.googleusercontent.com/pw/ACtC-3fPRRszLuGmIgM3DK1IUTQxyEChtxk6_NuMMD5vj68hV9WEPKnzXpnwXHSv2MLoEhVHeUYhLIh5aC0MqBk8rsF11BSqNA9LRJKzrhjuPp6KnEZs47i4LXcERl35m2m34B5kHvf68yYSSrtqdK0zMKN_=s64-no?ssl=1');
 $avatar_defaults[$myavatar] = "Default Gravatar";
 return $avatar_defaults;
 }

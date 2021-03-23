@@ -24,7 +24,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/icon/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/icon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
@@ -51,8 +51,8 @@
    <?php echo wp_json_encode($stateData); ?>
 </script>
 </amp-state> 
-  <amp-script style="position: absolute;" class="hidscr" layout="fixed" height="1" width="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js"></amp-script>
-  <!-- <amp-script width="1" height="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js"></amp-script> -->
+  <!-- <amp-script style="position: absolute;z-index: -1;height:100vh;" class="hidscr" layout="fixed" height="100" width="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js"></amp-script>
+   <amp-script width="1" height="1" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_base.js"></amp-script> -->
 <?php endif; ?>    
     
  

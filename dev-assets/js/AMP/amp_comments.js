@@ -1,6 +1,5 @@
-
 (async function ampComments() {
-    function waitForLib(timeout) {
+/*    function waitForLib(timeout) {
     let start = Date.now();
     return new Promise(wait); // set the promise object within the ensureFooIsSet object
     
@@ -23,6 +22,58 @@ const delSiSpinner = new Function("return " + A309TH.delSiSpiner)();
 const delAlertBox = new Function("return " + A309TH.delAlertBox)();  
 const alertBox = new Function("return " + A309TH.alertBox)();  
 
+*/
+
+const addSiSpinner = function(element, prepend = false) {
+    const spinner = document.createElement('div');
+    spinner.classList.add('loadingspinner');
+    if(prepend){
+        element.insertBefore(element, element.firstElementChild);
+    }else{
+        element.appendChild(spinner);
+    }
+    return spinner;
+};
+
+const delSiSpinner = (spinner) => {
+    spinner.parentNode.removeChild(spinner);
+};
+
+const delAlertBox = ( ) => {
+    const oldAlertBox = document.getElementById('a309-alert-box');
+    if(oldAlertBox){
+         oldAlertBox.parentNode.removeChild(oldAlertBox);
+     }
+};
+
+const alertBox = ( alertClass='error', alertMsg = '', delAlertBox = '') => {
+    
+    if(delAlertBox) delAlertBox();
+    
+     switch (alertClass) {
+        case 'error':
+            alertClass = 'alert-error';
+            break;
+        case 'info':
+           alertClass = 'alert-info';
+            break;
+        case 'success':
+            alertClass = 'alert-success';
+            break;
+        default:
+            alertClass = 'alert-error';
+            break;
+    }
+     
+     const alertBox = document.createElement('div');
+     alertBox.id = 'a309-alert-box';
+     alertBox.classList.add('alert');
+     alertBox.classList.add(alertClass);
+     alertBox.classList.add('fade-in');
+     alertBox.innerHTML = alertMsg;
+     return alertBox;
+ };
+ 
 
 
     const actionUrl = document.getElementById('commentform').getAttribute('action-xhr');
@@ -78,14 +129,14 @@ const fetchCommentsNo =  async () => {
         }
     });
     const data = await response.json();
-    page = Math.floor(data.commentNumber / 5);
+    page = Math.ceil(data.commentNumber / 5);
 };
 
 
 const fetchComments = async () => {
 
     // fetch Comments 
-    const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments/post/${postId}/page/${page}/amp/1`;
+    const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments/post/${postId}/page/${page}`;
 
     const response = await fetch(fetchUrl, {
         headers: {
@@ -99,9 +150,10 @@ const fetchComments = async () => {
 };
 
 const repImgAMP = (...args) =>{
+        const src = args[1].replace(/#038;/gms, '');
         return `<amp-img
              alt
-             src="${args[1]}"
+             src="${src}"
              width="60"
              height="60"
              layout="fixed"
@@ -125,7 +177,8 @@ const AddCommentsToList = (ListEl, comments) =>{
 };
 
 const showCommentsFn = async () => {
-     showCommentsBtn.innerHTML = `
+        
+    showCommentsBtn.innerHTML = `
      Loading
      <div class="loadingspinner"></div>
    `;
@@ -139,9 +192,11 @@ const showCommentsFn = async () => {
     commentsList = document.createElement('ol');
     commentsList.id = 'comment-list';
     commentsList.classList.add('comment-list');
+    
     const comments = AMPifyComments(data.comments);
     addReplyEvent(comments);
-    AddCommentsToList(commentsList, comments);
+    
+        AddCommentsToList(commentsList, comments);
 
     commentsEl.appendChild(commentsList);
 
@@ -219,14 +274,25 @@ const sumbitComment = async (e) => {
         if (data.error) {
             alert = alertBox('error', `&#x26A0; ${data.msg}`, delAlertBox);
             respondEl.appendChild(alert);
-        } else {
+        } else { 
+            const approved = parseInt(data.comment.comment_approved) === 1;
+            console.log(approved);
+            const notApprovedText = 'Comment was posted but was not approved it will be live after approval.';
             const commentList = document.getElementById('comment-list');
             if (commentList) {
-                //addCommentToDOM(data.comment);
-                alert = alertBox('success', 'Comment was posted', delAlertBox);
-                respondEl.appendChild(alert);
+                const com = addCommentToDOM(data.comment);
+                if(!approved){
+                alert = alertBox('info',notApprovedText, delAlertBox);
+                com.appendChild(alert);
+                }
             } else {
-                alert = alertBox('success', 'Comment was posted', delAlertBox);
+                if(approved){
+                  alert = alertBox('success', 'Comment was posted', delAlertBox);
+                }else{
+                  alert = alertBox('info', notApprovedText, delAlertBox);
+                }
+                
+                
                 respondEl.appendChild(alert);
             }
         }
@@ -238,6 +304,56 @@ const sumbitComment = async (e) => {
     
     submitBtn.disabled = false;
     delSiSpinner(spinner);
+
+};
+
+
+const addCommentToDOM = (comment) => {
+
+
+    const date = new Date(comment.comment_date);
+    const options = {year: 'numeric', month: 'long', day: 'numeric'};
+
+    const newCom = `<li id="comment-${comment.comment_ID}" class="comment byuser comment-author-${comment.comment_author} even thread-even comment-added fade-in">
+			<article id="div-comment-${comment.comment_ID}" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						 ${comment.comment_avatar}
+                      <b class="fn"><a href="${comment.comment_author_url}" rel="external nofollow ugc" class="url">${comment.comment_author}</a></b> 
+                       <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://blog-dev.flashsoft.eu:8443/async-task-without-queue-or-e-loop-php/#comment-743"><time datetime="${comment.comment_date}">${date.toLocaleDateString('en-US', options)} at ${date.toLocaleTimeString('en-US')}</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>${comment.comment_content}</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+                    <a rel="nofollow" class="comment-reply-link" href="#comment-${comment.comment_ID}" data-commentid="${comment.comment_ID}" data-postid="${comment.comment_post_ID}" data-belowelement="div-comment-${comment.comment_ID}" data-respondelement="respond" data-replyto="Reply to andrei0x309" aria-label="Reply to ${comment.comment_author}">Reply</a></div>			</article><!-- .comment-body -->
+		</li>`;
+    const ampComment = AMPifyComments(newCom)[0];
+    const commentList = document.getElementById('comment-list');
+    if (Number(comment.comment_parent) === 0) {
+        commentList.insertBefore(ampComment, commentList.firstChild);
+    } else {
+        const cancelLink = document.getElementById('cancel-comment-reply-link');
+        console.log(cancelLink.click);
+        cancelLink.click();
+        let commentParent = document.getElementById(`comment-${comment.comment_parent}`);
+        let children = commentParent.querySelector('ol.children');
+        console.log(children);
+        if (!children) {
+            children = document.createElement('ol');
+            children.classList.add('children');
+            commentParent.appendChild(children);
+        }
+        children.insertBefore(ampComment, children.firstChild);
+        
+        return ampComment;
+    }
 
 };
 
@@ -279,7 +395,6 @@ const replyMoveForm = (e) => {
     const resp = replyEl.querySelector('#respond');
     const inParent = resp.querySelector('#comment_parent');
     inParent.setAttribute('value', commentId);
-    console.log(`div-comment-${commentId}`);
     document.getElementById(`comment-${commentId}`).insertBefore(replyEl, divComment.nextSibling);
 
 };
@@ -308,7 +423,6 @@ const addReplyEvent = (comments) => {
 
 postCommentBtn.addEventListener('click', sumbitComment);
 showCommentsBtn.addEventListener('click', showCommentsFn);
-
  
 })();
 

@@ -44,7 +44,11 @@ amp-script {
             margin-right: 0.3em;
             }
         }
-    
+ 
+.fade-in{
+    animation: fadeinanim 0.6s linear forwards;
+}
+        
 }
 
 /*! purgecss end ignore */

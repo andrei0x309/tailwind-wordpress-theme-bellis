@@ -12,7 +12,7 @@ $a309_no_comments = get_comments_number();
 
 ?>
 <?php if(a309_is_amp() ): ?>
-<amp-script layout="container" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_comments.js" sandbox="allow-forms">
+<amp-script amp-boilerplate layout="container" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_comments.js" sandbox="allow-forms">
 <?php endif; ?>
 <div id="comments" data-post-id="<?php echo $post->ID; ?>" data-no-comments="<?php echo $a309_no_comments; ?>" class="comments-area default-max-width <?php echo get_option( 'show_avatars' ) ? 'show-avatars' : ''; ?>">
 <?php
