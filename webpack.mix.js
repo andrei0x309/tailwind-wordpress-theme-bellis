@@ -42,3 +42,29 @@ mix.sass('dev-assets/scss/page-offline.scss', 'css/page-offline.css');
 mix.sass('dev-assets/scss/404.scss', 'css/404.css', {} , error404Options).options({processCssUrls: false});
 mix.sass('dev-assets/scss/single.scss', 'css/single.css').version();
 mix.sass('dev-assets/scss/single-amp.scss', 'css/single-amp.css').version();
+
+
+
+if (mix.inProduction()) {
+    const files=[
+    'js/app.js',
+    'js/app_index.js',
+    'js/app_comments.js',
+    
+    'js/AMP/amp_base.js',
+    'js/AMP/amp_search_modal.js',
+    'js/AMP/amp_comments.js',
+    
+    'style.css',
+    'amp-style.css',
+    
+    'css/post-list.css',
+    'css/search-results.css',
+    'css/page-offline.css',
+    'css/404.css',
+    'css/single.css',
+    'css/single-amp.css'
+    ];
+    
+    mix.minify(files);
+}

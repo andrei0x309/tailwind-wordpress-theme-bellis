@@ -1,6 +1,6 @@
 
 (async function ampSearch() {
-    function waitForBase(timeout) {
+/*    function waitForBase(timeout) {
     let start = Date.now();
     return new Promise(wait); // set the promise object within the ensureFooIsSet object
  
@@ -20,6 +20,18 @@ let A309TH = await  waitForBase(5000);
 
 
 const addSiSpinner = new Function("return " + A309TH.addSiSpinner)();    
+*/
+
+const addSiSpinner = function(element, prepend = false) {
+    const spinner = document.createElement('div');
+    spinner.classList.add('loadingspinner');
+    if(prepend){
+        element.insertBefore(element, element.firstElementChild);
+    }else{
+        element.appendChild(spinner);
+    }
+    return spinner;
+};
 
 let searchModalOpen = false;
 

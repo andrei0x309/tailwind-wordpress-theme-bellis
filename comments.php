@@ -47,7 +47,7 @@ if(a309_is_amp()): echo '<div id="amp-respond">'; endif;
             $comments_args['cancel_reply_before'] = '';
             $comments_args['cancel_reply_after'] = '';
             $comments_args['cancel_reply_link'] = '';
-            $comments_args['submit_button'] = ''; }
+            $comments_args['submit_button'] = '<noscript><input name="%1$s" type="submit" id="%2$s" class="%3$s" value="%4$s" amp-boilerplate /></noscript>'; }
 	comment_form( $comments_args );
 	if(a309_is_amp()):    
         ?>
