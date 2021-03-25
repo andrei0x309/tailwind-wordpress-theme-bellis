@@ -95,9 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				<div class="comment-content">
 					<p>${comment.comment_content}</p>
 				</div><!-- .comment-content -->
-
-				<div class="reply">
-                    <a rel="nofollow" class="comment-reply-link" href="#comment-${comment.comment_ID}" data-commentid="${comment.comment_ID}" data-postid="${comment.comment_post_ID}" data-belowelement="div-comment-${comment.comment_ID}" data-respondelement="respond" data-replyto="Reply to andrei0x309" aria-label="Reply to ${comment.comment_author}">Reply</a></div>			</article><!-- .comment-body -->
+                                </article><!-- .comment-body -->
 		</li>`;
 
         if (Number(comment.comment_parent) === 0) {
