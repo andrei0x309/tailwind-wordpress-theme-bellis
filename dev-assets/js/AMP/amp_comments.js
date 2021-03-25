@@ -24,6 +24,8 @@ const alertBox = new Function("return " + A309TH.alertBox)();
 
 */
 
+
+
 const addSiSpinner = function(element, prepend = false) {
     const spinner = document.createElement('div');
     spinner.classList.add('loadingspinner');
@@ -36,7 +38,7 @@ const addSiSpinner = function(element, prepend = false) {
 };
 
 const delSiSpinner = (spinner) => {
-    spinner.parentNode.removeChild(spinner);
+    if(spinner) spinner.parentNode.removeChild(spinner);
 };
 
 const delAlertBox = ( ) => {
@@ -74,23 +76,28 @@ const alertBox = ( alertClass='error', alertMsg = '', delAlertBox = '') => {
      return alertBox;
  };
  
-
-
+ 
+     const commentsEl = document.getElementById('comments');
+     const commentFromEl = document.getElementById('commentform');
+     
+     commentFromEl.addEventListener('submit', (e) => { e.target.preventDefault(); } );
+     
     const actionUrl = document.getElementById('commentform').getAttribute('action-xhr');
-    let noComments = document.getElementById('comments').getAttribute('data-no-comments');
     const postId = document.getElementById('comments').getAttribute('data-post-id');
     
-    const commentsEl = document.getElementById('comments');
+   
     let storeRespEl = null;
     let replyEl = null;
     let hiddenRepLink = null;
-    const commentFromEl = document.getElementById('commentform');
+
+    
 
     let commentsList = null;
     let commentsShowMoreBtn = null;
      
 
     const showCommentsBtn = document.getElementById('comments-show-btn');
+    
     const postCommentBtn = document.getElementById('submit-amp');
     
     let page = null;
@@ -276,6 +283,17 @@ const sumbitComment = async (e) => {
             respondEl.appendChild(alert);
         } else { 
             const approved = parseInt(data.comment.comment_approved) === 1;
+            if(approved){
+                 const noComments = document.getElementById('comments').getAttribute('data-no-comments');
+                 if(noComments){
+                     const nCom = parseInt(noComments)+1;
+                     document.getElementById('comments').setAttribute('data-no-comments', nCom);
+                     const comText = commentsEl.querySelector('.comments-title');
+                     if(comText){
+                         comText.textContent = [comText.textContent.split(' ')[0], nCom].join(' ');
+                     }
+                 }
+            }
             console.log(approved);
             const notApprovedText = 'Comment was posted but was not approved it will be live after approval.';
             const commentList = document.getElementById('comment-list');
@@ -330,9 +348,7 @@ const addCommentToDOM = (comment) => {
 				<div class="comment-content">
 					<p>${comment.comment_content}</p>
 				</div><!-- .comment-content -->
-
-				<div class="reply">
-                    <a rel="nofollow" class="comment-reply-link" href="#comment-${comment.comment_ID}" data-commentid="${comment.comment_ID}" data-postid="${comment.comment_post_ID}" data-belowelement="div-comment-${comment.comment_ID}" data-respondelement="respond" data-replyto="Reply to andrei0x309" aria-label="Reply to ${comment.comment_author}">Reply</a></div>			</article><!-- .comment-body -->
+                            </article><!-- .comment-body -->
 		</li>`;
     const ampComment = AMPifyComments(newCom)[0];
     const commentList = document.getElementById('comment-list');
@@ -343,7 +359,7 @@ const addCommentToDOM = (comment) => {
         console.log(cancelLink.click);
         cancelLink.click();
         let commentParent = document.getElementById(`comment-${comment.comment_parent}`);
-        let children = commentParent.querySelector('ol.children');
+        let children = commentParent.querySelector('.children');
         console.log(children);
         if (!children) {
             children = document.createElement('ol');
@@ -351,7 +367,7 @@ const addCommentToDOM = (comment) => {
             commentParent.appendChild(children);
         }
         children.insertBefore(ampComment, children.firstChild);
-        
+        console.log('here');
         return ampComment;
     }
 
@@ -373,6 +389,8 @@ const replyMoveForm = (e) => {
         form.removeAttribute('amp-novalidate');
         form.removeAttribute('class');
     }
+    const noScript =  respondEl.getElementsByTagName('noscript');
+    if(noScript[0]) noScript[0].parentNode.removeChild(noScript[0]);
      replyEl = respondEl.cloneNode(true);
      storeRespEl = respondEl;
      const resp = replyEl.querySelector('#respond');
@@ -400,13 +418,13 @@ const replyMoveForm = (e) => {
 };
 
 const replyFormCancel = () => {
+      delAlertBox();
       const respondEl = document.getElementById('amp-respond');
       respondEl.parentNode.removeChild(respondEl);
       if(hiddenRepLink) {
         hiddenRepLink.removeAttribute('hidden');  
         hiddenRepLink = null;
       }
-      storeRespEl.querySelector('#submit-amp').addEventListener('click', sumbitComment);
       commentsEl.insertBefore(storeRespEl, commentsEl.firstChild);
 };
 

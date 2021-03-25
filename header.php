@@ -7,7 +7,6 @@
 <?php else: ?>
 <link rel="stylesheet" href="<?php echo mix('style.css'); ?>" />
 <?php endif; ?>
-   
     
    <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,7 +42,7 @@
   <?php if(isset($args['head_aditional_code']))echo $args['head_aditional_code'];?>
   </head>
 
- <body  <?php body_class( ); ?>>
+ <body class="i-amphtml-standalone <?php echo implode(' ',get_body_class()) ?>" >
 <?php if(a309_is_amp() ): 
  $stateData['theme_URI'] = get_stylesheet_directory_uri(); 
 ?>        

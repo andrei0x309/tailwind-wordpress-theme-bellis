@@ -1,5 +1,11 @@
-<?php get_header(); ?>
+<?php
 
+$style = '
+<meta name="test" content="tttt eeee ssss tttt">    
+<noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>';
+         
+get_header(null,['head_aditional_code' => $style]); ?>
+ 
 <div class="main flex w-full mt-6 mb-6 justify-center">
  
     

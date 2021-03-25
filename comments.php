@@ -12,11 +12,13 @@ $a309_no_comments = get_comments_number();
 
 ?>
 <?php if(a309_is_amp() ): ?>
-<amp-script amp-boilerplate layout="container" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_comments.js" sandbox="allow-forms">
+<amp-script id="comments-script" layout="container" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_comments.js" sandbox="allow-forms">
+ 
 <?php endif; ?>
 <div id="comments" data-post-id="<?php echo $post->ID; ?>" data-no-comments="<?php echo $a309_no_comments; ?>" class="comments-area default-max-width <?php echo get_option( 'show_avatars' ) ? 'show-avatars' : ''; ?>">
 <?php
-if(a309_is_amp()): echo '<div id="amp-respond">'; endif;
+if(a309_is_amp()): ?>
+<div id="amp-respond"> <?php endif;
 
         $aria_req = ($req) ? " aria-required='true'" : '' ;
         $comments_args = array(  
@@ -47,16 +49,18 @@ if(a309_is_amp()): echo '<div id="amp-respond">'; endif;
             $comments_args['cancel_reply_before'] = '';
             $comments_args['cancel_reply_after'] = '';
             $comments_args['cancel_reply_link'] = '';
-            $comments_args['submit_button'] = '<noscript><input name="%1$s" type="submit" id="%2$s" class="%3$s" value="%4$s" amp-boilerplate /></noscript>'; }
+            $comments_args['submit_button'] = '<noscript data-ampdevmode><input name="%1$s" type="submit" id="%2$s" class="%3$s" value="%4$s" /></noscript>'; }
 	comment_form( $comments_args );
 	if(a309_is_amp()):    
         ?>
+ 
     <p class="form-submit">
-        <button id="submit-amp" class="submit">Post Comment</button>
-    </p></div>
-    <noscript ><div amp-boilerplate>test</div></noscript>
+        <button id="submit-amp" class="submit fade-in">Post Comment</button>
+    </p>
+</div>
 <?php   
 endif;
+
 	if ( have_comments() ) :
 		?>
 		<h2 class="comments-title">
@@ -77,7 +81,10 @@ endif;
                 <button  id="comments-show-btn" >
                  Show Comments
                 </button>
-
+                <noscript data-ampdevmode><a  id="comments-page" >
+                 Go to comments page
+                </a>
+                </noscript>
                 
    
 
@@ -90,4 +97,5 @@ endif;
 </div><!-- #comments -->
 <?php if(a309_is_amp() ): ?>
 </amp-script>
+
 <?php endif;
