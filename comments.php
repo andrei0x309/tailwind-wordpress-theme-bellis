@@ -63,19 +63,16 @@ endif;
 
 	if ( have_comments() ) :
 		?>
-		<h2 class="comments-title">
-			<?php if ( '1' === $a309_no_comments ) : ?>
-				<?php esc_html_e( '1 comment', 'twentytwentyone' ); ?>
-			<?php else : ?>
-				<?php
+		<h2 class="comments-title"><?php if ( '1' === $a309_no_comments ) :
+				esc_html_e( '1 comment', 'twentytwentyone' ); 
+			else :
 				printf(
 					/* translators: %s: comment count number. */
-					esc_html( _nx( '%s comment', '%s comments', $a309_no_comments, 'Comments title', 'twentytwentyone' ) ),
+					esc_html( _nx( '%s comment', '%s comments', $a309_no_comments, 'Comments title', 'a309' ) ),
 					esc_html( number_format_i18n( $a309_no_comments ) )
 				);
-				?>
-			<?php endif; ?>
-		</h2><!-- .comments-title -->
+			
+                        endif; ?></h2><!-- .comments-title -->
                 
                 
                 <button  id="comments-show-btn" >
