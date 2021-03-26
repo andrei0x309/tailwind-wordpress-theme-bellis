@@ -34,7 +34,7 @@ mix.js('dev-assets/js/app_comments.js', 'js/app_comments.js');
 mix.copy('dev-assets/js/AMP/amp_base.js', 'js/AMP/amp_base.js');
 mix.copy('dev-assets/js/AMP/amp_search_modal.js', 'js/AMP/amp_search_modal.js');
 mix.copy('dev-assets/js/AMP/amp_comments.js', 'js/AMP/amp_comments.js');
-
+mix.copy('dev-assets/js/AMP/amp_addtoany.js', 'js/AMP/amp_addtoany.js');
 
 mix.sass('dev-assets/scss/base/post-list.scss', 'css/post-list.css');
 mix.sass('dev-assets/scss/search-results.scss', 'css/search-results.css');
@@ -54,6 +54,7 @@ if (mix.inProduction()) {
     'js/AMP/amp_base.js',
     'js/AMP/amp_search_modal.js',
     'js/AMP/amp_comments.js',
+    'js/AMP/amp_addtoany.js',
     
     'style.css',
     'amp-style.css',

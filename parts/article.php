@@ -63,9 +63,39 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
       
       
  if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' ) ) { 
-    ADDTOANY_SHARE_SAVE_KIT( array( 
-        'buttons' => array( 'twitter', 'reddit', 'pinterest', 'whatsapp', 'facebook', 'email', 'print' ),
+
+
+     if(a309_is_amp()): ?>
+ <amp-script layout="container"  src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_addtoany.js">
+         <?php   
+    $a2a_output = ADDTOANY_SHARE_SAVE_KIT( array( 
+        'buttons' => array( 
+            'twitter',
+            'reddit',
+            'pinterest',
+            'whatsapp',
+            'facebook',
+            'email',
+            'print' ),
+    'output_later' => true) );
+$a2a_output = preg_replace('/<a class="a2a_button_print".*?>/mi', '<a class="a2a_button_print" on="tap:AMP.print()"  href="#" title="Print" rel="nofollow noopener">', $a2a_output);
+ echo str_replace('style="background-color:#0166ff"', 'style="background-color:#434343"', $a2a_output);
+    
+     else:
+          ADDTOANY_SHARE_SAVE_KIT( array( 
+        'buttons' => array( 
+            'twitter',
+            'reddit',
+            'pinterest',
+            'whatsapp',
+            'facebook',
+            'email',
+            'print' ),
     ) );
+     endif;
+      if(a309_is_amp()): ?>
+       </amp-script>  
+      <?php  endif;
 }    
       
  }else{
@@ -75,6 +105,8 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
  </div>
  </article><!-- /.blog-post -->
  <?php
+ 
+
  
  if($articleFull){
  echo do_shortcode('[yarpp]');

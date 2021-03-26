@@ -18,7 +18,7 @@ function a309_is_amp() {
 
 
 // Exclude having CSS selectors being tree-shaken.
- add_filter( 'amp_content_sanitizers',
+ /*add_filter( 'amp_content_sanitizers',
 	function ( $sanitizers ) {
 		$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] = array_merge(
 			! empty( $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] ) ? $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] : [],
@@ -36,8 +36,16 @@ function a309_is_amp() {
 		);
 		return $sanitizers;
 	}
-);
+); */
+
+add_filter('A2A_SHARE_SAVE_services',        function ($A2A_SHARE_SAVE_services) {
+    foreach(array_keys($A2A_SHARE_SAVE_services) as $key){
+                $A2A_SHARE_SAVE_services[$key]['color'] = '434343';
+                }
+            return($A2A_SHARE_SAVE_services);
+        });
  
+
 
 function a309_setup_amp(){
     if(function_exists( 'is_amp_endpoint' ) && is_amp_endpoint()){
@@ -516,3 +524,44 @@ add_filter( 'avatar_defaults', 'new_gravatar' );
     }
     
 add_action( 'phpmailer_init', 'send_smtp_email' );
+
+
+
+
+ function a309_update_good_reads () {
+   
+     $option = get_option('widget_custom_html');
+     if($option){
+     $widgetArrId = 2;
+     $goodReadsJs = file_get_contents("https://www.goodreads.com/review/custom_widget/52338687.Andrei's%20bookshelf:%20read?cover_position=left&cover_size=small&num_books=5&order=d&shelf=read&show_author=1&show_cover=1&show_rating=1&show_review=1&show_tags=1&show_title=1&sort=date_added&widget_bg_color=FFFFFF&widget_bg_transparent=true&widget_border_width=none&widget_id=1613506906&widget_text_color=000000&widget_title_size=medium&widget_width=medium");
+     /*
+            let widgetHTML = respTxt.match(/=([^]+)widget_div =/gm)[0];
+       if(widgetHTML){        
+       widgetHTML = widgetHTML.replace('  var widget_div =','');
+       widgetHTML = widgetHTML.substring(3).slice(0, -2).trim();
+       widgetHTML = widgetHTML.replace(/\\\//gm, '/').replace(/\\n/gm, '');
+       widgetHTML = widgetHTML.replace(/\\"/gm, '"').replace(/<center>.*?<\/center>/gm, '').replace(/border="0"/gm, '').replace(/\\'/gm,`'`);
+        
+       document.getElementById(widgetId).innerHTML = widgetHTML;
+   }*/
+     
+     
+     preg_match ( '/=[^~]+widget_div =/ms' , $goodReadsJs , $mArr);
+     $iRep = str_replace('  var widget_div =' , '' , $mArr[0]);
+     $iRep = preg_replace ( '|\\\/|m' , '/' , $iRep);
+     $iRep = preg_replace ( '|\\\\n|m' , '' , $iRep);
+     $iRep = preg_replace ( '/\\\\"/m' , '"' , $iRep);
+     $iRep = preg_replace ( '/<center>[^\x07]+center>/m' , '' , $iRep);
+     $iRep = preg_replace ( '/border="0"/m' , '' , $iRep);
+     $iRep = preg_replace ( "/\\'/m" , "'" , $iRep);
+     $iRep = preg_replace ( "/<noscript>[^\x07]+noscript>/m" , "" , $iRep);
+     $iRep = preg_replace ( '|<br[^\x07]+<|m' , '<' , $iRep);
+     preg_match ( '|<div class="gr[^\x07]+$|m' , $iRep , $mArr);
+     $option[$widgetArrId]['content'] = substr($mArr[0], 0, -2);
+     
+     update_option('widget_custom_html', $option);
+ 
+     }
+  }
+  
+  //a309_update_good_reads();
