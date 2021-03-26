@@ -306,7 +306,7 @@
 
     const addCommentToDOM = (comment) => {
 
-
+        const slug = commentsEl.getAttribute('data-post-slug');
         const date = new Date(comment.comment_date);
         const options = {year: 'numeric', month: 'long', day: 'numeric'};
 
@@ -319,7 +319,9 @@
                        <span class="says">says:</span>					</div><!-- .comment-author -->
 
 					<div class="comment-metadata">
-						<a href="https://blog-dev.flashsoft.eu:8443/async-task-without-queue-or-e-loop-php/#comment-743"><time datetime="${comment.comment_date}">${date.toLocaleDateString('en-US', options)} at ${date.toLocaleTimeString('en-US')}</time></a>					</div><!-- .comment-metadata -->
+						<a href="${window.location.origin}/${slug}/#comment-${comment.comment_ID}">
+                        <time datetime="${comment.comment_date}">${date.toLocaleDateString('en-US', options)} at ${date.toLocaleTimeString('en-US')}
+                                </time></a></div><!-- .comment-metadata -->
 
 									</footer><!-- .comment-meta -->
 
@@ -334,18 +336,15 @@
             commentList.insertBefore(ampComment, commentList.firstChild);
         } else {
             const cancelLink = document.getElementById('cancel-comment-reply-link');
-            console.log(cancelLink.click);
             cancelLink.click();
             let commentParent = document.getElementById(`comment-${comment.comment_parent}`);
             let children = commentParent.querySelector('.children');
-            console.log(children);
             if (!children) {
                 children = document.createElement('ol');
                 children.classList.add('children');
                 commentParent.appendChild(children);
             }
             children.insertBefore(ampComment, children.firstChild);
-            console.log('here');
             return ampComment;
         }
 

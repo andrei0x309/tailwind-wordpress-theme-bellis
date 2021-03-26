@@ -294,7 +294,7 @@ add_action( 'wp_enqueue_scripts', 'add_adidtional_css_js' );
 
 
 function wpse71451_enqueue_comment_reply() {
-    if ( get_option( 'thread_comments' ) ) { 
+    if ( get_option( 'thread_comments' ) && !a309_is_amp() ) { 
         wp_enqueue_script( 'comment-reply' ); 
     }
 }
@@ -526,6 +526,21 @@ add_filter( 'avatar_defaults', 'new_gravatar' );
 add_action( 'phpmailer_init', 'send_smtp_email' );
 
 
+add_filter( 'cron_schedules', 'three_days_add_cron_interval' );
+function three_days_add_cron_interval( $schedules ) { 
+    $schedules['three_days'] = array(
+        'interval' => 259200,
+        'display'  => esc_html__( 'Every 3 Days' ), );
+    return $schedules;
+}
+
+
+if ( ! wp_next_scheduled( 'expire_posts' ) ) {
+    wp_schedule_event( time(), 'three_days', 'a309_update_good_reads' );
+}
+ 
+
+add_action( 'a309_update_good_reads', 'a309_update_good_reads' );
 
 
  function a309_update_good_reads () {
@@ -534,18 +549,7 @@ add_action( 'phpmailer_init', 'send_smtp_email' );
      if($option){
      $widgetArrId = 2;
      $goodReadsJs = file_get_contents("https://www.goodreads.com/review/custom_widget/52338687.Andrei's%20bookshelf:%20read?cover_position=left&cover_size=small&num_books=5&order=d&shelf=read&show_author=1&show_cover=1&show_rating=1&show_review=1&show_tags=1&show_title=1&sort=date_added&widget_bg_color=FFFFFF&widget_bg_transparent=true&widget_border_width=none&widget_id=1613506906&widget_text_color=000000&widget_title_size=medium&widget_width=medium");
-     /*
-            let widgetHTML = respTxt.match(/=([^]+)widget_div =/gm)[0];
-       if(widgetHTML){        
-       widgetHTML = widgetHTML.replace('  var widget_div =','');
-       widgetHTML = widgetHTML.substring(3).slice(0, -2).trim();
-       widgetHTML = widgetHTML.replace(/\\\//gm, '/').replace(/\\n/gm, '');
-       widgetHTML = widgetHTML.replace(/\\"/gm, '"').replace(/<center>.*?<\/center>/gm, '').replace(/border="0"/gm, '').replace(/\\'/gm,`'`);
-        
-       document.getElementById(widgetId).innerHTML = widgetHTML;
-   }*/
-     
-     
+
      preg_match ( '/=[^~]+widget_div =/ms' , $goodReadsJs , $mArr);
      $iRep = str_replace('  var widget_div =' , '' , $mArr[0]);
      $iRep = preg_replace ( '|\\\/|m' , '/' , $iRep);
@@ -563,5 +567,4 @@ add_action( 'phpmailer_init', 'send_smtp_email' );
  
      }
   }
-  
-  //a309_update_good_reads();
+ 
