@@ -224,7 +224,7 @@
         submitBtn.disabled = true;
         //serialize and store form data in a variable
 
-        console.log(actionUrl);
+        //console.log(actionUrl);
 
 
         const bodyData = {comment: document.getElementById('comment') ? document.getElementById('comment').value : '',
@@ -272,7 +272,6 @@
                         }
                     }
                 }
-                console.log(approved);
                 const notApprovedText = 'Comment was posted but was not approved it will be live after approval.';
                 const commentList = document.getElementById('comment-list');
                 if (commentList) {
@@ -287,7 +286,6 @@
                     } else {
                         alert = alertBox('info', notApprovedText, delAlertBox);
                     }
-
 
                     respondEl.appendChild(alert);
                 }
@@ -345,9 +343,8 @@
                 commentParent.appendChild(children);
             }
             children.insertBefore(ampComment, children.firstChild);
-            return ampComment;
         }
-
+       return ampComment;
     };
 
     const replyMoveForm = (e) => {

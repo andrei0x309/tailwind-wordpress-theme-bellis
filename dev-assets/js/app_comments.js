@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let page = null;
 
 //Called from index
-    eventsOnComments = () => {
+    const eventsOnComments = () => {
 // Add event on comments show
         if (showCommentsBtn)
-            showCommentsBtn.addEventListener('click', A309TH.showCommentsFn);
+            showCommentsBtn.addEventListener('click', showCommentsFn);
         commentFormEl.addEventListener('submit', sumbitComment);
     };
 
@@ -75,11 +75,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const addCommentToDOM = (comment) => {
 
-
+        const slug = commentsEl.getAttribute('data-post-slug');
         const date = new Date(comment.comment_date);
         const options = {year: 'numeric', month: 'long', day: 'numeric'};
 
-        const newCom = `<li id="comment-${comment.comment_ID}" class="comment byuser comment-author-${comment.comment_author} even thread-even comment-added fade-in">
+        const newComHTML = `<li id="comment-${comment.comment_ID}" class="comment byuser comment-author-${comment.comment_author} even thread-even comment-added fade-in">
 			<article id="div-comment-${comment.comment_ID}" class="comment-body">
 				<footer class="comment-meta">
 					<div class="comment-author vcard">
@@ -88,7 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
                        <span class="says">says:</span>					</div><!-- .comment-author -->
 
 					<div class="comment-metadata">
-						<a href="https://blog-dev.flashsoft.eu:8443/async-task-without-queue-or-e-loop-php/#comment-743"><time datetime="${comment.comment_date}">${date.toLocaleDateString('en-US', options)} at ${date.toLocaleTimeString('en-US')}</time></a>					</div><!-- .comment-metadata -->
+						<a href="${window.location.origin}/${slug}/#comment-${comment.comment_ID}">
+                                        <time datetime="${comment.comment_date}">${date.toLocaleDateString('en-US', options)} at ${date.toLocaleTimeString('en-US')}</time></a>					</div><!-- .comment-metadata -->
 
 									</footer><!-- .comment-meta -->
 
@@ -97,10 +98,12 @@ document.addEventListener("DOMContentLoaded", function () {
 				</div><!-- .comment-content -->
                                 </article><!-- .comment-body -->
 		</li>`;
-
+        const divParent = document.createElement('div');
+        divParent.innerHTML = newComHTML;
+        const newCom = divParent.firstChild;                            
         if (Number(comment.comment_parent) === 0) {
             const commentList = document.getElementById('comment-list');
-            commentList.insertAdjacentHTML('afterbegin', newCom);
+            commentList.insertBefore(newCom, commentList.firstChild);
         } else {
             const cancelLink = document.getElementById('cancel-comment-reply-link');
             cancelLink.click();
@@ -111,13 +114,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 children.classList.add('children');
                 commentParent.appendChild(children);
             }
-            children.insertAdjacentHTML('afterbegin', newCom);
-            children.scrollIntoView();
+            commentList.insertBefore(newCom, commentList.firstChild);
+            newCom.scrollIntoView();
         }
-
+        return newCom;
     };
 
-    showCommentsFn = async () => {
+    const showCommentsFn = async () => {
         showCommentsBtn.innerHTML = `
      Loading
      <div class="loadingspinner"></div>
@@ -198,10 +201,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 respondEl.appendChild(alert);
             } else {
                 const commentList = document.getElementById('comment-list');
+                const approved = parseInt(data.comment.comment_approved) === 1;
+                const notApprovedText = 'Comment was posted but was not approved it will be live after approval.';
                 if (commentList) {
-                    addCommentToDOM(data.comment);
+                    const com = addCommentToDOM(data.comment);
+                    if(!approved){
+                        alert = alertBox('info', notApprovedText);
+                         com.appendChild(alert);
+                    }
                 } else {
-                    alert = alertBox('success', 'Comment was posted');
+                     if (approved) {
+                        alert = alertBox('success', 'Comment was posted');
+                    } else {
+                        alert = alertBox('info', notApprovedText);
+                    }
                     respondEl.appendChild(alert);
                 }
             }

@@ -1,7 +1,7 @@
 {
     "/js/app.js": "/js/app.js?id=7bfe8164dfdae74ae861",
     "/js/app_index.js": "/js/app_index.js?id=5a010cd87741c1b9687a",
-    "/js/app_comments.js": "/js/app_comments.js?id=2721711a5eda86709c71",
+    "/js/app_comments.js": "/js/app_comments.js?id=00f017ede21fb1b33d13",
     "/css/page-offline.css": "/css/page-offline.css?id=1656c4ef0572d23d2bca",
     "/css/search-results.css": "/css/search-results.css?id=8920a2f41d4db327209c",
     "/css/post-list.css": "/css/post-list.css?id=85a5769a757a3a077418",
@@ -12,6 +12,6 @@
     "/css/404.css": "/css/404.css?id=baed69178dac9d449fc2",
     "/js/AMP/amp_base.js": "/js/AMP/amp_base.js?id=ffa3d795a934225a2cc0",
     "/js/AMP/amp_search_modal.js": "/js/AMP/amp_search_modal.js?id=db88fecf801e61895e59",
-    "/js/AMP/amp_comments.js": "/js/AMP/amp_comments.js?id=2f8405d26a0fecc9c800",
+    "/js/AMP/amp_comments.js": "/js/AMP/amp_comments.js?id=624c571833566aca43c0",
     "/js/AMP/amp_addtoany.js": "/js/AMP/amp_addtoany.js?id=cb913aeb75715ae1ce61"
 }
