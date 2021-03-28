@@ -23,9 +23,9 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/icon/flashsoft-blog-192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icon/flashsoft-blog-96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
@@ -42,7 +42,7 @@
   <?php if(isset($args['head_aditional_code']))echo $args['head_aditional_code'];?>
   </head>
 
- <body class="i-amphtml-standalone <?php echo implode(' ',get_body_class()) ?>" >
+ <body class="<?php echo implode(' ',get_body_class()) ?>" >
 <?php if(a309_is_amp() ): 
  $stateData['theme_URI'] = get_stylesheet_directory_uri(); 
 ?>        

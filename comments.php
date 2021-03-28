@@ -36,7 +36,7 @@ $comments_args = array(
         'url' => '',
     ],
     'logged_in_as' => null,
-    'title_reply' => esc_html__('Leave a comment', 'twentytwentyone'),
+    'title_reply' => esc_html__('Leave a comment', 'a309'),
     'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
     'title_reply_after' => '</h2>',
 );
@@ -61,7 +61,7 @@ if (have_comments()) :
     ?>
             <h2 class="comments-title"><?php
             if ('1' === $a309_no_comments) :
-                esc_html_e('1 comment', 'twentytwentyone');
+                esc_html_e('1 comment', 'a309');
             else :
                 printf(
                         /* translators: %s: comment count number. */
@@ -85,7 +85,7 @@ if (have_comments()) :
 
 
     <?php if (!comments_open()) : ?>
-                <p class="no-comments"><?php esc_html_e('Comments are closed.', 'twentytwentyone'); ?></p>
+                <p class="no-comments"><?php esc_html_e('Comments are closed.', 'a309'); ?></p>
             <?php endif; ?>
         <?php endif; ?>
     </div><!-- #comments -->

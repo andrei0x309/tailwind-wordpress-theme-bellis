@@ -67,18 +67,51 @@ return $query;
 }
 add_filter('pre_get_posts','remove_pages_from_search');
 
+// PWA FILTERS
+
+add_filter( 'web_app_manifest', function( $manifest ) {
+    $manifest['short_name'] = 'FlashSoft Blog';
+    return $manifest;
+} );
 
 
-/**
- * Exclude wp-json from SuperPWA cache
- * 
- * @link https://superpwa.com/codex/superpwa_sw_never_cache_urls/
- */
-/*function superpwa_exclude_from_cache( $superpwa_sw_never_cache_urls ) {
-	return $superpwa_sw_never_cache_urls . ',/\/wp-json/';
-}
-add_filter( 'superpwa_sw_never_cache_urls', 'superpwa_exclude_from_cache' );
-*/
+add_filter( 'web_app_manifest', function ( $manifest ) {
+	$manifest['icons'] = array(
+            	array(
+			'src'     => home_url( '/icon/flashsoft-blog-96.png' ),
+			'sizes'   => '96x96',
+			'type'    => 'image/png',
+			'purpose' => 'any',
+		),
+		array(
+			'src'     => home_url( '/icon/flashsoft-blog-192.png' ),
+			'sizes'   => '192x192',
+			'type'    => 'image/png',
+			'purpose' => 'any',
+		),
+		array(
+			'src'     => home_url( '/icon/flashsoft-blog-192.png' ),
+			'sizes'   => '192x192',
+			'type'    => 'image/png',
+			'purpose' => 'maskable',
+		),
+		array(
+			'src'     => home_url( '/icon/flashsoft-blog-512.png' ),
+			'sizes'   => '512x512',
+			'type'    => 'image/png',
+			'purpose' => 'any',
+		),
+		array(
+			'src'     => home_url( '/icon/blog-icon-512.png' ),
+			'sizes'   => '512x512',
+			'type'    => 'image/png',
+			'purpose' => 'maskable',
+		),
+	);
+	return $manifest;
+} );
+
+
 
 
 
@@ -557,7 +590,7 @@ add_action( 'a309_update_good_reads', 'a309_update_good_reads' );
      $iRep = preg_replace ( '/\\\\"/m' , '"' , $iRep);
      $iRep = preg_replace ( '/<center>[^\x07]+center>/m' , '' , $iRep);
      $iRep = preg_replace ( '/border="0"/m' , '' , $iRep);
-     $iRep = preg_replace ( "/\\'/m" , "'" , $iRep);
+     $iRep = preg_replace ( "/\\\\'/m" , "'" , $iRep);
      $iRep = preg_replace ( "/<noscript>[^\x07]+noscript>/m" , "" , $iRep);
      $iRep = preg_replace ( '|<br[^\x07]+<|m' , '<' , $iRep);
      preg_match ( '|<div class="gr[^\x07]+$|m' , $iRep , $mArr);
