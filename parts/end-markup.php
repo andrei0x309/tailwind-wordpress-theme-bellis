@@ -1,3 +1,2 @@
-</amp-script>
 </body>
 </html>
