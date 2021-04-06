@@ -417,6 +417,6 @@
 
 
     postCommentBtn.addEventListener('click', sumbitComment);
-    showCommentsBtn.addEventListener('click', showCommentsFn);
-
+    if(showCommentsBtn) showCommentsBtn.addEventListener('click', showCommentsFn);
+ 
 })();

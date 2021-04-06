@@ -38,13 +38,20 @@ function a309_is_amp() {
 	}
 ); */
 
-add_filter('A2A_SHARE_SAVE_services',        function ($A2A_SHARE_SAVE_services) {
+/*add_filter('A2A_SHARE_SAVE_services',        function ($A2A_SHARE_SAVE_services) {
     foreach(array_keys($A2A_SHARE_SAVE_services) as $key){
                 $A2A_SHARE_SAVE_services[$key]['color'] = '434343';
                 }
             return($A2A_SHARE_SAVE_services);
         });
- 
+  
+*/
+// They added fix per suggestion https://wordpress.org/support/topic/suggestion-add-suport-for-print-on-amp/#post-14280359
+add_filter( 'addtoany_icons_bg_color', function() {
+	if ( a309_is_amp() ) {
+		return '#434343';
+	}
+} );
 
 
 function a309_setup_amp(){
