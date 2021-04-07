@@ -17,6 +17,9 @@ function a309_is_amp() {
 }
 
 
+add_filter( 'amp_mobile_version_switcher_styles_used',  '__return_false' );
+
+
 // Exclude having CSS selectors being tree-shaken.
  /*add_filter( 'amp_content_sanitizers',
 	function ( $sanitizers ) {
@@ -77,7 +80,7 @@ add_filter('pre_get_posts','remove_pages_from_search');
 // PWA FILTERS
 
 add_filter( 'web_app_manifest', function( $manifest ) {
-    $manifest['short_name'] = 'FlashSoft Blog';
+    $manifest['short_name'] = 'FSoft Blog';
     return $manifest;
 } );
 
@@ -333,13 +336,13 @@ function add_adidtional_css_js() {
 add_action( 'wp_enqueue_scripts', 'add_adidtional_css_js' );
 
 
-function wpse71451_enqueue_comment_reply() {
+function a309_enqueue_comment_reply() {
     if ( get_option( 'thread_comments' ) && !a309_is_amp() ) { 
         wp_enqueue_script( 'comment-reply' ); 
     }
 }
 // Hook into comment_form_before
-add_action( 'comment_form_before', 'wpse71451_enqueue_comment_reply' );
+add_action( 'comment_form_before', 'a309_enqueue_comment_reply' );
  
 
 add_action('rest_api_init', 'change_rest_post' );
@@ -608,3 +611,17 @@ add_action( 'a309_update_good_reads', 'a309_update_good_reads' );
      }
   }
  
+  
+  function my_login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url(<?php echo get_site_url(); ?>/icon/android-icon-96x96.png);
+		height:96px;
+		width:96px;
+		background-size: 96px 96px;
+		background-repeat: no-repeat;
+        	padding-bottom: 20px;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
