@@ -51,7 +51,7 @@ get_header(null,['head_aditional_code' => $style]); ?>
 		$alt = '';
         ?>
         <div style="padding-top: 56.25%;" class="w-full relative">
-            <img style="top:0" class="w-full object-cover object-center absolute" width="200" height="200" loading="lazy" src="<?php echo nelioefi_get_thumbnail_src($post->ID) ?>" alt="<?php echo $alt;?>">
+            <img style="top:0" class="w-full object-cover object-center absolute" width="200" height="200" loading="lazy" src="<?php echo get_the_post_thumbnail_url($post->ID) ?>" alt="<?php echo $alt;?>">
         </div>
         <!-- Card Content -->
         <div class="p-4 h-auto">

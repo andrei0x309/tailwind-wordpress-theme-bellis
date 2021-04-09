@@ -42,7 +42,7 @@
   <?php if(isset($args['head_aditional_code']))echo $args['head_aditional_code'];?>
   </head>
 
- <body class="<?php echo implode(' ',get_body_class()) ?>" >
+ <body class="<?php echo implode(' ',get_body_class()) ?> break-all" >
 <?php if(a309_is_amp() ): 
  $stateData['theme_URI'] = get_stylesheet_directory_uri(); 
 ?>        

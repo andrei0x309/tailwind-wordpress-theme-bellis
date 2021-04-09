@@ -41,7 +41,11 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
            <?php if (!$articleFull) { ?> <a href="<?php echo get_the_permalink(); ?>" 
             title="<?php echo esc_attr( get_the_title() ); ?>" id="featured-thumbnail-<?php the_ID(); ?>" 
            class="post-image post-image-left p-0 <?php echo $articleFull ? '': 'post-image-link'; ?>"><?php } ?>
-                <?php echo '<div class="pr-4 pl-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left text-center">'; the_post_thumbnail([500,280],array('title' => '', 'class' => 'm-auto')); echo '</div>'; ?>
+                <?php echo '<div class="pr-4 pl-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left text-center">'; 
+                echo '<img '
+                the_post_thumbnail([500,280],array('title' => '', 'class' => 'm-auto')); 
+                
+                echo '</div>'; ?>
             <?php if (!$articleFull) { ?> </a> <?php } ?>
 <?php } ?>   
          

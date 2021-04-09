@@ -1,5 +1,6 @@
 <?php
 
+
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 
 $A309_IS_AMP = false;
@@ -55,7 +56,7 @@ add_filter( 'addtoany_icons_bg_color', function() {
 		return '#434343';
 	}
 } );
-
+ 
 
 function a309_setup_amp(){
     if(function_exists( 'is_amp_endpoint' ) && is_amp_endpoint()){
@@ -620,7 +621,7 @@ add_action( 'a309_update_good_reads', 'a309_update_good_reads' );
 		width:96px;
 		background-size: 96px 96px;
 		background-repeat: no-repeat;
-        	padding-bottom: 20px;
+        	padding-bottom: 10px;
         }
     </style>
 <?php }
