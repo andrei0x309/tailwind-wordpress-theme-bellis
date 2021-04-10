@@ -40,18 +40,15 @@ get_header(null,['head_aditional_code' => $style]); ?>
       <?php  while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
  ?>
    <!-- Card -->
-        <div class="break-all lg:w-full xl:w-1/3 md:mx-2 mb-4 md:mb-0">
+        <div class="break-all lg:w-full xl:w-1/3 md:mx-2 mb-4">
         <div class="bg-gray-50 rounded-lg overflow-hidden shadow-lg relative">
         <!-- Card Image -->
-        <?php 
-        $alt = get_post_meta( $id, '_nelioefi_alt', true );
-	if ( isset( $attr['alt'] ) )
-		$alt = $attr['alt'];
-	if ( !$alt )
-		$alt = '';
+        <?php
+ 
+        $alt = a309_thumbnail_get_alt();
         ?>
         <div style="padding-top: 56.25%;" class="w-full relative">
-            <img style="top:0" class="w-full object-cover object-center absolute" width="200" height="200" loading="lazy" src="<?php echo get_the_post_thumbnail_url($post->ID) ?>" alt="<?php echo $alt;?>">
+            <img style="top:0" class="w-full object-cover object-center absolute" width="400" height="225" loading="lazy" src="<?php echo a309_resize_img_src(get_the_post_thumbnail_url($post->ID),400) ?>" alt="<?php echo $alt;?>">
         </div>
         <!-- Card Content -->
         <div class="p-4 h-auto">

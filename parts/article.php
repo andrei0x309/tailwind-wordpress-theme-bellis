@@ -42,9 +42,10 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
             title="<?php echo esc_attr( get_the_title() ); ?>" id="featured-thumbnail-<?php the_ID(); ?>" 
            class="post-image post-image-left p-0 <?php echo $articleFull ? '': 'post-image-link'; ?>"><?php } ?>
                 <?php echo '<div class="pr-4 pl-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left text-center">'; 
-                echo '<img '
-                the_post_thumbnail([500,280],array('title' => '', 'class' => 'm-auto')); 
-                
+                $alt = a309_thumbnail_get_alt();
+               ?>
+               <img class="m-auto wp-post-image" width="500" height="281" loading="lazy" src="<?php echo a309_resize_img_src(get_the_post_thumbnail_url($post->ID),500) ?>" <?php echo ($alt) ? 'alt="'.$alt.'"': 'alt';  ?> >
+                <?php
                 echo '</div>'; ?>
             <?php if (!$articleFull) { ?> </a> <?php } ?>
 <?php } ?>   
