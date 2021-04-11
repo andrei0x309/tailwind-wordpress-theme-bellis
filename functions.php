@@ -57,8 +57,7 @@ add_filter( 'addtoany_icons_bg_color', function() {
 	}
 } );
  
-// Get ALT for Featured image -- until i migrate from one plugin to another
-
+ 
 function a309_thumbnail_get_alt(){
     global $post;
     $image_id = get_post_thumbnail_id();
@@ -68,12 +67,7 @@ function a309_thumbnail_get_alt(){
         $alt = '';
 	if ( $image_alt ){
             $alt = $image_alt;
-        } else{
-            $alt_nelioefi = get_post_meta( $post->ID, '_nelioefi_alt', true );
-            if($alt_nelioefi){
-                $alt = $alt_nelioefi;
-            }
-          }
+        } 
           return $alt;
 }
 

@@ -53,10 +53,10 @@ get_header(null,['head_aditional_code' => $style]); ?>
         <!-- Card Content -->
         <div class="p-4 h-auto">
         <a href="<?php echo get_the_permalink(); ?>" class="block text-blue-500 hover:text-blue-600 font-semibold mb-2 text-lg lg:text-base xl:text-lg uppercase">
-              <h2><?php the_title(); ?></h2>
+              <h2 class="clamp-h2"><?php the_title(); ?></h2>
         </a>
  
-          <div class="text-gray-600 text-sm leading-relaxed block lg:text-xs xl:text-sm"><?php
+          <div class="clamp-p-body text-gray-600 text-sm leading-relaxed lg:text-xs xl:text-sm"><?php
           the_advanced_excerpt('length=276&length_type=charcaters&no_custom=1&ellipsis=%26hellip;&exclude_tags=img,p,strong&add_link=0&finish=exact');
           ?></div>
           <div class="mt-5 text-center">
