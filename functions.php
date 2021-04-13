@@ -602,7 +602,7 @@ function three_days_add_cron_interval( $schedules ) {
 }
 
 
-if ( ! wp_next_scheduled( 'expire_posts' ) ) {
+if ( ! wp_next_scheduled( 'a309_update_good_reads' ) ) {
     wp_schedule_event( time(), 'three_days', 'a309_update_good_reads' );
 }
  
@@ -635,8 +635,28 @@ add_action( 'a309_update_good_reads', 'a309_update_good_reads' );
      }
   }
  
+function a309_the_is_dark(){
+    if(!isset($_COOKIE['theme-color'])) return false;
+    if($_COOKIE['theme_color'] === 'dark') return true;
+    return false;
+}
   
-  function my_login_logo() { ?>
+function a309_set_theme_cookie($pref) { 
+
+if ( !in_array($pref, array('light','dark') ) ){
+$pref = 'light';   
+}
+ 
+if(!isset($_COOKIE['theme_color'])) {
+ 
+setcookie('theme_color', $pref, time()+31556926); // 1 year
+ 
+}
+ 
+} 
+  
+  
+  function a309_login_logo() { ?>
     <style type="text/css">
         #login h1 a, .login h1 a {
             background-image: url(<?php echo get_site_url(); ?>/icon/android-icon-96x96.png);
@@ -648,4 +668,4 @@ add_action( 'a309_update_good_reads', 'a309_update_good_reads' );
         }
     </style>
 <?php }
-add_action( 'login_enqueue_scripts', 'my_login_logo' );
+add_action( 'login_enqueue_scripts', 'a309_login_logo' );
