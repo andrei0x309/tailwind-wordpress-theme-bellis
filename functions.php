@@ -86,6 +86,7 @@ function a309_setup_amp(){
         global $A309_IS_AMP;
         $A309_IS_AMP = true;
         add_filter('addtoany_script_disabled', '__return_true');
+        remove_action( 'wp_print_footer_scripts', array( 'PLL_Cache_Compat', 'add_cookie_script' ) );
     }
 }
 
@@ -456,9 +457,7 @@ if($yoastSeo){
     return ['template' => $template, 'yoast_head' => $yoast_head ];
 }else{
     return $template;
-}  
-
-    
+ }   
 }
 
 

@@ -105,6 +105,15 @@ const alertBox = ( alertClass='error', alertMsg = '' ) => {
      return alertBox;
  };
  
+const showNavigateToPage = _ => {
+   const body = document.getElementsByTagName('body')[0];
+   const barLoader = document.createElement('div');
+   barLoader.classList.add('load-line');
+   body.prepend(barLoader);
+   body.style.opacity = 0.7;
+   console.log('1');
+};
+ 
 document.addEventListener("DOMContentLoaded", function() {
 quicklinkListen();
 
@@ -117,6 +126,8 @@ window.A309TH.initLightbox = initLightbox;
 
     window.A309TH.initLightbox();
     document.getElementById('menu-search-btn').addEventListener('click', showSearchModal);
+    
+    window.addEventListener("beforeunload", showNavigateToPage);
 
  });
 

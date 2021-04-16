@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.A309TH.postsRemoveShowMoreBtn.addEventListener('click', loadMorePosts);
 
     // Add Open Post Event
-    modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ]);
+    //modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ]);
 
 });
 
@@ -219,7 +219,7 @@ const openPost = async (e) => {
     updateHead(data['yoast_seo']);
     
     // Add Stylsheet and comment js
-    addStyleScriptts([ {type:'script', id:'a309-comments-js', path:`${window.A309TH.theme_URI}/js/app_comments.js`,  onLoadCallback: () => {  window.A309TH.eventsOnComments();  }    },
+    addStyleScriptts([ {type:'script', id:'a309-comments-js', path:`${window.A309TH.theme_URI}/js/app_comments.js`,  onLoadCallback: () => {  /*window.A309TH.eventsOnComments */  }    },
                        {type:'script', id:'comment-reply-js', path:`${window.location.origin}/wp-includes/js/comment-reply.min.js`,  onLoadCallback: () => { window.addComment.init();  } },
                        {type:'script', id:'akismet-form-js', path:`${window.location.origin}/wp-content/plugins/akismet/_inc/form.js` },
                        {type:'style',  id:'a309-single-css', path:`${window.A309TH.theme_URI}/css/single.css` },
@@ -325,8 +325,8 @@ const loadMorePosts = async () => {
         showMorePostsParent.prepend(window.A309TH.alertBox('error', '&#x26A0; Error fetching request!'));
     }
     
-    modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ] , true);
-    modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ]);
+    //modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ] , true);
+    //modifyEventForOpenPost(['.read-more', '.post-image-link', '.blog-post-title-link' ]);
       
     window.A309TH.postsRemoveShowMoreBtn.disabled = false;
 
