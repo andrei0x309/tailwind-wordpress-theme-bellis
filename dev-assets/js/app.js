@@ -9,7 +9,7 @@ import { LuminousGallery } from 'luminous-lightbox';
 });
 */
 let searchModalOpen = false;
-
+let loaderFired = false;
 
 const initLightbox = () => {
     new LuminousGallery(document.querySelectorAll("a.lightbox"), 
@@ -106,12 +106,18 @@ const alertBox = ( alertClass='error', alertMsg = '' ) => {
  };
  
 const showNavigateToPage = _ => {
+   if(!loaderFired){
    const body = document.getElementsByTagName('body')[0];
    const barLoader = document.createElement('div');
    barLoader.classList.add('load-line');
    body.prepend(barLoader);
-   body.style.opacity = 0.7;
-   console.log('1');
+   const main = document.getElementById('main');
+   if(main) main.style.opacity = 0.7;
+    const spinnerTag = document.createElement('div');
+    spinnerTag.classList.add('nav-spinner', 'spinner__1');
+    body.prepend(spinnerTag);
+    loaderFired = true;
+    }
 };
  
 document.addEventListener("DOMContentLoaded", function() {

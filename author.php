@@ -2,7 +2,7 @@
 
   <?php get_header(); ?>
 
-<div class="main flex w-full mt-6 mb-6 justify-center">
+<div id="main" class="main flex w-full mt-6 mb-6 justify-center">
  
     
     

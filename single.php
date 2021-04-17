@@ -6,7 +6,7 @@ $style = '
          
 get_header(null,['head_aditional_code' => $style]); ?>
  
-<div class="main flex w-full mt-6 mb-6 justify-center">
+<div id="main" class="main flex w-full mt-6 mb-6 justify-center">
  
     
     

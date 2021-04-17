@@ -1,6 +1,15 @@
-<?php get_header(); ?>
+<?php 
 
-<div class="main flex w-full mt-6 mb-6 justify-center">
+if ( ! defined( 'ABSPATH' ) ) {
+    header( 'HTTP/1.1 301 Moved Permanently' );
+    header( 'Location: /' );
+    die();
+}
+
+get_header(); 
+?>
+
+<div id="main" class="main flex w-full mt-6 mb-6 justify-center">
  
     
     
