@@ -3,10 +3,10 @@
 $articleFull = (isset($args['full_content']) && $args['full_content']);
         
 ?>
-<article itemscope itemtype="http://schema.org/BlogPosting" class="<?php echo $articleFull? '':'content-va-on ' ?>post-body mb-2 <?php echo implode(' ',get_post_class()) ?>" id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>">
+<article <?php if (!$articleFull): ?> itemscope itemtype="http://schema.org/BlogPosting" <?php endif; ?> class="<?php echo $articleFull? '':'content-va-on ' ?>break-word post-body mb-2 <?php echo implode(' ',get_post_class()) ?>" id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>">
      <header>
          <?php  if($articleFull): ?>
-         <h1 itemprop="headline" class="blog-post-title">
+         <h1 class="blog-post-title">
          <?php          
          else: ?>
          <h2 itemprop="headline" class="blog-post-title blog-post-title-link">
@@ -24,12 +24,16 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
          <?php endif; ?>
          
         <div class="blog-post-meta flex flex-row">
-            <address class="author px-2 pt-3 pb-6"><a rel="author" title="Author's page" href="<?php echo site_url(); ?>/author/andrei0x309/"><i class="icon-user-solid-square"></i> <?php the_author(); ?></a></address> 
-            <time class="px-2 pt-3 pb-6" itemprop="published" datetime="<?php echo get_the_date('Y-m-d'); ?>" title="<?php echo get_the_date(); ?>"><i class="icon-calendar"></i> <?php echo get_the_date(); ?></time>
+            <address class="author px-2 pt-3 pb-6"><a rel="author" title="Author's page" href="<?php echo site_url(); ?>/author/andrei0x309/"><i class="icon-user-solid-square"></i><span class="inline" <?php if (!$articleFull): ?>  itemprop="author"<?php endif; ?>> <?php the_author(); ?></span></a></address> 
+            <span class="px-2 pt-3 pb-6"><i class="icon-calendar"></i> <time datetime="<?php echo get_the_date('Y-m-d'); ?>" title="<?php echo get_the_date(); ?>" <?php if (!$articleFull): ?> itemprop="datePublished" <?php endif; ?>><?php echo get_the_date(); ?></time></span>
             <span class="px-2 pt-3 pb-6" ><i class="icon-folder"></i> <?php the_category( ', ' ); ?></span> 
+            <?php if (!$articleFull): ?> 
+            <meta itemprop="mainEntityOfPage" content="<?php echo site_url(); ?>">
+            <meta itemprop="dateModified" content="<?php the_modified_date(); ?>">
+            <?php endif; ?>
         </div>     
      </header><!--  !-->
-     <div itemprop="articleBody" class="article-body">
+     <div <?php if (!$articleFull): ?>  itemprop="articleBody" <?php endif; ?> class="article-body">
      <?php
           if ( function_exists('yoast_breadcrumb') && $articleFull ):
      yoast_breadcrumb( '<div id="breadcrumbs" class="mb-2">','</div>' );
@@ -44,7 +48,7 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
                 <?php echo '<div class="pt-2 pr-4 pl-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left text-center">'; 
                 $alt = a309_thumbnail_get_alt();
                ?>
-               <img class="m-auto wp-post-image" width="500" height="281" loading="lazy" src="<?php echo a309_resize_img_src(get_the_post_thumbnail_url(),500) ?>" <?php echo ($alt) ? 'alt="'.$alt.'"': 'alt';  ?> >
+               <img <?php if (!$articleFull): ?> itemprop="image"<?php endif; ?> class="m-auto wp-post-image" width="500" height="281" loading="lazy" src="<?php echo a309_resize_img_src(get_the_post_thumbnail_url(),500) ?>" <?php echo ($alt) ? 'alt="'.$alt.'"': 'alt';  ?> >
                 <?php
                 echo '</div>'; ?>
             <?php if (!$articleFull) { ?> </a> <?php } ?>

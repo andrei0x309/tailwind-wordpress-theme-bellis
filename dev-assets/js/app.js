@@ -10,6 +10,7 @@ import { LuminousGallery } from 'luminous-lightbox';
 */
 let searchModalOpen = false;
 let loaderFired = false;
+let isSwitchingTheme = false;
 
 const initLightbox = () => {
     new LuminousGallery(document.querySelectorAll("a.lightbox"), 
@@ -37,6 +38,7 @@ const showSearchModal = () => {
  
   document.getElementById('search-close-btn').addEventListener('click', closeSearchModal);
   document.getElementById('menu-search-from').addEventListener('submit', searchAddSpinner);
+  document.getElementById('btn-theme-switch').addEventListener('click', themeSwitch);
   }
 };
 
@@ -119,6 +121,41 @@ const showNavigateToPage = _ => {
     loaderFired = true;
     }
 };
+
+const themeSwitch = (e) => {
+    
+const darkIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+</svg>`;
+
+const lightIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+</svg>`;
+    
+    if(!isSwitchingTheme){
+        const body = document.getElementsByTagName('body')[0];
+        const isDarkmode = body.classList.contains("active");
+        isSwitchingTheme = true;
+        
+        if (isDarkmode) {
+    e.target.classList.remove('bg-yellow-500','-translate-x-2')
+    e.target.classList.add('bg-gray-700','translate-x-full')
+    setTimeout(() => {
+      e.target.innerHTML = darkIcon;
+    }, 250);
+  } else {
+    e.target.classList.add('bg-yellow-500','-translate-x-2')
+    e.target.classList.remove('bg-gray-700','translate-x-full')
+    setTimeout(() => {
+      e.target.innerHTML = lightIcon;
+    }, 250);
+  }
+        
+        
+    }
+    
+};
+
  
 document.addEventListener("DOMContentLoaded", function() {
 quicklinkListen();
