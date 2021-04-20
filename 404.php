@@ -9,7 +9,7 @@ get_header(null,['head_aditional_code' => $style]); ?>
 <div class="main flex w-full mt-6 mb-6 justify-center">
  
     
-    <main class="flex flex-col content bg-white w-full sm:w-full md:w-7/12 lg:w-7/12 xl:w-7/12 p-8">
+    <main class="flex flex-col content bg-white w-full sm:w-full md:w-7/12 lg:w-7/12 xl:w-7/12 p-8 dark:bg-dark-bg text-dark-text">
      
                     <header class="page-header">
                 <p class="not-found-404">404</p>

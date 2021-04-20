@@ -8,6 +8,7 @@ mix.setPublicPath('../a309');
 let mainOptions = [ tailwindcss('./tailwind.js') , purgecss({content: [
             path.join(__dirname, "!(404).php"),
             path.join(__dirname, "parts/*.php"),
+            path.join(__dirname, "dev-assets/js/app.js")
         ],})  ];
 let error404Options = [ tailwindcss('./tailwind.js'), purgecss({content: [
             path.join(__dirname, "404.php"),
