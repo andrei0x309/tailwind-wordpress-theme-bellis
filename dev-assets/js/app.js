@@ -137,15 +137,15 @@ const lightIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
         console.log(isDarkmode);
         const svg = document.getElementById('svg-theme-switch');
 if (isDarkmode) {
-    svg.classList.add('bg-yellow-500','-translate-x-2');
-    svg.classList.remove('bg-gray-700','translate-x-full');
+    svg.classList.add('-translate-x-2');
+    svg.classList.remove('translate-x-full');
     document.documentElement.classList.remove('dark');
     setTimeout(() => {
       svg.innerHTML = darkIcon;
     }, 200);
   } else {
-    svg.classList.remove('bg-yellow-500','-translate-x-2');
-    svg.classList.add('bg-gray-700','translate-x-full');
+    svg.classList.remove('-translate-x-2');
+    svg.classList.add('translate-x-full');
     document.documentElement.classList.add('dark');
     setTimeout(() => {
       svg.innerHTML = lightIcon;

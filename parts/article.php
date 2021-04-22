@@ -3,7 +3,8 @@
 $articleFull = (isset($args['full_content']) && $args['full_content']);
         
 ?>
-<article <?php if (!$articleFull): ?> itemscope itemtype="http://schema.org/BlogPosting" <?php endif; ?> class="<?php echo $articleFull? '':'content-va-on ' ?>break-word post-body mb-2 <?php echo implode(' ',get_post_class()) ?>" id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>">
+<article <?php if (!$articleFull): ?> itemscope itemtype="http://schema.org/BlogPosting" 
+<?php endif; ?> class="<?php echo $articleFull? '':'content-va-on ' ?> p-8 bg-white break-word post-body mb-4 <?php echo implode(' ',get_post_class()) ?>" id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name ;?>" data-title="<?php echo $post->post_title ;?>">
      <header>
          <?php  if($articleFull): ?>
          <h1 class="blog-post-title">
@@ -45,10 +46,10 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
            <?php if (!$articleFull) { ?> <a href="<?php echo get_the_permalink(); ?>" 
             title="<?php echo esc_attr( get_the_title() ); ?>" id="featured-thumbnail-<?php the_ID(); ?>" 
            class="post-image post-image-left p-0 <?php echo $articleFull ? '': 'post-image-link'; ?>"><?php } ?>
-                <?php echo '<div class="pt-2 pr-4 pl-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-2/5 md:float-left text-center">'; 
-                $alt = a309_thumbnail_get_alt();
+                <?php echo '<div class="pt-2 pr-4 pl-4 pb-6 featured-thumbnail w-full content-center justify-center md:w-full md:text-center">'; 
+                $alt = bellis_thumbnail_get_alt();
                ?>
-               <img <?php if (!$articleFull): ?> itemprop="image"<?php endif; ?> class="m-auto wp-post-image" width="500" height="281" loading="lazy" src="<?php echo a309_resize_img_src(get_the_post_thumbnail_url(),500) ?>" <?php echo ($alt) ? 'alt="'.$alt.'"': 'alt';  ?> >
+               <img <?php if (!$articleFull): ?> itemprop="image"<?php endif; ?> class="m-auto wp-post-image" width="500" height="281" loading="lazy" src="<?php echo bellis_resize_img_src(get_the_post_thumbnail_url(),500) ?>" <?php echo ($alt) ? 'alt="'.$alt.'"': 'alt';  ?> >
                 <?php
                 echo '</div>'; ?>
             <?php if (!$articleFull) { ?> </a> <?php } ?>
@@ -74,7 +75,7 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
  if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' ) ) { 
 
 
-     if(a309_is_amp()): ?>
+     if(bellis_is_amp()): ?>
  <amp-script layout="container"  src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_addtoany.js">
          <?php
          //    $a2a_output = 
@@ -102,7 +103,7 @@ ADDTOANY_SHARE_SAVE_KIT( array(
             'print' ),
     ) );
      endif;
-      if(a309_is_amp()): ?>
+      if(bellis_is_amp()): ?>
        </amp-script>  
       <?php  endif;
 }    

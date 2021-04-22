@@ -11,7 +11,7 @@ get_header();
 
 <div id="main" class="main flex w-full mt-6 mb-6 justify-center">
  
-    <main class="flex flex-col content bg-white w-full sm:w-full md:w-7/12 lg:w-7/12 xl:w-7/12 p-8 dark:bg-dark-bg dark:text-dark-text">
+    <main class="flex flex-col content w-full sm:w-full md:w-5/12 lg:w-5/12 xl:w-5/12 dark:bg-dark-bg dark:text-dark-text">
      
         
          <?php 
@@ -27,7 +27,7 @@ get_header();
   //echo the_posts_pagination();
  
  ?>
-<?php if(a309_is_amp() ): the_posts_pagination();
+<?php if(bellis_is_amp() ): the_posts_pagination();
 else: ?>
         <div class="text-center m-2"> 
         <button id="show-more-posts-btn">Load more Posts</button>

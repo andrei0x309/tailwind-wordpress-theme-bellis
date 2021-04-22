@@ -3,7 +3,7 @@
 
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 
-$A309_IS_AMP = false;
+$bellis_IS_AMP = false;
 
 /**
  * Determine whether this is an AMP response.
@@ -12,9 +12,9 @@ $A309_IS_AMP = false;
  *
  * @return bool Is AMP endpoint (and AMP plugin is active).
  */
-function a309_is_amp() {
-    global $A309_IS_AMP;
-    return $A309_IS_AMP ;
+function bellis_is_amp() {
+    global $bellis_IS_AMP;
+    return $bellis_IS_AMP ;
 }
 
 
@@ -52,13 +52,13 @@ add_filter( 'amp_mobile_version_switcher_styles_used',  '__return_false' );
 */
 // They added fix per suggestion https://wordpress.org/support/topic/suggestion-add-suport-for-print-on-amp/#post-14280359
 add_filter( 'addtoany_icons_bg_color', function() {
-	if ( a309_is_amp() ) {
+	if ( bellis_is_amp() ) {
 		return '#434343';
 	}
 } );
  
  
-function a309_thumbnail_get_alt(){
+function bellis_thumbnail_get_alt(){
     global $post;
     $image_id = get_post_thumbnail_id();
         if($image_id){
@@ -72,7 +72,7 @@ function a309_thumbnail_get_alt(){
 }
 
 
-function a309_resize_img_src($src, $size=500){
+function bellis_resize_img_src($src, $size=500){
     $img_src = explode('=', $src);
     if(count($img_src)  > 1 ){
         return $img_src[0].'=w'.$size;
@@ -81,16 +81,16 @@ function a309_resize_img_src($src, $size=500){
 }
 
 
-function a309_setup_amp(){
+function bellis_setup_amp(){
     if(function_exists( 'is_amp_endpoint' ) && is_amp_endpoint()){
-        global $A309_IS_AMP;
-        $A309_IS_AMP = true;
+        global $bellis_IS_AMP;
+        $bellis_IS_AMP = true;
         add_filter('addtoany_script_disabled', '__return_true');
         remove_action( 'wp_print_footer_scripts', array( 'PLL_Cache_Compat', 'add_cookie_script' ) );
     }
 }
 
-add_action( 'wp', 'a309_setup_amp' );
+add_action( 'wp', 'bellis_setup_amp' );
 
 
 /* Exclude Pages from search */
@@ -274,7 +274,7 @@ function theme_slug_widgets_init() {
 	'after_title'   => '</h2>',
     ) );
     
-    register_sidebar( array(
+register_sidebar( array(
 'name' => 'Footer Sidebar',
 'id' => 'footer-sidebar',
 'description' => 'Appears in the footer area',
@@ -289,8 +289,8 @@ function theme_slug_widgets_init() {
 
 
 require_once get_template_directory() .'/inc/nav_menu.php';
-add_action( 'init', 'wpa309_theme_reg_menus' );
-function wpa309_theme_reg_menus(){
+add_action( 'init', 'wpbellis_theme_reg_menus' );
+function wpbellis_theme_reg_menus(){
     
     register_nav_menus( array(
       'primary-menu'    => __( 'Primary' ),
@@ -306,11 +306,11 @@ function wpa309_theme_reg_menus(){
 /* theme Setup */
 
 if ( ! isset( $content_width ) ){
-    $content_width = 900;
+    $content_width = 1100;
 }
 
 
-function wpa309_theme_setup() {
+function wpbellis_theme_setup() {
     add_theme_support( 'title-tag' );
     add_theme_support( 'automatic-feed-links' );
     add_theme_support( 'post-thumbnails' );
@@ -318,7 +318,7 @@ function wpa309_theme_setup() {
   
 }
  
-add_action( 'after_setup_theme', 'wpa309_theme_setup' );
+add_action( 'after_setup_theme', 'wpbellis_theme_setup' );
 
 // Remove Jquery Migrate 
 /*
@@ -330,7 +330,7 @@ add_action('wp_default_scripts', function ($scripts) {
 */
 
 function add_adidtional_css_js() {
- if(!a309_is_amp()) {
+ if(!bellis_is_amp()) {
     // APP CSS
     if( is_singular() ){
     wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
@@ -352,7 +352,7 @@ function add_adidtional_css_js() {
  }else{
     // APP CSS
     if( is_singular() ){
-    if(!a309_is_amp()) wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
+    if(!bellis_is_amp()) wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
     else wp_enqueue_style( 'a309-single-amp', get_template_directory_uri() . '/css/single-amp.css',false, null,'all');
     }
  }
@@ -361,13 +361,13 @@ function add_adidtional_css_js() {
 add_action( 'wp_enqueue_scripts', 'add_adidtional_css_js' );
 
 
-function a309_enqueue_comment_reply() {
-    if ( get_option( 'thread_comments' ) && !a309_is_amp() ) { 
+function bellis_enqueue_comment_reply() {
+    if ( get_option( 'thread_comments' ) && !bellis_is_amp() ) { 
         wp_enqueue_script( 'comment-reply' ); 
     }
 }
 // Hook into comment_form_before
-add_action( 'comment_form_before', 'a309_enqueue_comment_reply' );
+add_action( 'comment_form_before', 'bellis_enqueue_comment_reply' );
  
 
 add_action('rest_api_init', 'change_rest_post' );
@@ -382,13 +382,13 @@ function change_rest_post(){
     
   register_rest_route( 'a309/v1', '/get-y-morph/plugin/(?P<plugin>.*)', array(
     'methods' => 'GET',
-    'callback' => 'a309_get_y_morf',
+    'callback' => 'bellis_get_y_morf',
     'permission_callback' => '__return_true',
   ) );
   
   register_rest_route( 'a309/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
     'methods' => 'GET',
-    'callback' => 'a309_get_posts',
+    'callback' => 'bellis_get_posts',
     'permission_callback' => '__return_true',
   ) );
   
@@ -406,19 +406,19 @@ function change_rest_post(){
    
       register_rest_route( 'a309/v1', '/gr-widget', array(
     'methods' => 'GET',
-    'callback' => 'a309_get_gr_widget',
+    'callback' => 'bellis_get_gr_widget',
     'permission_callback' => '__return_true',
   ) );
    
 }
  
-function a309_get_gr_widget(){
+function bellis_get_gr_widget(){
     echo file_get_contents("https://www.goodreads.com/review/custom_widget/52338687.Andrei's%20bookshelf:%20read?cover_position=left&cover_size=small&num_books=5&order=d&shelf=read&show_author=1&show_cover=1&show_rating=1&show_review=1&show_tags=1&show_title=1&sort=date_added&widget_bg_color=FFFFFF&widget_bg_transparent=true&widget_border_width=none&widget_id=1613506906&widget_text_color=000000&widget_title_size=medium&widget_width=medium");
 }
 
 
 //https://my.yoast.com/api/downloads/file/morphology-en-v4?plugin_version=15.7&site=https%3A%2F%2Fblackellis.eu
-function a309_get_y_morf(){
+function bellis_get_y_morf(){
     
      global $wp_filesystem;
             WP_Filesystem();
@@ -433,7 +433,7 @@ function a309_get_y_morf(){
 }
 
 
-function a309_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = false){
+function bellis_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = false){
     
    $my_posts = new WP_Query($wpQueryArgs);  
    global $post;
@@ -480,14 +480,14 @@ $current_user->ID =  $user_id;
         'p' => $data['id'],   // id of the post you want to query
     );
     
-  $post_html = a309_get_post_template($args, true, true);
+  $post_html = bellis_get_post_template($args, true, true);
 
   wp_send_json([ 'article' => $post_html['template'], 'post_id' =>  $data['id'], 'yoast_seo' => $post_html['yoast_head']  ]);
  
 }
 
 
-function a309_get_posts($data){
+function bellis_get_posts($data){
      $template = '';
      $data['per_page'] = intval($data['per_page']);
      $data['per_page'] = $data['per_page']  < 0 ? 0 : $data['per_page'];
@@ -502,7 +502,7 @@ function a309_get_posts($data){
         'offset' => $data['offset'],
     );
      
-     $template = a309_get_post_template($args, false , false);
+     $template = bellis_get_post_template($args, false , false);
      
      wp_send_json([ 'articles' => $template, 'offset' =>  $data['offset'], 'per_page' => $data['per_page']]);
      
@@ -575,7 +575,7 @@ add_filter( 'avatar_defaults', 'new_gravatar' );
 /**
  * SMTP email.
  */
-
+/*
     // SMTP Authentication
     function send_smtp_email( $phpmailer ) {
     	$phpmailer->isSMTP();
@@ -590,57 +590,15 @@ add_filter( 'avatar_defaults', 'new_gravatar' );
     }
     
 add_action( 'phpmailer_init', 'send_smtp_email' );
+*/
 
-
-add_filter( 'cron_schedules', 'three_days_add_cron_interval' );
-function three_days_add_cron_interval( $schedules ) { 
-    $schedules['three_days'] = array(
-        'interval' => 259200,
-        'display'  => esc_html__( 'Every 3 Days' ), );
-    return $schedules;
-}
-
-
-if ( ! wp_next_scheduled( 'a309_update_good_reads' ) ) {
-    wp_schedule_event( time(), 'three_days', 'a309_update_good_reads' );
-}
- 
-
-add_action( 'a309_update_good_reads', 'a309_update_good_reads' );
-
-
- function a309_update_good_reads () {
-   
-     $option = get_option('widget_custom_html');
-     if($option){
-     $widgetArrId = 2;
-     $goodReadsJs = file_get_contents("https://www.goodreads.com/review/custom_widget/52338687.Andrei's%20bookshelf:%20read?cover_position=left&cover_size=small&num_books=5&order=d&shelf=read&show_author=1&show_cover=1&show_rating=1&show_review=1&show_tags=1&show_title=1&sort=date_added&widget_bg_color=FFFFFF&widget_bg_transparent=true&widget_border_width=none&widget_id=1613506906&widget_text_color=000000&widget_title_size=medium&widget_width=medium");
-
-     preg_match ( '/=[^~]+widget_div =/ms' , $goodReadsJs , $mArr);
-     $iRep = str_replace('  var widget_div =' , '' , $mArr[0]);
-     $iRep = preg_replace ( '|\\\/|m' , '/' , $iRep);
-     $iRep = preg_replace ( '|\\\\n|m' , '' , $iRep);
-     $iRep = preg_replace ( '/\\\\"/m' , '"' , $iRep);
-     $iRep = preg_replace ( '/<center>[^\x07]+center>/m' , '' , $iRep);
-     $iRep = preg_replace ( '/border="0"/m' , '' , $iRep);
-     $iRep = preg_replace ( "/\\\\'/m" , "'" , $iRep);
-     $iRep = preg_replace ( "/<noscript>[^\x07]+noscript>/m" , "" , $iRep);
-     $iRep = preg_replace ( '|<br[^\x07]+<|m' , '<' , $iRep);
-     preg_match ( '|<div class="gr[^\x07]+$|m' , $iRep , $mArr);
-     $option[$widgetArrId]['content'] = substr($mArr[0], 0, -2);
-     
-     update_option('widget_custom_html', $option);
- 
-     }
-  }
- 
-function a309_the_is_dark(){
+function bellis_the_is_dark(){
     if(!isset($_COOKIE['theme-color'])) return false;
     if($_COOKIE['theme_color'] === 'dark') return true;
     return false;
 }
   
-function a309_set_theme_cookie($pref) { 
+function bellis_set_theme_cookie($pref) { 
 
 if ( !in_array($pref, array('light','dark') ) ){
 $pref = 'light';   
@@ -653,9 +611,8 @@ setcookie('theme_color', $pref, time()+31556926); // 1 year
 }
  
 } 
-  
-  
-  function a309_login_logo() { ?>
+ 
+  function bellis_login_logo() { ?>
     <style type="text/css">
         #login h1 a, .login h1 a {
             background-image: url(<?php echo get_site_url(); ?>/icon/android-icon-96x96.png);
@@ -667,4 +624,4 @@ setcookie('theme_color', $pref, time()+31556926); // 1 year
         }
     </style>
 <?php }
-add_action( 'login_enqueue_scripts', 'a309_login_logo' );
+add_action( 'login_enqueue_scripts', 'bellis_login_logo' );

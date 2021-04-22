@@ -3,13 +3,13 @@ $a309wp_unique_id = wp_unique_id( 'search-form-' );
 
 //$a309wp_aria_label = ! empty( $args['aria_label'] ) ? 'aria-label="' . esc_attr( $args['aria_label'] ) . '"' : '';
 $a309wp_aria_label = '';
-$a309wp_search_button = isset($args['a309_search_btn']) && $args['a309_search_btn'] == true;;
-$a309wp_search_formen_menu = isset($args['a309_menu']) && $args['a309_menu'] == true;
+$a309wp_search_button = isset($args['bellis_search_btn']) && $args['bellis_search_btn'] == true;;
+$a309wp_search_formen_menu = isset($args['bellis_menu']) && $args['bellis_menu'] == true;
  
 ?>
 <?php if($a309wp_search_formen_menu): ?>
 
-<?php if(a309_is_amp() ): ?>
+<?php if(bellis_is_amp() ): ?>
 <amp-script layout="container" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_search_modal.js" sandbox="allow-forms">
     <button id="menu-search-btn" class="icon-search link-search-icon" aria-label="search button to open search modal"></button>
 </amp-script> 

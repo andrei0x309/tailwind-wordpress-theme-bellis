@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> <?php if(a309_the_is_dark()): ?>class="dark" <?php endif; ?> >
+<html <?php language_attributes(); ?> <?php if(bellis_the_is_dark()): ?>class="dark" <?php endif; ?> >
   <head>
       
-<?php if(a309_is_amp() ): ?>
+<?php if(bellis_is_amp() ): ?>
 <link rel="stylesheet" href="<?php echo mix('amp-style.css'); ?>" />
 <?php else: ?>
 <link rel="stylesheet" href="<?php echo mix('style.css'); ?>" />
@@ -32,7 +32,7 @@
     <meta name="theme-color" content="#ffffff">
     <?php wp_head(); ?>
     
-<?php if( ! a309_is_amp() ): ?>
+<?php if( ! bellis_is_amp() ): ?>
     <script>
      var A309TH = {}; window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri() ?>';
      window.A309TH.current_user_id = '<?php echo wp_get_current_user()->ID ?>';
@@ -42,8 +42,8 @@
   <?php if(isset($args['head_aditional_code']))echo $args['head_aditional_code'];?>
   </head>
 
- <body class="<?php echo implode(' ',get_body_class()) ?> break-all" >
-<?php if(a309_is_amp() ): 
+ <body class="<?php echo implode(' ',get_body_class()) ?> break-word" >
+<?php if(bellis_is_amp() ): 
  $stateData['theme_URI'] = get_stylesheet_directory_uri(); 
 ?>        
 <amp-state id="A309TH"><script type="application/json">
@@ -55,10 +55,11 @@
 <?php endif; ?>    
     
  
- <header class="header flex flex-row bg-gray-200 items-center content-va-off">
-      <div class="logo min-h-full h-16 w-40 bg-white py-2 rounded-tr-full dark:bg-dark-bg">
+ <header class="header bg-gray-200  content-va-off">
+ <div class="flex flex-row items-center h-full w-full m-auto md:w-3/4">
+ <div class="logo min-h-full w-80 mt-8  py-2 rounded-tr-full">
  <a href="<?php echo site_url(); ?>">
- <img height="48" width="96" class="h-full ml-4" src="<?php echo get_theme_file_uri( 'images/blogLogo.svg' ) ?>"  alt="flashsoft.eu Blog Logo" >
+ <img height="120" width="400" class="h-full ml-4" src="<?php echo get_theme_file_uri( 'images/bellisLogo.svg' ) ?>"  alt="blackellis.eu Blog Logo" >
  </a>
       </div>
    
@@ -70,16 +71,17 @@
                 <?php wp_nav_menu( [ 'theme_location' => 'secondary-menu', 'walker' => new Walker_Nav_Menu_Custom ] ); ?>
 	<?php }?>
       </nav>
-      <?php get_search_form(['a309_menu' => true]); ?>
+      <?php get_search_form(['bellis_menu' => true]); ?>
 
-<?php if (!a309_is_amp()): ?>     
+<?php if (!bellis_is_amp()): ?>     
 <button id="theme-switch" class="ml-5 w-16 h-6 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow">
-    <div id="svg-theme-switch" class="border border-white w-9 h-9 relative rounded-full transition duration-500 transform bg-yellow-500 -translate-x-2 p-1 text-white">
+    <div id="svg-theme-switch" class="border border-white w-9 h-9 relative rounded-full transition duration-500 transform bg-gray-700 -translate-x-2 p-1 text-white">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
     </div>
 </button>
- <?php endif; ?>   
+ <?php endif; ?>
+</div>
   </header>
 

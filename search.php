@@ -11,7 +11,7 @@ get_header(null,['head_aditional_code' => $style]);  ?>
     
 <main class="flex flex-col content bg-white w-full sm:w-full md:w-7/12 lg:w-7/12 xl:w-7/12 p-8 dark:bg-dark-bg dark:text-dark-text">
         
-<?php get_search_form(['a309_search_btn' => true]); ?>
+<?php get_search_form(['bellis_search_btn' => true]); ?>
     <h1 class="list-posts-title"> Search Results for:  <span><?php echo get_search_query(); ?></span></h1>
  <?php 
  if ( have_posts() ) { 
