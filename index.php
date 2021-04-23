@@ -11,7 +11,7 @@ get_header();
 
 <div id="main" class="main flex w-full mt-6 mb-6 justify-center">
  
-    <main class="flex flex-col content w-full sm:w-full md:w-5/12 lg:w-5/12 xl:w-5/12 dark:bg-dark-bg dark:text-dark-text">
+    <main class="flex flex-col content w-full sm:w-full md:w-5/12 lg:w-5/12 xl:w-5/12 dark:text-dark-text">
      
         
          <?php 

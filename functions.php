@@ -155,13 +155,13 @@ add_filter( 'web_app_manifest', function ( $manifest ) {
 remove_action('wp_head', 'wp_generator');
 
 // Remove Admin Bar
-add_filter('show_admin_bar', '__return_false');
+//add_filter('show_admin_bar', '__return_false');
 
 // Dev AMP
 add_filter( 'amp_dev_tools_user_default_enabled', '__return_true' );
 
 // Remove Jquery
-add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
+//add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
 
 function change_default_jquery( ){
     wp_dequeue_script( 'jquery');
@@ -378,13 +378,7 @@ function change_rest_post(){
     'callback' => 'get_post_by_id',
     'permission_callback' => '__return_true',
   ) );
-    
-    
-  register_rest_route( 'a309/v1', '/get-y-morph/plugin/(?P<plugin>.*)', array(
-    'methods' => 'GET',
-    'callback' => 'bellis_get_y_morf',
-    'permission_callback' => '__return_true',
-  ) );
+ 
   
   register_rest_route( 'a309/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
     'methods' => 'GET',
@@ -404,34 +398,10 @@ function change_rest_post(){
     'permission_callback' => '__return_true',
   ) );
    
-      register_rest_route( 'a309/v1', '/gr-widget', array(
-    'methods' => 'GET',
-    'callback' => 'bellis_get_gr_widget',
-    'permission_callback' => '__return_true',
-  ) );
+ 
    
 }
  
-function bellis_get_gr_widget(){
-    echo file_get_contents("https://www.goodreads.com/review/custom_widget/52338687.Andrei's%20bookshelf:%20read?cover_position=left&cover_size=small&num_books=5&order=d&shelf=read&show_author=1&show_cover=1&show_rating=1&show_review=1&show_tags=1&show_title=1&sort=date_added&widget_bg_color=FFFFFF&widget_bg_transparent=true&widget_border_width=none&widget_id=1613506906&widget_text_color=000000&widget_title_size=medium&widget_width=medium");
-}
-
-
-//https://my.yoast.com/api/downloads/file/morphology-en-v4?plugin_version=15.7&site=https%3A%2F%2Fblackellis.eu
-function bellis_get_y_morf(){
-    
-     global $wp_filesystem;
-            WP_Filesystem();
-     
-            $jsonPath = (get_template_directory() .'/res/y-morf.json');
-            if (! file_exists( $jsonPath )) {
-               wp_send_json([ 'error' => true]);
-            }
-            $json = json_decode($wp_filesystem->get_contents( $jsonPath ), true);
-             wp_send_json($json);
- 
-}
-
 
 function bellis_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = false){
     
