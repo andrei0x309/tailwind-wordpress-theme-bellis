@@ -1,6 +1,7 @@
 <?php 
 
 $articleFull = (isset($args['full_content']) && $args['full_content']);
+$isPage = (isset($args['is_page']) && $args['is_page']); 
         
 ?>
 <article <?php if (!$articleFull): ?> itemscope itemtype="http://schema.org/BlogPosting" 
@@ -23,7 +24,8 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
           </a>
          </h2>
          <?php endif; ?>
-         
+        
+        <?php if(!$isPage ): ?>
         <div class="blog-post-meta flex flex-row">
             <address class="author px-2 pt-3 pb-6"><a rel="author" title="Author's page" href="<?php echo site_url(); ?>/author/andrei0x309/"><i class="icon-user-solid-square"></i><span class="inline" <?php if (!$articleFull): ?>  itemprop="author"<?php endif; ?>> <?php the_author(); ?></span></a></address> 
             <span class="px-2 pt-3 pb-6"><i class="icon-calendar"></i> <time datetime="<?php echo get_the_date('Y-m-d'); ?>" title="<?php echo get_the_date(); ?>" <?php if (!$articleFull): ?> itemprop="datePublished" <?php endif; ?>><?php echo get_the_date(); ?></time></span>
@@ -32,11 +34,12 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
             <meta itemprop="mainEntityOfPage" content="<?php echo site_url(); ?>">
             <meta itemprop="dateModified" content="<?php the_modified_date(); ?>">
             <?php endif; ?>
-        </div>     
+        </div>
+        <?php endif; ?>
      </header><!--  !-->
      <div <?php if (!$articleFull): ?>  itemprop="articleBody" <?php endif; ?> class="article-body">
      <?php
-          if ( function_exists('yoast_breadcrumb') && $articleFull ):
+          if ( function_exists('yoast_breadcrumb') && $articleFull && !$isPage ):
      yoast_breadcrumb( '<div id="breadcrumbs" class="mb-2">','</div>' );
      endif;
  
@@ -74,7 +77,7 @@ $articleFull = (isset($args['full_content']) && $args['full_content']);
  
       
       
- if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' ) ) { 
+ if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' && !$isPage ) ) { 
 
 
      if(bellis_is_amp()): ?>
@@ -120,7 +123,7 @@ ADDTOANY_SHARE_SAVE_KIT( array(
  
 
  
- if($articleFull){
+ if($articleFull  && !$isPage){
  echo do_shortcode('[yarpp]');
  
  
