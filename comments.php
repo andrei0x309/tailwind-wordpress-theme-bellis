@@ -3,18 +3,18 @@ if (post_password_required()) {
     return;
 }
 
-$bellis_no_comments = get_comments_number();
+$theme_no_comments = get_comments_number();
 
 //global $current_user; 
 //if($current_user) echo $current_user->user_login;
 ?>
-<?php if (bellis_is_amp()): ?>
+<?php if (theme_is_amp()): ?>
     <amp-script id="comments-script" layout="container" src="<?php echo get_stylesheet_directory_uri() ?>/js/AMP/amp_comments.js" sandbox="allow-forms">
 
 <?php endif; ?>
 
-    <div id="comments" data-post-id="<?php echo $post->ID; ?>" data-no-comments="<?php echo $bellis_no_comments; ?>" data-post-slug="<?php echo $post->post_name; ?>" class="comments-area default-max-width <?php echo get_option('show_avatars') ? 'show-avatars' : ''; ?>">
-    <?php if (bellis_is_amp()): ?>
+    <div id="comments" data-post-id="<?php echo $post->ID; ?>" data-no-comments="<?php echo $theme_no_comments; ?>" data-post-slug="<?php echo $post->post_name; ?>" class="comments-area default-max-width <?php echo get_option('show_avatars') ? 'show-avatars' : ''; ?>">
+    <?php if (theme_is_amp()): ?>
             <div id="amp-respond"> <?php
 endif;
 
@@ -40,14 +40,14 @@ $comments_args = array(
     'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
     'title_reply_after' => '</h2>',
 );
-if (bellis_is_amp()) {
+if (theme_is_amp()) {
     $comments_args['cancel_reply_before'] = '';
     $comments_args['cancel_reply_after'] = '';
     $comments_args['cancel_reply_link'] = '';
     $comments_args['submit_button'] = '<noscript data-ampdevmode><input name="%1$s" type="submit" id="%2$s" class="%3$s" value="%4$s" /></noscript>';
 }
 comment_form($comments_args);
-if (bellis_is_amp()):
+if (theme_is_amp()):
         ?>
 
                 <p class="form-submit">
@@ -60,13 +60,13 @@ endif;
 if (have_comments()) :
     ?>
             <h2 class="comments-title"><?php
-            if ('1' === $bellis_no_comments) :
+            if ('1' === $theme_no_comments) :
                 esc_html_e('1 comment', 'a309');
             else :
                 printf(
                         /* translators: %s: comment count number. */
-                        esc_html(_nx('%s comment', '%s comments', $bellis_no_comments, 'Comments title', 'a309')),
-                        esc_html(number_format_i18n($bellis_no_comments))
+                        esc_html(_nx('%s comment', '%s comments', $theme_no_comments, 'Comments title', 'a309')),
+                        esc_html(number_format_i18n($theme_no_comments))
                 );
 
             endif;
@@ -89,7 +89,7 @@ if (have_comments()) :
             <?php endif; ?>
         <?php endif; ?>
     </div><!-- #comments -->
-        <?php if (bellis_is_amp()): ?>
+        <?php if (theme_is_amp()): ?>
     </amp-script>
 
         <?php
