@@ -34,7 +34,7 @@ const modifyEventForOpenPost = (selectors = [], remove = false) => {
 
 const fetchPosts = async (offset = 0, perPage = 0) => {
     // fetch posts 
-    const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-posts/offset/${offset}/per-page/${perPage}`;
+    const fetchUrl = `${window.location.origin}/wp-json/bellis/v1/get-posts/offset/${offset}/per-page/${perPage}`;
 
     const response = await fetch(fetchUrl, {
         headers: {

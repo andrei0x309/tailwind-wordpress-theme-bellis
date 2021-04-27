@@ -3,7 +3,7 @@
 
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 
-$bellis_IS_AMP = false;
+$theme_IS_AMP = false;
 
 /**
  * Determine whether this is an AMP response.
@@ -12,9 +12,9 @@ $bellis_IS_AMP = false;
  *
  * @return bool Is AMP endpoint (and AMP plugin is active).
  */
-function bellis_is_amp() {
-    global $bellis_IS_AMP;
-    return $bellis_IS_AMP ;
+function theme_is_amp() {
+    global $theme_IS_AMP;
+    return $theme_IS_AMP ;
 }
 
 
@@ -52,13 +52,13 @@ add_filter( 'amp_mobile_version_switcher_styles_used',  '__return_false' );
 */
 // They added fix per suggestion https://wordpress.org/support/topic/suggestion-add-suport-for-print-on-amp/#post-14280359
 add_filter( 'addtoany_icons_bg_color', function() {
-	if ( bellis_is_amp() ) {
+	if ( theme_is_amp() ) {
 		return '#434343';
 	}
 } );
  
  
-function bellis_thumbnail_get_alt(){
+function theme_thumbnail_get_alt(){
     global $post;
     $image_id = get_post_thumbnail_id();
         if($image_id){
@@ -72,7 +72,7 @@ function bellis_thumbnail_get_alt(){
 }
 
 
-function bellis_resize_img_src($src, $size=500){
+function theme_resize_img_src($src, $size=500){
     $img_src = explode('=', $src);
     if(count($img_src)  > 1 ){
         return $img_src[0].'=w'.$size;
@@ -81,16 +81,16 @@ function bellis_resize_img_src($src, $size=500){
 }
 
 
-function bellis_setup_amp(){
+function theme_setup_amp(){
     if(function_exists( 'is_amp_endpoint' ) && is_amp_endpoint()){
-        global $bellis_IS_AMP;
-        $bellis_IS_AMP = true;
+        global $theme_IS_AMP;
+        $theme_IS_AMP = true;
         add_filter('addtoany_script_disabled', '__return_true');
         remove_action( 'wp_print_footer_scripts', array( 'PLL_Cache_Compat', 'add_cookie_script' ) );
     }
 }
 
-add_action( 'wp', 'bellis_setup_amp' );
+add_action( 'wp', 'theme_setup_amp' );
 
 
 /* Exclude Pages from search */
@@ -289,8 +289,8 @@ register_sidebar( array(
 
 
 require_once get_template_directory() .'/inc/nav_menu.php';
-add_action( 'init', 'wpbellis_theme_reg_menus' );
-function wpbellis_theme_reg_menus(){
+add_action( 'init', 'wptheme_theme_reg_menus' );
+function wptheme_theme_reg_menus(){
     
     register_nav_menus( array(
       'primary-menu'    => __( 'Primary' ),
@@ -310,7 +310,7 @@ if ( ! isset( $content_width ) ){
 }
 
 
-function wpbellis_theme_setup() {
+function wptheme_theme_setup() {
     add_theme_support( 'title-tag' );
     add_theme_support( 'automatic-feed-links' );
     add_theme_support( 'post-thumbnails' );
@@ -318,7 +318,7 @@ function wpbellis_theme_setup() {
   
 }
  
-add_action( 'after_setup_theme', 'wpbellis_theme_setup' );
+add_action( 'after_setup_theme', 'wptheme_theme_setup' );
 
 // Remove Jquery Migrate 
 /*
@@ -330,7 +330,7 @@ add_action('wp_default_scripts', function ($scripts) {
 */
 
 function add_adidtional_css_js() {
- if(!bellis_is_amp()) {
+ if(!theme_is_amp()) {
     // APP CSS
     if( is_singular() ){
     wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
@@ -352,7 +352,7 @@ function add_adidtional_css_js() {
  }else{
     // APP CSS
     if( is_singular() ){
-    if(!bellis_is_amp()) wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
+    if(!theme_is_amp()) wp_enqueue_style( 'a309-single', get_template_directory_uri() . '/css/single.css',false, null,'all');
     else wp_enqueue_style( 'a309-single-amp', get_template_directory_uri() . '/css/single-amp.css',false, null,'all');
     }
  }
@@ -361,49 +361,54 @@ function add_adidtional_css_js() {
 add_action( 'wp_enqueue_scripts', 'add_adidtional_css_js' );
 
 
-function bellis_enqueue_comment_reply() {
-    if ( get_option( 'thread_comments' ) && !bellis_is_amp() ) { 
+function theme_enqueue_comment_reply() {
+    if ( get_option( 'thread_comments' ) && !theme_is_amp() ) { 
         wp_enqueue_script( 'comment-reply' ); 
     }
 }
 // Hook into comment_form_before
-add_action( 'comment_form_before', 'bellis_enqueue_comment_reply' );
+add_action( 'comment_form_before', 'theme_enqueue_comment_reply' );
  
 
 add_action('rest_api_init', 'change_rest_post' );
 function change_rest_post(){
    
-  register_rest_route( 'a309/v1', '/get-post/(?P<id>\d+)/user/(?P<user_id>\d+)', array(
+  register_rest_route( 'bellis/v1', '/get-post/(?P<id>\d+)/user/(?P<user_id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_post_by_id',
     'permission_callback' => '__return_true',
   ) );
  
   
-  register_rest_route( 'a309/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
+  register_rest_route( 'bellis/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
     'methods' => 'GET',
-    'callback' => 'bellis_get_posts',
+    'callback' => 'theme_get_posts',
     'permission_callback' => '__return_true',
   ) );
   
-  register_rest_route( 'a309/v1', '/get-comments-no/post/(?P<post_id>\d+)', array(
+  register_rest_route( 'bellis/v1', '/get-comments-no/post/(?P<post_id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_top_level_comments_number',
     'permission_callback' => '__return_true',
   ) );
     
-   register_rest_route( 'a309/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
+   register_rest_route( 'bellis/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_comments_post',
     'permission_callback' => '__return_true',
   ) );
    
- 
+  register_rest_route( 'bellis/v1', '/theme-switch/(?P<color>\w+)', array(
+    'methods' => 'GET',
+    'callback' => 'theme_set_theme_cookie',
+    'permission_callback' => '__return_true',
+  ) );
+   
    
 }
  
 
-function bellis_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = false){
+function theme_get_post_template($wpQueryArgs = null ,$full = true, $yoastSeo = false){
     
    $my_posts = new WP_Query($wpQueryArgs);  
    global $post;
@@ -450,14 +455,14 @@ $current_user->ID =  $user_id;
         'p' => $data['id'],   // id of the post you want to query
     );
     
-  $post_html = bellis_get_post_template($args, true, true);
+  $post_html = theme_get_post_template($args, true, true);
 
   wp_send_json([ 'article' => $post_html['template'], 'post_id' =>  $data['id'], 'yoast_seo' => $post_html['yoast_head']  ]);
  
 }
 
 
-function bellis_get_posts($data){
+function theme_get_posts($data){
      $template = '';
      $data['per_page'] = intval($data['per_page']);
      $data['per_page'] = $data['per_page']  < 0 ? 0 : $data['per_page'];
@@ -472,7 +477,7 @@ function bellis_get_posts($data){
         'offset' => $data['offset'],
     );
      
-     $template = bellis_get_post_template($args, false , false);
+     $template = theme_get_post_template($args, false , false);
      
      wp_send_json([ 'articles' => $template, 'offset' =>  $data['offset'], 'per_page' => $data['per_page']]);
      
@@ -562,30 +567,28 @@ add_filter( 'avatar_defaults', 'new_gravatar' );
 add_action( 'phpmailer_init', 'send_smtp_email' );
 */
 
-function bellis_the_is_dark(){
-    if(!isset($_COOKIE['theme-color'])) return false;
+function theme_theme_is_dark(){
+    if(!isset($_COOKIE['theme_color'])) return false;
     if($_COOKIE['theme_color'] === 'dark') return true;
     return false;
 }
   
-function bellis_set_theme_cookie($pref) { 
+function theme_set_theme_cookie($data) {
 
-if ( !in_array($pref, array('light','dark') ) ){
-$pref = 'light';   
+    if (!in_array($data['color'], array('light', 'dark'))) {
+        $data['color'] = 'light';
+    }
+    if(isset($_COOKIE['theme_color'])) unset($_COOKIE['theme_color']);
+    setcookie('theme_color', $data['color'], time() + 31556926, '/', '', true); // 1 year
+    
+    wp_send_json([ 'result' =>  $_COOKIE['theme_color'] ]);
+    
 }
  
-if(!isset($_COOKIE['theme_color'])) {
- 
-setcookie('theme_color', $pref, time()+31556926); // 1 year
- 
-}
- 
-} 
- 
-  function bellis_login_logo() { ?>
+  function theme_login_logo() { ?>
     <style type="text/css">
         #login h1 a, .login h1 a {
-            background-image: url(<?php echo get_site_url(); ?>/icon/android-icon-96x96.png);
+            background-image: url(<?php echo get_site_url(); ?>/icon/blackellis-blog-96.png);
 		height:96px;
 		width:96px;
 		background-size: 96px 96px;
@@ -594,4 +597,4 @@ setcookie('theme_color', $pref, time()+31556926); // 1 year
         }
     </style>
 <?php }
-add_action( 'login_enqueue_scripts', 'bellis_login_logo' );
+add_action( 'login_enqueue_scripts', 'theme_login_logo' );

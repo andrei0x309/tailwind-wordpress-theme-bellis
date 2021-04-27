@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const fetchComments = async () => {
 
         // fetch Comments 
-        const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments/post/${postId}/page/${page}`;
+        const fetchUrl = `${window.location.origin}/wp-json/bellis/v1/get-comments/post/${postId}/page/${page}`;
 
         const response = await fetch(fetchUrl, {
             headers: {
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const fetchCommentsNo = async () => {
 
-        const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments-no/post/${postId}`;
+        const fetchUrl = `${window.location.origin}/wp-json/bellis/v1/get-comments-no/post/${postId}`;
 
         const response = await fetch(fetchUrl, {
             headers: {

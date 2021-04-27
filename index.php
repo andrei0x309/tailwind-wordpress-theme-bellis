@@ -27,7 +27,7 @@ get_header();
   //echo the_posts_pagination();
  
  ?>
-<?php if(bellis_is_amp() ): the_posts_pagination();
+<?php if(theme_is_amp() ): the_posts_pagination();
 else: ?>
         <div class="text-center m-2"> 
         <button id="show-more-posts-btn">Load more Posts</button>

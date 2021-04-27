@@ -135,7 +135,7 @@ const themeSwitch = () => {
         svg.classList.add('bg-yellow-500','-translate-x-2');
         svg.classList.remove('bg-gray-700','translate-x-full');
         document.documentElement.classList.remove('dark');
-        fetchUrl = `${window.location.origin}/wp-json/a309/v1/theme-switch/light/`;
+        fetchUrl = `${window.location.origin}/wp-json/bellis/v1/theme-switch/light/`;
         setTimeout(() => {
           svg.innerHTML = darkIcon;
         }, 200);
@@ -143,7 +143,7 @@ const themeSwitch = () => {
         svg.classList.remove('bg-yellow-500','-translate-x-2');
         svg.classList.add('bg-gray-700','translate-x-full');
         document.documentElement.classList.add('dark');
-        fetchUrl = `${window.location.origin}/wp-json/a309/v1/theme-switch/dark/`;
+        fetchUrl = `${window.location.origin}/wp-json/bellis/v1/theme-switch/dark/`;
         setTimeout(() => {
           svg.innerHTML = lightIcon;
         }, 200);
