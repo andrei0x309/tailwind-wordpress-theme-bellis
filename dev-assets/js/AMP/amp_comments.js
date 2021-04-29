@@ -106,7 +106,7 @@
 
     const fetchCommentsNo = async () => {
 
-        const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments-no/post/${postId}`;
+        const fetchUrl = `${window.location.origin}/wp-json/theme/v1/get-comments-no/post/${postId}`;
 
         const response = await fetch(fetchUrl, {
             headers: {
@@ -121,7 +121,7 @@
     const fetchComments = async () => {
 
         // fetch Comments 
-        const fetchUrl = `${window.location.origin}/wp-json/a309/v1/get-comments/post/${postId}/page/${page}`;
+        const fetchUrl = `${window.location.origin}/wp-json/theme/v1/get-comments/post/${postId}/page/${page}`;
 
         const response = await fetch(fetchUrl, {
             headers: {

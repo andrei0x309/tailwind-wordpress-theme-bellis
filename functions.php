@@ -373,32 +373,32 @@ add_action( 'comment_form_before', 'theme_enqueue_comment_reply' );
 add_action('rest_api_init', 'change_rest_post' );
 function change_rest_post(){
    
-  register_rest_route( 'bellis/v1', '/get-post/(?P<id>\d+)/user/(?P<user_id>\d+)', array(
+  register_rest_route( 'theme/v1', '/get-post/(?P<id>\d+)/user/(?P<user_id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_post_by_id',
     'permission_callback' => '__return_true',
   ) );
  
   
-  register_rest_route( 'bellis/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
+  register_rest_route( 'theme/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', array(
     'methods' => 'GET',
     'callback' => 'theme_get_posts',
     'permission_callback' => '__return_true',
   ) );
   
-  register_rest_route( 'bellis/v1', '/get-comments-no/post/(?P<post_id>\d+)', array(
+  register_rest_route( 'theme/v1', '/get-comments-no/post/(?P<post_id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_top_level_comments_number',
     'permission_callback' => '__return_true',
   ) );
     
-   register_rest_route( 'bellis/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
+   register_rest_route( 'theme/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', array(
     'methods' => 'GET',
     'callback' => 'get_comments_post',
     'permission_callback' => '__return_true',
   ) );
    
-  register_rest_route( 'bellis/v1', '/theme-switch/(?P<color>\w+)', array(
+  register_rest_route( 'theme/v1', '/theme-switch/(?P<color>\w+)', array(
     'methods' => 'GET',
     'callback' => 'theme_set_theme_cookie',
     'permission_callback' => '__return_true',
@@ -567,7 +567,7 @@ add_filter( 'avatar_defaults', 'new_gravatar' );
 add_action( 'phpmailer_init', 'send_smtp_email' );
 */
 
-function theme_theme_is_dark(){
+function theme_is_dark(){
     if(!isset($_COOKIE['theme_color'])) return false;
     if($_COOKIE['theme_color'] === 'dark') return true;
     return false;

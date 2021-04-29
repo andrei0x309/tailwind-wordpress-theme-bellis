@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> <?php if (theme_theme_is_dark()) { ?>class="dark" <?php } ?>>
+<html <?php language_attributes(); ?> <?php if (theme_is_dark()) { ?>class="dark" <?php } ?>>
 
 <head>
 
@@ -63,7 +63,7 @@
 
   <header class="header bg-gray-200 pb-2">
     <div class="justify-center flex flex-row items-center h-full w-full m-auto md:w-80p">
-      <div class="logo min-h-full w-64 mt-6 py-2">
+      <div class="logo min-h-full w-56 mt-16 px-2">
         <a href="<?php echo site_url(); ?>">
           <img height="120" width="400" class="h-full ml-4"
             src="<?php echo get_theme_file_uri('images/bellisLogo.svg'); ?>" alt="blackellis.eu Blog Logo">
@@ -80,23 +80,20 @@
       </nav>
       <?php get_search_form(['theme_menu' => true]); ?>
 
-      <?php if (!theme_is_amp()) { ?>
       <button id="theme-switch"
-        class="mt-24 ml-5 w-16 h-6 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow">
+        class="mt-24 ml-5 w-10 h-5 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow">
         <div id="svg-theme-switch"
-          class="border border-white w-9 h-9 relative rounded-full transition duration-500 transform <?php if(theme_theme_is_dark()): ?>bg-gray-700 translate-x-full<?php else: ?>bg-yellow-500 -translate-x-2<?php endif; ?> p-1 text-white">
-            <?php if(theme_theme_is_dark()): ?>
-     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          class="border border-white w-7 h-7 relative rounded-full transition duration-500 transform bg-gray-700 <?php if(theme_is_dark()): ?> translate-x-full<?php else: ?> -translate-x-2<?php endif; ?> p-1 text-white">
+            <?php if(theme_is_dark()): ?>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
     </svg>
           <?php else: ?>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
         </div>
         <?php endif; ?>
       </button>
-      <?php } ?>
     </div>
   </header>

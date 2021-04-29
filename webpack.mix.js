@@ -45,7 +45,6 @@ mix.sass('dev-assets/scss/single.scss', 'css/single.css').version();
 mix.sass('dev-assets/scss/single-amp.scss', 'css/single-amp.css').version();
 
 
-
 if (mix.inProduction()) {
     const files=[
     'js/app.js',
@@ -65,7 +64,7 @@ if (mix.inProduction()) {
     'css/page-offline.css',
     'css/404.css',
     'css/single.css',
-    'css/single-amp.css'
+    'css/single-amp.css',
     ];
     
     mix.minify(files);
