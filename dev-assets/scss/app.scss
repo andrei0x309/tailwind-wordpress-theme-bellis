@@ -21,7 +21,7 @@
  
 
 :root {
-  --theme-red-color: #d22443;
+  --theme-blue-color: #3f4c6b;
   
   --input-border: #8b8a8b;
   --input-focus-color: var(--title-link-color);
@@ -32,6 +32,8 @@
 
 --link-color: #0274be;
 --link-color-hover: #003366;
+--link-color-underline: #9090f3;
+
 --title-link-color:#3a3a3a;
 --title-link--shadow-color:  #868686;
 --post-meta-color:#606b7b;
@@ -40,7 +42,7 @@
 --bg-code-inline-color: #dadada;
 --border-code-inline: #7b7b7b;
 --link-more-color:#2b2d30;
---link-more-hover: var(--theme-red-color);
+--link-more-hover: var(--theme-blue-color);
 
 --widget-shadow-color: #999;
 
@@ -57,9 +59,11 @@ html.dark {
   --bg-gradient-color1:#1d1d1d;
   --bg-gradient-color2:#171717;
 
---link-color: #ff9933;
+--link-color: #D48C70;
 --link-color-hover: #fcb900;
---title-link-color: var(--theme-red-color);
+--link-color-underline: #ca7d5f;
+
+--title-link-color: var(--theme-blue-color);
 --title-link--shadow-color: #1b2426;
 --post-meta-color:#ccc;
 --bg-color:#1d1d1d;
@@ -195,7 +199,7 @@ input:focus {
   outline: 2px solid transparent;
 }
 
-input:not(textarea) {
+input:not(textarea):not([type="checkbox"]) {
   line-height: 1;
   height: 2.25rem;
 }
@@ -250,7 +254,7 @@ label {
 
 .article-body a, .yarpp-related-shortcode a  {
     color: var(--link-color);
-    border-bottom: 1px solid #9090f3;
+    border-bottom: 1px solid var(--link-color-underline);
     transition: all .3s ease-out; 
     position: relative;
 
@@ -264,7 +268,7 @@ label {
     
     &:hover{
         color: var(--link-color-hove);
-        border-color: var(--title-link-color);
+        border-color: var(--link-color-underline);
     }
     
 }
@@ -343,7 +347,7 @@ button.link-search-icon{
     }
 
     nav.header-nav ul li.current-menu-item{
-      background-color: #d22443;
+      background-color: var(--theme-blue-color);
     }
 
     .header-nav ul img,.header-nav ul svg {
@@ -976,7 +980,7 @@ content: "";
     left: 1rem;
     height: 4rem;
     width: 4rem;
-    background-color: var(--theme-red-color);
+    background-color: var(--theme-blue-color);
     -webkit-animation: shrink 3s ease infinite;
     animation: shrink 3s ease infinite;
     z-index: 1;

@@ -83,7 +83,7 @@
 
         .comment-form-author, .comment-form-email{
             flex: 1 0 40%;  /* flex-grow, flex-shrink, flex-basis */
-            background-color: lightgreen;
+            position: relative;
         }
         
         .comment-form-author{
@@ -96,7 +96,7 @@
         }
         
         input{
-            width: 100%
+            width: 95%;
         }
 
     }

@@ -105,7 +105,7 @@ add_filter('pre_get_posts','remove_pages_from_search');
 // PWA FILTERS
 
 add_filter( 'web_app_manifest', function( $manifest ) {
-    $manifest['short_name'] = 'FSoft Blog';
+    $manifest['short_name'] = 'Ellis Blog';
     return $manifest;
 } );
 
@@ -113,31 +113,31 @@ add_filter( 'web_app_manifest', function( $manifest ) {
 add_filter( 'web_app_manifest', function ( $manifest ) {
 	$manifest['icons'] = array(
             	array(
-			'src'     => home_url( '/icon/flashsoft-blog-96.png' ),
+			'src'     => home_url( '/icon/blackellis-blog-96.png' ),
 			'sizes'   => '96x96',
 			'type'    => 'image/png',
 			'purpose' => 'any',
 		),
 		array(
-			'src'     => home_url( '/icon/flashsoft-blog-192.png' ),
+			'src'     => home_url( '/icon/blackellis-blog-192.png' ),
 			'sizes'   => '192x192',
 			'type'    => 'image/png',
 			'purpose' => 'any',
 		),
 		array(
-			'src'     => home_url( '/icon/flashsoft-blog-192.png' ),
+			'src'     => home_url( '/icon/blackellis-blog-192.png' ),
 			'sizes'   => '192x192',
 			'type'    => 'image/png',
 			'purpose' => 'maskable',
 		),
 		array(
-			'src'     => home_url( '/icon/flashsoft-blog-512.png' ),
+			'src'     => home_url( '/icon/android-chrome-512x512-1.png' ),
 			'sizes'   => '512x512',
 			'type'    => 'image/png',
 			'purpose' => 'any',
 		),
 		array(
-			'src'     => home_url( '/icon/blog-icon-512.png' ),
+			'src'     => home_url( '/icon/android-chrome-512x512-1.png' ),
 			'sizes'   => '512x512',
 			'type'    => 'image/png',
 			'purpose' => 'maskable',
