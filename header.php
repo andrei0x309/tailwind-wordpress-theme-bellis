@@ -2,13 +2,7 @@
 <html <?php language_attributes(); ?> <?php if (theme_is_dark()) { ?>class="dark" <?php } ?>>
 
 <head>
-
-  <?php if (theme_is_amp()) { ?>
-  <link rel="stylesheet" href="<?php echo mix('amp-style.css'); ?>" />
-  <?php } else { ?>
   <link rel="stylesheet" href="<?php echo mix('style.css'); ?>" />
-  <?php } ?>
-
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +27,6 @@
   <meta name="theme-color" content="#ffffff">
   <?php wp_head(); ?>
 
-  <?php if (!theme_is_amp()) { ?>
   <script>
     var A309TH = {};
     window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri(); ?>';
@@ -41,25 +34,12 @@
   </script>
   <link rel="prefetch" href="<?php echo get_stylesheet_directory_uri(); ?>/fonts/icomoon.woff" as="font" type="font/woff"
     crossorigin="">
-  <?php } ?>
   <?php if (isset($args['head_aditional_code'])) {
     echo $args['head_aditional_code'];
 } ?>
 </head>
 
 <body class="<?php echo implode(' ', get_body_class()); ?> break-word">
-  <?php if (theme_is_amp()) {
-    $stateData['theme_URI'] = get_stylesheet_directory_uri(); ?>
-  <amp-state id="A309TH">
-    <script type="application/json">
-      <?php echo wp_json_encode($stateData); ?>
-    </script>
-  </amp-state>
-  <!-- <amp-script style="position: absolute;z-index: -1;height:100vh;" class="hidscr" layout="fixed" height="100" width="1" src="<?php echo get_stylesheet_directory_uri(); ?>/js/AMP/amp_base.js"></amp-script>
-   <amp-script width="1" height="1" src="<?php echo get_stylesheet_directory_uri(); ?>/js/AMP/amp_base.js"></amp-script> -->
-  <?php
-} ?>
-
 
   <header class="header bg-gray-200 pb-2">
     <div class="justify-center flex flex-row items-center h-full w-full m-auto md:w-80p">
@@ -83,17 +63,17 @@
       <button id="theme-switch"
         class="mt-24 ml-5 w-10 h-5 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow">
         <div id="svg-theme-switch"
-          class="border border-white w-7 h-7 relative rounded-full transition duration-500 transform bg-gray-700 <?php if(theme_is_dark()): ?> translate-x-full<?php else: ?> -translate-x-2<?php endif; ?> p-1 text-white">
-            <?php if(theme_is_dark()): ?>
+          class="border border-white w-7 h-7 relative rounded-full transition duration-500 transform bg-gray-700 <?php if (theme_is_dark()) { ?> translate-x-full<?php } else { ?> -translate-x-2<?php } ?> p-1 text-white">
+            <?php if (theme_is_dark()) { ?>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
     </svg>
-          <?php else: ?>
+          <?php } else { ?>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
     </svg>
         </div>
-        <?php endif; ?>
+        <?php } ?>
       </button>
     </div>
   </header>
