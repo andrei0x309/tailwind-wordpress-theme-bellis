@@ -310,14 +310,14 @@ button.link-search-icon{
     font-size: 1rem;
     padding: 0.3em;
     background-color: #444;
-    color: #fff;
+    color: rgb(44, 44, 44);
     display: inline-block;
     margin-top:6rem;
     position: relative;
     border-radius: 3em;
     border: 1px solid #eeeeeec2;
-    background: -moz-linear-gradient(top, #485561 0%, #1b2426 100%);
-    background: linear-gradient(to bottom, #485561 0%, #1b2426 100%);
+    background: -moz-linear-gradient(top,#ffffff 0,#cccccc);
+    background: linear-gradient(180deg,#ffffff 0,#cccccc);
     cursor: pointer;
     outline:0;
  

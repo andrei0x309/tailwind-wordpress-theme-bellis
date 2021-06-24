@@ -319,6 +319,25 @@ function change_rest_post()
     'callback' => 'theme_set_theme_cookie',
     'permission_callback' => '__return_true',
   ]);
+
+    register_rest_route('a309/v1', '/get-y-morph/plugin/(?P<plugin>.*)', [
+    'methods' => 'GET',
+    'callback' => 'theme_get_y_morpf',
+    'permission_callback' => '__return_true',
+  ]);
+}
+
+function theme_get_y_morpf()
+{
+    global $wp_filesystem;
+    WP_Filesystem();
+
+    $jsonPath = (get_template_directory().'/res/y-morf.json');
+    if (!file_exists($jsonPath)) {
+        wp_send_json(['error' => true]);
+    }
+    $json = json_decode($wp_filesystem->get_contents($jsonPath), true);
+    wp_send_json($json);
 }
 
 function theme_get_post_template($wpQueryArgs = null, $full = true, $yoastSeo = false)
