@@ -3,6 +3,28 @@
 
 @import "minxin/blue_btn.scss"; 
 
+
+ 
+.title-underline {
+    --underline-intrinsic-width: 4;
+    --underline-width: 8;
+    --underline-cap-width: 0.8rem;
+    --underline-offset-y: -1rem;
+    --underline-padding-x: 1.4rem;
+    display: inline;
+    --underline-width-scale: calc(var(--underline-width)/var(--underline-intrinsic-width));
+    padding: 0 calc(var(--underline-padding-x) + var(--underline-cap-width)*var(--underline-width-scale));
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background-repeat: no-repeat;
+    color: var(--title-underline-gradient-start);
+    background-image: linear-gradient(120deg,var(--title-underline-gradient-start),var(--title-underline-gradient-end));
+    background-position-x: 0.4rem;
+    background-position-y: calc(100% - var(--underline-offset-y)*-1);
+    background-size: calc(100% - var(--underline-cap-width)*var(--underline-width-scale)*2) calc(var(--underline-width)*1px),auto calc(var(--underline-width)*1px),auto calc(var(--underline-width)*1px);
+}
+
+
 #comments {
     
 .comment-form-comment {

@@ -10,7 +10,7 @@ class="<?php echo $articleFull ? '' : 'content-va-on '; ?> dark:bg-dark-bg dark:
 id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo $post->post_name; ?>" data-title="<?php echo $post->post_title; ?>">
      <header>
          <?php if ($articleFull) { ?>
-         <h1 class="blog-post-title">
+         <h1 class="blog-post-title title-underline">
          <?php
 } else { ?>
          <h2 itemprop="headline" class="blog-post-title blog-post-title-link">

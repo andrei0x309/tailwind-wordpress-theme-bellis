@@ -10,9 +10,8 @@ $theme_no_comments = get_comments_number();
 ?>
 
     <div id="comments" data-post-id="<?php echo $post->ID; ?>" data-no-comments="<?php echo $theme_no_comments; ?>" data-post-slug="<?php echo $post->post_name; ?>" class="comments-area default-max-width <?php echo get_option('show_avatars') ? 'show-avatars' : ''; ?>">
-    <?php if (theme_is_amp()) { ?>
-            <div id="amp-respond"> <?php
-}
+    
+<?php
 
 $aria_req = ($req) ? " aria-required='true'" : '';
 $comments_args = [
@@ -66,4 +65,3 @@ if (have_comments()) {
         <?php
 } ?>
     </div><!-- #comments -->
-     endif;
