@@ -537,7 +537,7 @@ add_action('login_enqueue_scripts', 'theme_login_logo');
 function remove_update_notifications($value)
 {
     if (isset($value) && is_object($value)) {
-        unset($value->response['wp-seo-premium.php/wp-seo-premium.php']);
+        unset($value->response['wp-seo-premium/wp-seo-premium.php']);
         unset($value->response['wp-hide-security-enhancer-pro/wp-hide.php']);
     }
 
