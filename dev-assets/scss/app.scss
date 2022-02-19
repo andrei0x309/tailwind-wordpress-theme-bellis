@@ -18,8 +18,6 @@
 
 /*! purgecss start ignore */
 
- 
-
 :root {
   --theme-blue-color: #3f4c6b;
   
@@ -30,9 +28,9 @@
  --bg-gradient-color1:#FFFFFF;
  --bg-gradient-color2:#ECE9E6;
 
---link-color: #0274be;
+--link-color: cornflowerblue;
 --link-color-hover: #003366;
---link-color-underline: #9090f3;
+--link-color-underline: rgb(95, 134, 206);
 
 --title-link-color:#3a3a3a;
 --title-link--shadow-color:  #868686;
@@ -361,11 +359,10 @@ button.link-search-icon{
     }
     
  
-    .header-nav ul li:hover {
-        /*background: linear-gradient(to bottom, rgba(153,92,0,1) 0%, rgba(255,161,10,1) 3%, rgba(253,135,33,0.91) 87%, rgba(222,105,2,0.9) 100%); */
+    // .header-nav ul li:hover {
+    //     /*background: linear-gradient(to bottom, rgba(153,92,0,1) 0%, rgba(255,161,10,1) 3%, rgba(253,135,33,0.91) 87%, rgba(222,105,2,0.9) 100%); */
 
-
-    }    
+    // }    
 
 
     .header-nav ul li:hover ul.sub-menu li:hover {
