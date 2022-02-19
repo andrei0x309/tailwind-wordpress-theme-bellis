@@ -532,3 +532,15 @@ function theme_set_theme_cookie($data)
     </style>
 <?php }
 add_action('login_enqueue_scripts', 'theme_login_logo');
+
+// remove update notice
+function remove_update_notifications($value)
+{
+    if (isset($value) && is_object($value)) {
+        unset($value->response['wp-seo-premium.php/wp-seo-premium.php']);
+        unset($value->response['wp-hide-security-enhancer-pro/wp-hide.php']);
+    }
+
+    return $value;
+}
+add_filter('site_transient_update_plugins', 'remove_update_notifications');
