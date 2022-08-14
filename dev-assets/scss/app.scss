@@ -223,7 +223,6 @@ input[type="submit"]{
   transition: all .4s ease-in;
   cursor: pointer;
   min-width: 10rem;
-  margin: auto;
 }
 
 input[type="submit"]:hover{
@@ -716,12 +715,13 @@ li li::marker { color: #a2a; }
 
 
 .content article .blog-post-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     color: var(--title-link-color);
     padding-left: 0.2em;
-    font-family: "Catamaran", sans-serif;
+    font-family: Catamaran,sans-serif;
     line-height: 1.2;
-    transition: all .4s cubic-bezier(0, 0, 0.02, 0.56);
+    transition: all .4s cubic-bezier(0,0,.02,.56);
+    overflow-wrap: break-word;
     
     &:hover{
       text-shadow:0.1rem 0.02rem 0.1rem var(--title-link--shadow-color);
