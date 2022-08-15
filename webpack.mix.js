@@ -3,7 +3,7 @@ const concat = require('concat-files');
 const path = require('path');
 const purgecss = require('postcss-purgecss-laravel');
 const tailwindcss = require('tailwindcss');
-mix.setPublicPath('../bellis');
+mix.setPublicPath(path.resolve('./'));
 
 let mainOptions = [ tailwindcss('./tailwind.js') , purgecss({content: [
             path.join(__dirname, "!(404).php"),
