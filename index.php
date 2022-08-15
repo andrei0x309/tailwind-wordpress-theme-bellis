@@ -7,7 +7,7 @@
 get_header();
 ?>
 
-<div id="main" class="main flex w-full mt-6 mb-6 justify-center">
+<div id="main" class="main flex w-full pb-6 justify-center">
  
     <main class="flex flex-col content w-full sm:w-full md:w-5/12 lg:w-5/12 xl:w-5/12 dark:text-dark-text">
      
