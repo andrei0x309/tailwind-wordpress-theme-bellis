@@ -569,7 +569,7 @@ button.link-search-icon{
            max-width: 100%;
         }
      }
-    max-width: 96%;
+    max-width: 100%;
     margin:auto;
     background: var(--input-focus-color);
     padding-top: 2rem;
@@ -776,7 +776,6 @@ li li::marker { color: #a2a; }
     margin-bottom: 0.3em;
     cursor: default;
     color:#999;
-    -webkit-text-stroke: 1px #888;
     text-align: center;
 }
 
@@ -1126,5 +1125,11 @@ content: "";
     float: right;
   }
 
+
+  article[data-slug="contact-me"] {
+    input, textarea {
+      width: 100%
+    }
+  }
 
 /*! purgecss end ignore */
