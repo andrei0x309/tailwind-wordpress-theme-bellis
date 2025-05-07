@@ -7,7 +7,10 @@
 /res/
 /vendor/
 /amp-style.css
-/style.css
 /style.min.css
 /amp-style.min.css
 /mix-manifest.json
+/css_bk/
+/js_bk/
+/assets
+manifest.json

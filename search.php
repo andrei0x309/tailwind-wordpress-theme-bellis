@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 $style = '<style>'.
-file_get_contents( __DIR__ . '/css/search-results.css')
+file_get_contents(__DIR__.vite_assets('/dev-assets/scss/search-results.scss'))
 .'</style>';
 
-get_header(null,['head_aditional_code' => $style]);  ?>
+get_header(null, ['head_aditional_code' => $style]); ?>
 
 <div id="main" class="main flex w-full pb-6 justify-center">
  
@@ -13,21 +13,21 @@ get_header(null,['head_aditional_code' => $style]);  ?>
         
 <?php get_search_form(['theme_search_btn' => true]); ?>
     <h1 class="list-posts-title"> Search Results for:  <span><?php echo get_search_query(); ?></span></h1>
- <?php 
- if ( have_posts() ) { 
- while ( have_posts() ) : the_post();
- 
-  get_template_part( 'parts/article', null, [ 'full_content' => false ]);  
- 
- endwhile;
- 
- echo the_posts_pagination();
- }else {
- ?>
+ <?php
+ if (have_posts()) {
+     while (have_posts()) {
+         the_post();
+
+         get_template_part('parts/article', null, ['full_content' => false]);
+     }
+
+     echo the_posts_pagination();
+ } else {
+     ?>
     <p class="search-no-result">No result for your query &lt;&lt;&lt; <?php echo get_search_query(); ?> &gt;&gt;&gt;</p>
  <?php } ?>
     </main>
 <?php get_sidebar(); ?>
   </div>
 <?php get_footer();
-get_template_part( 'parts/end-markup');
+get_template_part('parts/end-markup');

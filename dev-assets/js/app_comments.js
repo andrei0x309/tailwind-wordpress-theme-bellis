@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let commentsShowMoreBtn = null;
     let page = null;
 
-//Called from index
+    //Called from index
     const eventsOnComments = () => {
-// Add event on comments show
+        // Add event on comments show
         if (showCommentsBtn)
             showCommentsBtn.addEventListener('click', showCommentsFn);
         commentFormEl.addEventListener('submit', sumbitComment);
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const slug = commentsEl.getAttribute('data-post-slug');
         const date = new Date(comment.comment_date);
-        const options = {year: 'numeric', month: 'long', day: 'numeric'};
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
         const newComHTML = `<li id="comment-${comment.comment_ID}" class="comment byuser comment-author-${comment.comment_author} even thread-even comment-added fade-in">
 			<article id="div-comment-${comment.comment_ID}" class="comment-body">
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		</li>`;
         const divParent = document.createElement('div');
         divParent.innerHTML = newComHTML;
-        const newCom = divParent.firstChild;                            
+        const newCom = divParent.firstChild;
         if (Number(comment.comment_parent) === 0) {
             const commentList = document.getElementById('comment-list');
             commentList.insertBefore(newCom, commentList.firstChild);
@@ -205,12 +205,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 const notApprovedText = 'Comment was posted but was not approved it will be live after approval.';
                 if (commentList) {
                     const com = addCommentToDOM(data.comment);
-                    if(!approved){
+                    if (!approved) {
                         alert = alertBox('info', notApprovedText);
-                         com.appendChild(alert);
+                        com.appendChild(alert);
                     }
                 } else {
-                     if (approved) {
+                    if (approved) {
                         alert = alertBox('success', 'Comment was posted');
                     } else {
                         alert = alertBox('info', notApprovedText);
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
         delSimpleSpinner(spinner);
 
     };
- 
+
     eventsOnComments();
 
 });

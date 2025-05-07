@@ -1,4 +1,4 @@
-import { listen as quicklinkListen } from "quicklink"
+// import { listen as quicklinkListen } from "quicklink"
 import { LuminousGallery } from 'luminous-lightbox';
 
 
@@ -7,19 +7,19 @@ let loaderFired = false;
 let isSwitchingTheme = false;
 
 const initLightbox = () => {
-    new LuminousGallery(document.querySelectorAll("a.lightbox"), 
-    {arrowNavigation: true },
-    {injectBaseStyles: true },
+    new LuminousGallery(document.querySelectorAll("a.lightbox"),
+        { arrowNavigation: true },
+        { injectBaseStyles: true },
     );
 };
 
 const showSearchModal = () => {
-  if(!searchModalOpen) {
-  searchModalOpen = true;
-  const searchModal=document.createElement('div');
-  searchModal.classList.add('full-search-modal');
-  searchModal.id="full-search-modal";
-  searchModal.innerHTML =  `
+    if (!searchModalOpen) {
+        searchModalOpen = true;
+        const searchModal = document.createElement('div');
+        searchModal.classList.add('full-search-modal');
+        searchModal.id = "full-search-modal";
+        searchModal.innerHTML = `
 <button id="search-close-btn">X</button> 
 <form id="menu-search-from" role="search" method="get" class="search-form" action="${window.location.origin}">
 	<label style="display:none;" for="menu-search-input">Search</label>
@@ -27,11 +27,11 @@ const showSearchModal = () => {
         <input style="display:none;" type="submit" class="search-submit" value="search" />
 </form>
   </div>`;
-  document.getElementsByTagName("BODY")[0].append(searchModal);
+        document.getElementsByTagName("BODY")[0].append(searchModal);
 
-  document.getElementById('search-close-btn').addEventListener('click', closeSearchModal);
-  document.getElementById('menu-search-from').addEventListener('submit', searchAddSpinner);
-  }
+        document.getElementById('search-close-btn').addEventListener('click', closeSearchModal);
+        document.getElementById('menu-search-from').addEventListener('submit', searchAddSpinner);
+    }
 };
 
 const searchAddSpinner = (e) => {
@@ -39,15 +39,15 @@ const searchAddSpinner = (e) => {
 };
 
 const closeSearchModal = () => {
-    if(searchModalOpen) {
-    const searchModal = document.getElementById('full-search-modal');
-    document.getElementById('search-close-btn').removeEventListener('click', closeSearchModal);
-    document.getElementById('menu-search-from').removeEventListener('menu-search-from', searchAddSpinner);
-    searchModalOpen = false;
-    searchModal.style.animation = 'search-modal-close 0.4s linear forwards';
-    searchModal.addEventListener('animationend', () => {
-  searchModal.parentElement.removeChild(searchModal);
-});
+    if (searchModalOpen) {
+        const searchModal = document.getElementById('full-search-modal');
+        document.getElementById('search-close-btn').removeEventListener('click', closeSearchModal);
+        document.getElementById('menu-search-from').removeEventListener('menu-search-from', searchAddSpinner);
+        searchModalOpen = false;
+        searchModal.style.animation = 'search-modal-close 0.4s linear forwards';
+        searchModal.addEventListener('animationend', () => {
+            searchModal.parentElement.removeChild(searchModal);
+        });
     }
 };
 
@@ -56,7 +56,7 @@ const closeSearchModal = () => {
 const addSimpleSpinner = (element, prepend = true) => {
     const spinner = document.createElement('div');
     spinner.classList.add('loadingspinner');
-    if(prepend) element.prepend(spinner);
+    if (prepend) element.prepend(spinner);
     else element.appendChild(spinner);
     return spinner;
 };
@@ -65,23 +65,23 @@ const delSimpleSpinner = (spinner) => {
     spinner.parentElement.removeChild(spinner);
 };
 
-const delAlertBox = ( ) => {
+const delAlertBox = () => {
     const oldAlertBox = document.getElementById('a309-alert-box');
-    if(oldAlertBox){
-         oldAlertBox.parentElement.removeChild(oldAlertBox);
-     }
+    if (oldAlertBox) {
+        oldAlertBox.parentElement.removeChild(oldAlertBox);
+    }
 };
 
-const alertBox = ( alertClass='error', alertMsg = '' ) => {
-    
+const alertBox = (alertClass = 'error', alertMsg = '') => {
+
     delAlertBox();
-    
-     switch (alertClass) {
+
+    switch (alertClass) {
         case 'error':
             alertClass = 'alert-error';
             break;
         case 'info':
-           alertClass = 'alert-info';
+            alertClass = 'alert-info';
             break;
         case 'success':
             alertClass = 'alert-success';
@@ -90,93 +90,137 @@ const alertBox = ( alertClass='error', alertMsg = '' ) => {
             alertClass = 'alert-error';
             break;
     }
-     
-     const alertBox = document.createElement('div');
-     alertBox.id = 'a309-alert-box';
-     alertBox.classList.add('alert');
-     alertBox.classList.add(alertClass);
-     alertBox.innerHTML = alertMsg;
-     return alertBox;
- };
- 
+
+    const alertBox = document.createElement('div');
+    alertBox.id = 'a309-alert-box';
+    alertBox.classList.add('alert');
+    alertBox.classList.add(alertClass);
+    alertBox.innerHTML = alertMsg;
+    return alertBox;
+};
+
 const showNavigateToPage = _ => {
-   if(!loaderFired){
-   const body = document.getElementsByTagName('body')[0];
-   const barLoader = document.createElement('div');
-   barLoader.classList.add('load-line');
-   body.prepend(barLoader);
-   const main = document.getElementById('main');
-   if(main) main.style.opacity = 0.7;
-    const spinnerTag = document.createElement('div');
-    spinnerTag.classList.add('nav-spinner', 'spinner__1');
-    body.prepend(spinnerTag);
-    loaderFired = true;
+    if (!loaderFired) {
+        const body = document.getElementsByTagName('body')[0];
+        const barLoader = document.createElement('div');
+        barLoader.id = 'navigation-loader';
+        barLoader.classList.add('load-line');
+        body.prepend(barLoader);
+        const main = document.getElementById('main');
+        if (main) main.style.opacity = 0.7;
+        const spinnerTag = document.createElement('div');
+        spinnerTag.classList.add('nav-spinner', 'spinner__1');
+        body.prepend(spinnerTag);
+        loaderFired = true;
     }
 };
 
+const removeNavigateToPage = _ => {
+    const barLoader = document.getElementById('navigation-loader');
+    if (barLoader) {
+        barLoader.parentElement.removeChild(barLoader);
+        const main = document.getElementById('main');
+        if (main) main.style.opacity = 1;
+        const spinnerTag = document.getElementById('navigation-loader');
+        if (spinnerTag) spinnerTag.parentElement.removeChild(spinnerTag);
+        loaderFired = false;
+    }
+};
 
 const themeSwitch = () => {
 
     const darkIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
     </svg>`;
-    
+
     const lightIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
     </svg>`;
-                        
-    
-        if(!isSwitchingTheme){
-            const isDarkmode = document.documentElement.classList.contains("dark");
-            isSwitchingTheme = true;
-            const svg = document.getElementById('svg-theme-switch');
-    let fetchUrl ;
-    if (isDarkmode) {
-        svg.classList.add('-translate-x-2');
-        svg.classList.remove('translate-x-full');
-        document.documentElement.classList.remove('dark');
-        fetchUrl = `${window.location.origin}/wp-json/theme/v1/theme-switch/light/`;
-        setTimeout(() => {
-          svg.innerHTML = darkIcon;
-        }, 200);
-      } else {
-        svg.classList.remove('-translate-x-2');
-        svg.classList.add('translate-x-full');
-        document.documentElement.classList.add('dark');
-        fetchUrl = `${window.location.origin}/wp-json/theme/v1/theme-switch/dark/`;
-        setTimeout(() => {
-          svg.innerHTML = lightIcon;
-        }, 200);
-      }
-        fetch(fetchUrl, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-       isSwitchingTheme = false;     
-            
+
+
+    if (!isSwitchingTheme) {
+        const isDarkmode = document.documentElement.classList.contains("dark");
+        isSwitchingTheme = true;
+        const svg = document.getElementById('svg-theme-switch');
+        let fetchUrl;
+        if (isDarkmode) {
+            svg.classList.add('-translate-x-2');
+            svg.classList.remove('translate-x-full');
+            document.documentElement.classList.remove('dark');
+            fetchUrl = `${window.location.origin}/wp-json/theme/v1/theme-switch/light/`;
+            setTimeout(() => {
+                svg.innerHTML = darkIcon;
+            }, 200);
+        } else {
+            svg.classList.remove('-translate-x-2');
+            svg.classList.add('translate-x-full');
+            document.documentElement.classList.add('dark');
+            fetchUrl = `${window.location.origin}/wp-json/theme/v1/theme-switch/dark/`;
+            setTimeout(() => {
+                svg.innerHTML = lightIcon;
+            }, 200);
         }
-        
-    };
-    
+        fetch(fetchUrl, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        isSwitchingTheme = false;
 
- 
-document.addEventListener("DOMContentLoaded", function() {
-quicklinkListen();
+    }
 
-window.A309TH.delAlertBox = delAlertBox;
-window.A309TH.alertBox = alertBox;
-window.A309TH.addSimpleSpinner = addSimpleSpinner;
-window.A309TH.delSimpleSpinner = delSimpleSpinner;
-window.A309TH.quicklinkListen = quicklinkListen;
-window.A309TH.initLightbox = initLightbox;
+};
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // quicklinkListen();
+
+    window.A309TH.delAlertBox = delAlertBox;
+    window.A309TH.alertBox = alertBox;
+    window.A309TH.addSimpleSpinner = addSimpleSpinner;
+    window.A309TH.delSimpleSpinner = delSimpleSpinner;
+    // window.A309TH.quicklinkListen = quicklinkListen;
+    window.A309TH.initLightbox = initLightbox;
 
     window.A309TH.initLightbox();
     document.getElementById('menu-search-btn').addEventListener('click', showSearchModal);
     document.getElementById('theme-switch').addEventListener('click', themeSwitch);
-    
+
     window.addEventListener("beforeunload", showNavigateToPage);
+});
 
- });
+window.addEventListener('load', () => {
+    if (window.performance && performance.getEntriesByType) {
+        const navigationEntries = performance.getEntriesByType('navigation');
 
+        if (navigationEntries.length > 0) {
+            const navigationType = navigationEntries[0].type;
 
+            if (navigationType === 'back_forward') {
+                const referrer = document.referrer;
+                if (referrer) {
+                    try {
+                        const referrerUrl = new URL(referrer);
+                        const currentDomain = window.location.hostname;
+                        const referrerDomain = referrerUrl.hostname;
+                        if (referrerDomain !== currentDomain) {
+                            removeNavigateToPage();
+                        } else {
+                            console.log('User pressed back from the same domain.');
+                        }
+                    } catch (e) {
+                        console.log('Referrer is not a standard URL:', referrer);
+                    }
+
+                } else {
+                    console.log('Referrer is empty.');
+                }
+            } else {
+                console.log('Navigation Type:', navigationType); // e.g., 'navigate', 'reload'
+            }
+        }
+    } else {
+        console.warn('Navigation Timing API not supported in this browser.');
+    }
+});

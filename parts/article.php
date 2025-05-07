@@ -12,7 +12,7 @@ id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo 
          <?php if ($articleFull) { ?>
          <h1 class="blog-post-title title-underline">
          <?php
-} else { ?>
+         } else { ?>
          <h2 itemprop="headline" class="blog-post-title blog-post-title-link">
          <a href="<?php echo esc_url(get_the_permalink()); ?>" title="<?php echo esc_attr(get_the_title()); ?>">
          <?php }?>
@@ -22,7 +22,7 @@ id="post-<?php the_ID(); ?>" data-id="<?php the_ID(); ?>" data-slug="<?php echo 
          <?php if ($articleFull) { ?>
             </h1>
          <?php
-} else { ?>
+         } else { ?>
           </a>
          </h2>
          <?php }?>
@@ -69,34 +69,34 @@ echo '</div>'; ?>
 
 
  <?php if ($articleFull) {
-        the_content();
+     the_content();
 
-        /*
-        $tags = get_the_tags();
-        if($tags){ ?>
-        <div class="blog-post-meta flex flex-row">
-        <span class="px-2 pt-3 pb-6 " ><i class="icon-tags"></i> <?php echo implode(', ', array_map(function($term) {
-        return $term->name;
-        }, $tags))  ; ?></span>
-        </div>
-        <?php
-        }    */
+     /*
+     $tags = get_the_tags();
+     if($tags){ ?>
+     <div class="blog-post-meta flex flex-row">
+     <span class="px-2 pt-3 pb-6 " ><i class="icon-tags"></i> <?php echo implode(', ', array_map(function($term) {
+     return $term->name;
+     }, $tags))  ; ?></span>
+     </div>
+     <?php
+     }    */
 
-        if (function_exists('ADDTOANY_SHARE_SAVE_KIT' && !$isPage)) {
-            ADDTOANY_SHARE_SAVE_KIT([
-                'buttons' => [
-                    'twitter',
-                    'reddit',
-                    'pinterest',
-                    'whatsapp',
-                    'facebook',
-                    'email',
-                    'print', ],
-            ]);
-        }
-    } else {
-        the_excerpt();
-    }
+     if (function_exists('ADDTOANY_SHARE_SAVE_KIT' && !$isPage)) {
+         ADDTOANY_SHARE_SAVE_KIT([
+             'buttons' => [
+                 'twitter',
+                 'reddit',
+                 'pinterest',
+                 'whatsapp',
+                 'facebook',
+                 'email',
+                 'print', ],
+         ]);
+     }
+ } else {
+     the_excerpt();
+ }
 ?>
  </div>
  </article><!-- /.blog-post -->

@@ -2,7 +2,8 @@
 <html <?php language_attributes(); ?> <?php if (theme_is_dark()) { ?>class="dark" <?php } ?>>
 
 <head>
-  <link rel="stylesheet" href="<?php echo mix('style.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo vite_assets('dev-assets/css/tailwind.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo vite_assets('dev-assets/scss/app.scss'); ?>" />
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,11 +33,11 @@
     window.A309TH.theme_URI = '<?php echo get_stylesheet_directory_uri(); ?>';
     window.A309TH.current_user_id = '<?php echo wp_get_current_user()->ID; ?>';
   </script>
-  <link rel="prefetch" href="<?php echo get_stylesheet_directory_uri(); ?>/fonts/icomoon.woff" as="font" type="font/woff"
+  <link rel="prefetch" href="<?php echo get_stylesheet_directory_uri(); ?>/fonts/icomoon.woff2" as="font" type="font/woff2"
     crossorigin="">
   <?php if (isset($args['head_aditional_code'])) {
-    echo $args['head_aditional_code'];
-} ?>
+      echo $args['head_aditional_code'];
+  } ?>
 </head>
 
 <body class="<?php echo implode(' ', get_body_class()); ?> break-word">
@@ -61,7 +62,7 @@
       <?php get_search_form(['theme_menu' => true]); ?>
 
       <button id="theme-switch"
-        class="mt-24 ml-5 w-10 h-5 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow">
+        class="mt-24 ml-5 w-10 h-5 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow cursor-pointer">
         <div id="svg-theme-switch"
           class="border border-white w-7 h-7 relative rounded-full transition duration-500 transform bg-gray-700 <?php if (theme_is_dark()) { ?> translate-x-full<?php } else { ?> -translate-x-2<?php } ?> p-1 text-white">
             <?php if (theme_is_dark()) { ?>

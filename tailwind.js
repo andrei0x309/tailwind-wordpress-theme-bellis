@@ -1,9 +1,10 @@
-// Example `tailwind.js` file
 
 module.exports = {
   important: true,
-  purge: false,
   darkMode: 'class',
+  content: [
+    './**/*.{js,jsx,ts,tsx,php}',
+  ],
   theme: {
     fontFamily: {
     },
@@ -26,3 +27,4 @@ module.exports = {
     opacity: ['responsive', 'hover']
   }
 }
+

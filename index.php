@@ -1,7 +1,7 @@
 <?php if (!defined('ABSPATH')) {
     header('HTTP/1.1 301 Moved Permanently');
     header('Location: /');
-    exit();
+    exit;
 }
 
 get_header();
@@ -13,19 +13,19 @@ get_header();
      
         
          <?php if (have_posts()) {
-    while (have_posts()) {
-        the_post();
+             while (have_posts()) {
+                 the_post();
 
-        get_template_part('parts/article', null, ['full_content' => false]);
-    }
-}
+                 get_template_part('parts/article', null, ['full_content' => false]);
+             }
+         }
 
-  //echo the_posts_pagination();
+// echo the_posts_pagination();
 
- ?>
+?>
  
        <div class="text-center m-2"> 
-        <button id="show-more-posts-btn">Load more Posts</button>
+        <button class="cursor-pointer" id="show-more-posts-btn">Load more Posts</button>
         </div>
  
     </main>

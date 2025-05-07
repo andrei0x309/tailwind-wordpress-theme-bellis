@@ -1,26 +1,30 @@
-<!--
- Copyright (c) 2021 Andrei O.
- 
- This software is released under the MIT License.
- https://opensource.org/licenses/MIT
--->
+# Bellis WP Theme
 
+## Description
 
-## Bellis WP Theme
+Fork from an old `A309` Wordpress theme.
+Minimal theme focused on performance.
 
-Fork of A309 WP Theme
+### Uses
 
-### Is using:
 - tailwind css
-- laravel mix
+- vanilla js
+- php
+- wordpress
+- bun
+- vite
 
-### Features:
+### Features
+
 - AMP compatible
-- Unregisters Jquery and other stuff from WP
-- Adds Custom REST API
+- Adds Custom small REST API
 - Vanila JS
-- Mobile First
-- Lightweight + Performance
+- Responsive
+- Lightweight & Fast
 - Light / Dark Mode
 - Native lazy load
 - Dynamic feature image request size from CDN based on display size
+
+### Notes
+
+I don't personally use Wordpress anymore(but this team is used on other websites),I converted wordpress blog I had to my own blog implementation using SvelteKit source: [https://github.com/andrei0x309/svelte-kit-supa-blog](https://github.com/andrei0x309/svelte-kit-supa-blog)

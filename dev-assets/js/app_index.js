@@ -69,7 +69,7 @@ const loadMorePosts = async () => {
     if (!data.httpError) {
         if (data.articles) {
             showMorePostsParent.insertAdjacentHTML('beforebegin', data.articles);
-            if(typeof SyntaxHighlighter !== 'undefined') SyntaxHighlighter.highlight();
+            if (typeof SyntaxHighlighter !== 'undefined') SyntaxHighlighter.highlight();
         } else {
             showMorePostsParent.removeChild(window.A309TH.postsRemoveShowMoreBtn);
             showMorePostsParent.prepend(window.A309TH.alertBox('info', '&#x26A0; No more articles!'));

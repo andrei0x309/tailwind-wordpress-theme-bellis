@@ -58,7 +58,7 @@ add_filter('web_app_manifest', function ($manifest) {
 
 add_filter('web_app_manifest', function ($manifest) {
     $manifest['icons'] = [
-                [
+        [
             'src' => home_url('/icon/blackellis-blog-96.png'),
             'sizes' => '96x96',
             'type' => 'image/png',
@@ -97,10 +97,10 @@ add_filter('web_app_manifest', function ($manifest) {
 remove_action('wp_head', 'wp_generator');
 
 // Remove Admin Bar
-//add_filter('show_admin_bar', '__return_false');
+// add_filter('show_admin_bar', '__return_false');
 
 // Remove Jquery
-//add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
+// add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
 
 /*function change_default_jquery()
 {
@@ -159,37 +159,55 @@ function disable_emojis_tinymce($plugins)
     }
 }
 
-if (!function_exists('mix')) {
-    /**
-     * Get the path to a versioned Mix file.
-     *
-     * @param string $path
-     * @param string $manifestDirectory
-     *
-     * @throws \Exception
-     */
-    function mix($path, $manifestDirectory = ''): string
+if (!function_exists('theme_wp_debug')) {
+    function theme_wp_debug($debug = '')
+    {
+        $debugInfo = "--- Theme Asset Debug Info ---\n";
+        $debugInfo .= $debug;
+        $debugInfo .= "--- Theme Asset Debug Info End ---\n";
+
+        wp_die(
+            nl2br(esc_html($debugInfo)), // The content shown to the user
+            esc_html('Debug Error'), // The title of the error page
+            [
+                'response' => 500, // Set HTTP status code
+                'exit' => true,    // Ensure script exits
+                'exception' => $e, // Pass the original Exception object for WP's error handler to log if configured
+            ]
+        );
+    }
+}
+
+if (!function_exists('vite_assets')) {
+    function vite_assets($path, $only_path = false): string
     {
         static $manifest;
         global $wp_filesystem;
         WP_Filesystem();
+        $assetFolder = 'assets';
 
         $publicPath = get_template_directory().'/';
 
         if (!$manifest) {
-            if (!file_exists($manifestPath = (get_template_directory().'/mix-manifest.json'))) {
-                throw new Exception('The Mix manifest does not exist. '.$manifestPath);
+            if (!file_exists($manifestPath = (get_template_directory().'/'.$assetFolder.'/.vite/manifest.json'))) {
+                throw new Exception('The Vite asset manifest does not exist. '.$manifestPath);
             }
             $manifest = json_decode($wp_filesystem->get_contents($manifestPath), true);
         }
 
-        $path = "/{$path}";
+        // theme_wp_debug(var_dump($manifest, true));
 
         if (!array_key_exists($path, $manifest)) {
-            throw new Exception("Unable to locate Mix file: {$path}. Please check your ".'webpack.mix.js output paths and try again.');
+            throw new Exception("Unable to locate asset file: {$path}. Please check your ".'vite output paths and try again.', $manifest);
         }
 
-        return get_theme_file_uri($manifest[$path]);
+        $filePath = $assetFolder.'/'.$manifest[$path]['file'];
+
+        if ($only_path) {
+            return $filePath;
+        }
+
+        return get_theme_file_uri($filePath);
     }
 }
 
@@ -202,21 +220,21 @@ function theme_slug_widgets_init()
         'name' => __('Main Sidebar', 'a309'),
         'id' => 'main-sidebar',
         'description' => __('Widgets in this area will be shown on all posts and pages.', 'a309'),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-    'after_widget' => '</div>',
-    'before_title' => '<h2 class="widgettitle">',
-    'after_title' => '</h2>',
+        'before_widget' => '<div id="%1$s" class="widget widget-side %2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h2 class="widgettitle">',
+        'after_title' => '</h2>',
     ]);
 
     register_sidebar([
-'name' => 'Footer Sidebar',
-'id' => 'footer-sidebar',
-'description' => 'Appears in the footer area',
-'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-'after_widget' => '</aside>',
-'before_title' => '<h3 class="widget-title">',
-'after_title' => '</h3>',
-]);
+        'name' => 'Footer Sidebar',
+        'id' => 'footer-sidebar',
+        'description' => 'Appears in the footer area',
+        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+        'after_widget' => '</aside>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>',
+    ]);
 }
 
 require_once get_template_directory().'/inc/nav_menu.php';
@@ -224,9 +242,9 @@ add_action('init', 'wptheme_theme_reg_menus');
 function wptheme_theme_reg_menus()
 {
     register_nav_menus([
-      'primary-menu' => __('Primary'),
-      'secondary-menu' => __('Secondary'),
-      'mobile' => __('Mobile'),
+        'primary-menu' => __('Primary'),
+        'secondary-menu' => __('Secondary'),
+        'mobile' => __('Mobile'),
     ]);
 }
 
@@ -259,20 +277,20 @@ function add_adidtional_css_js()
 {
     // APP CSS
     if (is_singular()) {
-        wp_enqueue_style('theme-single', get_template_directory_uri().'/css/single.css', false, null, 'all');
+        wp_enqueue_style('theme-single', vite_assets('dev-assets/scss/single.scss'), false, null, 'all');
     }
 
     // App JS
-    wp_enqueue_script('theme-app', get_theme_file_uri('/js/app.js'), [], null, true);
+    wp_enqueue_script('theme-app', vite_assets('dev-assets/js/app.js'), [], null, true);
 
-    //Singular JS
+    // Singular JS
     if (is_singular()) {
-        wp_enqueue_script('theme-comments', get_theme_file_uri('/js/app_comments.js'), ['theme-app'], null, true);
+        wp_enqueue_script('theme-comments', vite_assets('dev-assets/js/app_comments.js'), ['theme-app'], null, true);
     }
 
-    //Index JS
+    // Index JS
     if (is_home()) {
-        wp_enqueue_script('theme-index', get_theme_file_uri('/js/app_index.js'), ['theme-app'], null, true);
+        wp_enqueue_script('theme-index', vite_assets('dev-assets/js/app_index.js'), ['theme-app'], null, true);
     }
 }
 
@@ -291,40 +309,40 @@ add_action('rest_api_init', 'change_rest_post');
 function change_rest_post()
 {
     register_rest_route('theme/v1', '/get-post/(?P<id>\d+)/user/(?P<user_id>\d+)', [
-    'methods' => 'GET',
-    'callback' => 'get_post_by_id',
-    'permission_callback' => '__return_true',
-  ]);
+        'methods' => 'GET',
+        'callback' => 'get_post_by_id',
+        'permission_callback' => '__return_true',
+    ]);
 
     register_rest_route('theme/v1', '/get-posts/offset/(?P<offset>\d+)/per-page/(?P<per_page>\d+)', [
-    'methods' => 'GET',
-    'callback' => 'theme_get_posts',
-    'permission_callback' => '__return_true',
-  ]);
+        'methods' => 'GET',
+        'callback' => 'theme_get_posts',
+        'permission_callback' => '__return_true',
+    ]);
 
     register_rest_route('theme/v1', '/get-comments-no/post/(?P<post_id>\d+)', [
-    'methods' => 'GET',
-    'callback' => 'get_top_level_comments_number',
-    'permission_callback' => '__return_true',
-  ]);
+        'methods' => 'GET',
+        'callback' => 'get_top_level_comments_number',
+        'permission_callback' => '__return_true',
+    ]);
 
     register_rest_route('theme/v1', '/get-comments/post/(?P<post_id>\d+)/page/(?P<page_no>\d+)', [
-    'methods' => 'GET',
-    'callback' => 'get_comments_post',
-    'permission_callback' => '__return_true',
-  ]);
+        'methods' => 'GET',
+        'callback' => 'get_comments_post',
+        'permission_callback' => '__return_true',
+    ]);
 
     register_rest_route('theme/v1', '/theme-switch/(?P<color>\w+)', [
-    'methods' => 'GET',
-    'callback' => 'theme_set_theme_cookie',
-    'permission_callback' => '__return_true',
-  ]);
+        'methods' => 'GET',
+        'callback' => 'theme_set_theme_cookie',
+        'permission_callback' => '__return_true',
+    ]);
 
     register_rest_route('a309/v1', '/get-y-morph/plugin/(?P<plugin>.*)', [
-    'methods' => 'GET',
-    'callback' => 'theme_get_y_morpf',
-    'permission_callback' => '__return_true',
-  ]);
+        'methods' => 'GET',
+        'callback' => 'theme_get_y_morpf',
+        'permission_callback' => '__return_true',
+    ]);
 }
 
 function theme_get_y_morpf()
@@ -358,14 +376,14 @@ function theme_get_post_template($wpQueryArgs = null, $full = true, $yoastSeo = 
             ob_start();
             get_template_part('parts/article', null, ['full_content' => $full]);
             $template .= ob_get_clean();
-        } //end the while loop
+        } // end the while loop
     } // end of the loop.
 
-if ($yoastSeo) {
-    return ['template' => $template, 'yoast_head' => $yoast_head];
-} else {
-    return $template;
-}
+    if ($yoastSeo) {
+        return ['template' => $template, 'yoast_head' => $yoast_head];
+    } else {
+        return $template;
+    }
 }
 
 function get_post_by_id($data)
@@ -431,16 +449,16 @@ function get_comments_post($data)
     setup_postdata($post);
 
     $comment_args = [
-                    'avatar_size' => 60,
-                                        'reverse_top_level' => true,
-                                        'reverse_children' => true,
-                    'style' => 'ol',
-                    'short_ping' => true,
-                                        'max_depth' => 5,
-                                        'per_page' => 5,
-                                        'page' => $data['page_no'],
-                                        'echo' => false,
-                ];
+        'avatar_size' => 60,
+        'reverse_top_level' => true,
+        'reverse_children' => true,
+        'style' => 'ol',
+        'short_ping' => true,
+        'max_depth' => 5,
+        'per_page' => 5,
+        'page' => $data['page_no'],
+        'echo' => false,
+    ];
 
     $template = wp_list_comments($comment_args);
 
@@ -465,7 +483,7 @@ add_filter('comment_form_defaults', 'change_comment_action_url');
  */
 function new_gravatar($avatar_defaults)
 {
-    //lh3.googleusercontent.com/pw/ACtC-3fPRRszLuGmIgM3DK1IUTQxyEChtxk6_NuMMD5vj68hV9WEPKnzXpnwXHSv2MLoEhVHeUYhLIh5aC0MqBk8rsF11BSqNA9LRJKzrhjuPp6KnEZs47i4LXcERl35m2m34B5kHvf68yYSSrtqdK0zMKN_=s64-no
+    // lh3.googleusercontent.com/pw/ACtC-3fPRRszLuGmIgM3DK1IUTQxyEChtxk6_NuMMD5vj68hV9WEPKnzXpnwXHSv2MLoEhVHeUYhLIh5aC0MqBk8rsF11BSqNA9LRJKzrhjuPp6KnEZs47i4LXcERl35m2m34B5kHvf68yYSSrtqdK0zMKN_=s64-no
     $myavatar = esc_url('https://i1.wp.com/lh3.googleusercontent.com/pw/ACtC-3fPRRszLuGmIgM3DK1IUTQxyEChtxk6_NuMMD5vj68hV9WEPKnzXpnwXHSv2MLoEhVHeUYhLIh5aC0MqBk8rsF11BSqNA9LRJKzrhjuPp6KnEZs47i4LXcERl35m2m34B5kHvf68yYSSrtqdK0zMKN_=s64-no?ssl=1');
     $avatar_defaults[$myavatar] = 'Default Gravatar';
 
@@ -519,7 +537,8 @@ function theme_set_theme_cookie($data)
     wp_send_json(['result' => $_COOKIE['theme_color']]);
 }
 
-  function theme_login_logo() { ?>
+function theme_login_logo()
+{ ?>
     <style type="text/css">
         #login h1 a, .login h1 a {
             background-image: url(<?php echo get_site_url(); ?>/icon/blackellis-blog-96.png);
@@ -533,14 +552,17 @@ function theme_set_theme_cookie($data)
 <?php }
 add_action('login_enqueue_scripts', 'theme_login_logo');
 
-// remove update notice
-function remove_update_notifications($value)
-{
-    if (isset($value) && is_object($value)) {
-        unset($value->response['wp-seo-premium/wp-seo-premium.php']);
-        unset($value->response['wp-hide-security-enhancer-pro/wp-hide.php']);
-    }
+// put direct in wp-config.php
+// function remove_update_notifications($value)
+// {
+//     if (isset($value) && is_object($value)) {
+//         unset($value->response['wp-seo-premium/wp-seo-premium.php']);
+//         unset($value->response['wp-seo/wp-seo.php']);
+//         unset($value->response['wp-hide-security-enhancer-pro/wp-hide.php']);
+//     }
 
-    return $value;
-}
-add_filter('site_transient_update_plugins', 'remove_update_notifications');
+//     return $value;
+// }
+// add_filter('site_transient_update_plugins', 'remove_update_notifications');
+// remove w3tc comment
+add_filter('w3tc_can_print_comment', '__return_false', 10, 1);

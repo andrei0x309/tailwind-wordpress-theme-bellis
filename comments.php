@@ -5,8 +5,8 @@ if (post_password_required()) {
 
 $theme_no_comments = get_comments_number();
 
-//global $current_user;
-//if($current_user) echo $current_user->user_login;
+// global $current_user;
+// if($current_user) echo $current_user->user_login;
 ?>
 
     <div id="comments" data-post-id="<?php echo $post->ID; ?>" data-no-comments="<?php echo $theme_no_comments; ?>" data-post-slug="<?php echo $post->post_name; ?>" class="comments-area default-max-width <?php echo get_option('show_avatars') ? 'show-avatars' : ''; ?>">
@@ -41,9 +41,9 @@ if (have_comments()) {
                 esc_html_e('1 comment', 'a309');
             } else {
                 printf(
-                        /* translators: %s: comment count number. */
-                        esc_html(_nx('%s comment', '%s comments', $theme_no_comments, 'Comments title', 'a309')),
-                        esc_html(number_format_i18n($theme_no_comments))
+                    /* translators: %s: comment count number. */
+                    esc_html(_nx('%s comment', '%s comments', $theme_no_comments, 'Comments title', 'a309')),
+                    esc_html(number_format_i18n($theme_no_comments))
                 );
             } ?></h2><!-- .comments-title -->
 

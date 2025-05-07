@@ -1,10 +1,10 @@
 <?php /* Template Name: Offline Page */ ?>
 <?php
 $style = '<style>'.
-file_get_contents( __DIR__ . '/../css/page-offline.css')
+file_get_contents(__DIR__.'..'.vite_assets('/dev-assets/scss/offline.scss'))
 .'</style>';
-         
-get_header(null,['head_aditional_code' => $style]); ?>
+
+get_header(null, ['head_aditional_code' => $style]); ?>
 
 <div class="main flex w-full mt-6 mb-6 justify-center">
  
@@ -19,14 +19,6 @@ get_header(null,['head_aditional_code' => $style]); ?>
     </main>
 <?php get_sidebar(); ?>
   </div>
-<?php get_footer() ?>    
+<?php get_footer(); ?>    
     </body>
 </html>
-
-
-
-
-        
-        
- 
- 

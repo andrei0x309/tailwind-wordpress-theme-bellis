@@ -1,10 +1,7 @@
-/* purgecss start ignore */
 
+@use "sass:meta";
+@use "minxin/blue_btn.scss";
 
-@import "minxin/blue_btn.scss"; 
-
-
- 
 .title-underline {
     --underline-intrinsic-width: 4;
     --underline-width: 8;
@@ -92,16 +89,16 @@
         margin-top: 0.5em;
 
         input,button{
-            @include blueBtn;
+            @include blue_btn.blueBtn;
         }
 
     }
     #comments-show-more-btn {
-        @include blueBtn;
+        @include blue_btn.blueBtn;
     }
 
     #comments-show-btn {
-        @include blueBtn;
+        @include blue_btn.blueBtn;
 
         width:100%;
 
@@ -120,7 +117,7 @@
     }
 
 
-    @import 'components/commentList.scss';    
+    @include meta.load-css('components/commentList.scss');    
 
 
 }
@@ -290,7 +287,6 @@ span.a2a_s_link#a2a_copy_link_icon, span.a2a_w_link#a2a_copy_link_icon {
     margin: 0 3px 0 0;
     position: absolute;
     vertical-align: top;
-    *vertical-align: middle;
     width: 48px;
 }
 #a2a_modal input#a2a_copy_link_text {
@@ -515,7 +511,6 @@ a.a2a_i span, a.a2a_more span {
     display: inline-block;
     overflow: hidden;
     vertical-align: top;
-    *vertical-align: middle;
 }
 a.a2a_i .a2a_svg {
     margin: 0 6px 0 0;
@@ -638,5 +633,3 @@ a.a2a_menu_show_more_less span {
     max-width: none;
 }
 
-
-/* purgecss end ignore */
